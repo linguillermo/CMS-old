@@ -358,11 +358,11 @@ $ret=mysqli_query($con,"select * from tblmedicalhistory  where PatientID='$vid'"
                           <table class="footable table table-stripped" data-page-size="14" data-filter=#filter>
                               <thead>
                                   <tr>
-                                    <th>#</th>
-                                    <th>Weight</th>
+                                    <th width="20%">Treatment Date</th>
+                                    <th width="20%">Weight</th>
                                     <th>Laboratories</th>
-                                    <th>Treatment Date</th>
-                                    <th>Action</th>
+
+                                    <th width="10%">Action</th>
                                   </tr>
                                   </thead>
                                   <tbody>
@@ -370,10 +370,11 @@ $ret=mysqli_query($con,"select * from tblmedicalhistory  where PatientID='$vid'"
 while ($row=mysqli_fetch_array($ret)) {
   ?>
                                       <tr>
-                                        <td><?php echo $cnt;?></td>
+                                        <td><?php  echo date('F j, Y g:i A', strtotime($row['CreationDate']));?></td>
+
                                         <td><?php  echo $row['Weight'];?> kgs</td>
                                         <td><?php  echo $row['Laboratories'];?></td>
-                                        <td><?php  echo date('F j, Y g:i A', strtotime($row['CreationDate']));?></td>
+
                                           <td><a href="edit-treatment.php?viewid=<?php echo $vid;?>&editid=<?php echo $row['ID'];?>" class="btn btn-primary btn-xs">View</a></td>
                                       </tr>
                                       <?php $cnt=$cnt+1;} ?>
@@ -401,7 +402,7 @@ while ($row=mysqli_fetch_array($ret)) {
                       <div class="ibox-title">
                           <h5>Prescription Records</h5>
                           <div class="ibox-tools">
-                              <a href="sample-patient-prescription.html" class="btn btn-primary btn-xs">
+                              <a href="add-prescription.php?viewid=<?php echo $vid;?>" class="btn btn-primary btn-xs">
                                   Add New Record
                               </a>
                               <a class="collapse-link">
@@ -412,33 +413,37 @@ while ($row=mysqli_fetch_array($ret)) {
 
                       </div>
                       <div class="ibox-content">
+
+                        <?php
+
+$ret=mysqli_query($con,"select * from prescriptions where PatientID='$vid'");
+
+
+
+ ?>
                           <input type="text" class="form-control form-control-sm m-b-xs" id="filter"
                                  placeholder="Search...">
 
                           <table class="footable table table-stripped" data-page-size="14" data-filter=#filter>
                               <thead>
                                   <tr>
-                                      <th>Date</th>
-                                      <th>Description</th>
-                                      <th>Action</th>
+
+                                      <th width="90%">Prescription Date</th>
+                                      <th width="10%">Action</th>
                                   </tr>
                                   </thead>
                                   <tbody>
+
+                                    <?php
+while ($row=mysqli_fetch_array($ret)) {
+  ?>
                                       <tr>
-                                          <td>December 18, 2020</td>
-                                          <td>Prescribed to take antibiotics (fucidin cream) 2x daily before every meal</td>
-                                          <td><a href="sample-patient.html" class="btn btn-primary btn-xs">View</a></td>
+
+                                          <td><?php  echo date('F j, Y g:i A', strtotime($row['CreationDate']));?></td>
+                                          <td><a href="view-prescription.php?viewid=<?php echo $vid;?>&prescid=<?php echo $row['ID'];?>" class="btn btn-primary btn-xs">View</a></td>
                                       </tr>
-                                      <tr>
-                                          <td>November 30, 2020</td>
-                                          <td>Added another set of medications for infection</td>
-                                          <td><button class="btn btn-primary btn-xs" aria-expanded="false">View</button></td>
-                                      </tr>
-                                      <tr>
-                                          <td>November 16, 2020</td>
-                                          <td>Prescribed new antibiotics</td>
-                                          <td><button class="btn btn-primary btn-xs" aria-expanded="false">View</button></td>
-                                      </tr>
+                                      <?php } ?>
+
 
                               </tbody>
                               <tfoot>
