@@ -596,7 +596,7 @@
         <div class="row">
             <div class="col-lg-12 text-center m-t-lg m-b-lg">
                 <p><strong>© 2020 Clinica Abeleda</strong><br>
-				<a href="hms/admin">Admin</a> | <a href="hms/doctor/">Doctor</a> | Staff
+				<a href="hms/admin">Admin</a> | <a href="hms/doctor/">Doctor</a> | <a href="hms/staff/">Staff</a>
 				</p>
             </div>
         </div>
