@@ -67,15 +67,12 @@ check_login();
                 </li>
 
                 <li>
-                    <a href="admin-approved-appointments.html"><i class="fa fa-calendar"></i> <span class="nav-label">Appointments</span>  </a>
+                    <a href="appointment/appointmentStaff.php"><i class="fa fa-calendar"></i> <span class="nav-label">Appointments</span>  </a>
                 </li>
 
                 <li>
-                    <a href="#"><i class="fa fa-medkit"></i> <span class="nav-label">Medicine Stocks</span><span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level collapse">
-                        <li><a href="admin-medicines.html">Medicines</a></li>
-                        <li><a href=" admin-stocks.html">Stocks</a></li>
-                    </ul>
+                    <a href="Inventory/inventory.php"><i class="fa fa-medkit"></i> <span class="nav-label">Medicine Stocks</span></a>
+                    
                 </li>
 
                 <!-- <li>
