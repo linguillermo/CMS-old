@@ -4,7 +4,7 @@ error_reporting(0);
 include("include/config.php");
 if(isset($_POST['submit']))
 {
-$ret=mysqli_query($con,"SELECT * FROM admin WHERE username='".$_POST['username']."' and password='".$_POST['password']."'");
+$ret=mysqli_query($con,"SELECT * FROM users WHERE username='".$_POST['username']."' and password='".$_POST['password']."' and role='administrator'");
 $num=mysqli_fetch_array($ret);
 if($num>0)
 {
@@ -32,87 +32,60 @@ exit();
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>Admin-Login</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
-		<meta name="apple-mobile-web-app-capable" content="yes">
-		<meta name="apple-mobile-web-app-status-bar-style" content="black">
-		<meta content="" name="description" />
-		<meta content="" name="author" />
-		<link href="http://fonts.googleapis.com/css?family=Lato:300,400,400italic,600,700|Raleway:300,400,500,600,700|Crete+Round:400italic" rel="stylesheet" type="text/css" />
-		<link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
-		<link rel="stylesheet" href="vendor/fontawesome/css/font-awesome.min.css">
-		<link rel="stylesheet" href="vendor/themify-icons/themify-icons.min.css">
-		<link href="vendor/animate.css/animate.min.css" rel="stylesheet" media="screen">
-		<link href="vendor/perfect-scrollbar/perfect-scrollbar.min.css" rel="stylesheet" media="screen">
-		<link href="vendor/switchery/switchery.min.css" rel="stylesheet" media="screen">
-		<link rel="stylesheet" href="assets/css/styles.css">
-		<link rel="stylesheet" href="assets/css/plugins.css">
-		<link rel="stylesheet" href="assets/css/themes/theme-1.css" id="skin_color" />
+		<title>Admin Login</title>
+
+		<link href="insp/css/bootstrap.min.css" rel="stylesheet">
+    <link href="insp/font-awesome/css/font-awesome.css" rel="stylesheet">
+
+    <link href="insp/css/animate.css" rel="stylesheet">
+    <link href="insp/css/style.css" rel="stylesheet">
+
 	</head>
-	<body class="login">
-		<div class="row">
-			<div class="main-login col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-4">
-				<div class="logo margin-top-30">
-				<h2>Admin Login</h2>
-				</div>
+	<body class="gray-bg">
 
-				<div class="box-login">
-					<form class="form-login" method="post">
-						<fieldset>
-							<legend>
-								Sign in to your account
-							</legend>
-							<p>
-								Please enter your name and password to log in.<br />
-								<span style="color:red;"><?php echo htmlentities($_SESSION['errmsg']); ?><?php echo htmlentities($_SESSION['errmsg']="");?></span>
-							</p>
-							<div class="form-group">
-								<span class="input-icon">
-									<input type="text" class="form-control" name="username" placeholder="Username">
-									<i class="fa fa-user"></i> </span>
-							</div>
-							<div class="form-group form-actions">
-								<span class="input-icon">
-									<input type="password" class="form-control password" name="password" placeholder="Password"><i class="fa fa-lock"></i>
-									 </span>
-							</div>
-							<div class="form-actions">
-								
-								<button type="submit" class="btn btn-primary pull-right" name="submit">
-									Login <i class="fa fa-arrow-circle-right"></i>
-								</button>
-							</div>
-							
-						</fieldset>
-					</form>
+    <div class="middle-box text-center loginscreen animated fadeInDown">
+        <div>
+            <div>
 
-					<div class="copyright">
-						&copy; <span class="current-year"></span><span class="text-bold text-uppercase"> HMS</span>. <span>All rights reserved</span>
-					</div>
-			
-				</div>
+                <h2 class="logo-name" style="text-align: center;">Clinica Abeleda</h2>
 
-			</div>
-		</div>
-		<script src="vendor/jquery/jquery.min.js"></script>
-		<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-		<script src="vendor/modernizr/modernizr.js"></script>
-		<script src="vendor/jquery-cookie/jquery.cookie.js"></script>
-		<script src="vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-		<script src="vendor/switchery/switchery.min.js"></script>
-		<script src="vendor/jquery-validation/jquery.validate.min.js"></script>
-	
-		<script src="assets/js/main.js"></script>
+            </div>
+            <h3>Welcome to Clinica Abeleda</h3>
 
-		<script src="assets/js/login.js"></script>
+            <p>Please enter your user credentials<br>
+						<span style="color:red;"><?php echo $_SESSION['errmsg']; ?><?php echo $_SESSION['errmsg']="";?></span>
+					</p>
+
+
+
+            <form class="form-login m-t" role="form" method="post">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Username" required="" name="username">
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" placeholder="Password" required="" name="password">
+                </div>
+                <button type="submit" class="btn btn-primary block full-width m-b" name="submit">Login</button>
+
+                <a href="forgot-password.php"><small>Forgot password?</small></a>
+                <!-- <p class="text-muted text-center"><small>Do not have an account?</small></p>
+                <a class="btn btn-sm btn-white btn-block" href="register.html">Create an account</a> -->
+            </form>
+
+        </div>
+    </div>
+
+    <!-- Mainly scripts -->
+    <script src="js/jquery-3.1.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.js"></script>
 		<script>
 			jQuery(document).ready(function() {
 				Main.init();
 				Login.init();
 			});
 		</script>
-	
+
 	</body>
 	<!-- end: BODY -->
 </html>
