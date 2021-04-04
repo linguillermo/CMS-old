@@ -23,7 +23,7 @@
 <div class="navbar-wrapper">
         <nav class="navbar navbar-default navbar-fixed-top navbar-expand-md" role="navigation">
             <div class="container">
-                <a class="navbar-brand" href="index.html">CLINICA ABELEDA</a>
+                <a class="navbar-brand" href="index.php">CLINICA ABELEDA</a>
                 <div class="navbar-header page-scroll">
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar">
                         <i class="fa fa-bars"></i>
@@ -32,10 +32,11 @@
                 <div class="collapse navbar-collapse justify-content-end" id="navbar">
                     <ul class="nav navbar-nav navbar-right">
                         <li><a class="nav-link page-scroll" href="#page-top">Home</a></li>
-                        <li><a class="nav-link page-scroll" href="#features">Services</a></li>
+                        <li><a class="nav-link page-scroll" href="#services">Services</a></li>
+						<li><a class="nav-link page-scroll" href="#team">About Us</a></li>
+                        <li><a class="nav-link page-scroll" href="#appointment">Appointment</a></li>
                         <li><a class="nav-link page-scroll" href="#contact">Contact</a></li>
-                        <li><a class="nav-link page-scroll" href="#">Appointment</a></li>
-                        <li><a class="nav-link page-scroll" href="login.html">Login</a></li>
+                        
                     </ul>
                 </div>
             </div>
@@ -55,7 +56,7 @@
                         </h1>
                     <p>Providing supportive care for your dermatological needs</p>
                     <p>
-                        <a class="btn btn-lg btn-primary" href="#" role="button">MAKE AN APPOINTMENT</a>
+                        <a class="btn btn-lg btn-primary page-scroll" href="#appointment" role="button">MAKE AN APPOINTMENT</a>
                         <a class="caption-link" href="#" role="button">Inspinia Theme</a>
                     </p>
                 </div>
@@ -71,7 +72,7 @@
 </div>
 
 
-<section id="features" class="container services">
+<section id="services" class="container services">
     <div class="row">
         <div class="col-sm-3">
             <h2>Full responsive</h2>
@@ -217,7 +218,7 @@
     </div>
 </section>
 
-<section class="features">
+<section class="features" id="appointment">
     <div class="container">
         <div class="row">
             <div class="col-lg-12 text-center">
@@ -247,6 +248,8 @@
 
 </section>
 
+
+<!--
 <section class="timeline gray-section">
     <div class="container">
         <div class="row">
@@ -554,6 +557,9 @@
     </div>
 
 </section>
+-->
+
+
 
 <section id="contact" class="gray-section contact">
     <div class="container">
@@ -581,9 +587,9 @@
         </div>
         <div class="row">
             <div class="col-lg-12 text-center">
-                <a href="mailto:test@email.com" class="btn btn-primary">Send us mail</a>
+                
                 <p class="m-t-sm">
-                    Or follow us on social platform
+                    Follow us on social platform
                 </p>
                 <ul class="list-inline social-icon">
 
