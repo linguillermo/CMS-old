@@ -41,17 +41,16 @@ check_login();
 							<li class="nav-header">
 									<div class="dropdown profile-element">
 											<img alt="image" class="rounded-circle" src="insp/img/New Project.png"/>
-											<a data-toggle="dropdown" class="dropdown-toggle" href="#">
-													<span class="block m-t-xs font-bold">Rochelle Abeleda</span>
-													<span class="text-muted text-xs block">Doctor <b class="caret"></b></span>
-											</a>
-											<ul class="dropdown-menu animated fadeInRight m-t-xs">
-													<li><a class="dropdown-item" href="profile.html">Profile</a></li>
-													<li><a class="dropdown-item" href="contacts.html">Contacts</a></li>
-													<li><a class="dropdown-item" href="mailbox.html">Mailbox</a></li>
-													<li class="dropdown-divider"></li>
-													<li><a class="dropdown-item" href="logout.php">Logout</a></li>
-											</ul>
+											<?php $query=mysqli_query($con,"select * from users where id='".$_SESSION['id']."'");
+															while($row=mysqli_fetch_array($query))
+															{ ?>
+
+
+                            <span class="block m-t-xs font-bold"><?php echo $row['fullName']; ?></span>
+                            <span class="text-muted text-xs block"><?php echo $row['role']; ?></span>
+
+
+													<?php } ?>
 									</div>
 									<div class="logo-element">
 											CA
@@ -61,7 +60,7 @@ check_login();
 									<a href="dashboard.php"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboard</span></a>
 
 							</li>
-							<li>
+							<!-- <li>
 									<a href="#"><i class="fa fa-table"></i> <span class="nav-label">Patients</span><span class="fa arrow"></span></a>
 									<ul class="nav nav-second-level collapse">
 											<li><a href="manage-patient.php">Patient Records</a></li>
@@ -69,6 +68,11 @@ check_login();
 											<li><a href="doctor-prescription-records.html">Prescription Records</a></li>
 
 									</ul>
+							</li> -->
+
+							<li>
+									<a href="manage-patient.php"><i class="fa fa-table"></i> <span class="nav-label">Patient Records</span></a>
+
 							</li>
 							<li>
 									<a href="appointment-history.php"><i class="fa fa-calendar"></i> <span class="nav-label">Appointments</span>  </a>
