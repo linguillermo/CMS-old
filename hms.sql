@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 04, 2021 at 12:09 PM
+-- Generation Time: Apr 12, 2021 at 06:45 AM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 8.0.3
 
@@ -120,7 +120,8 @@ CREATE TABLE `doctorschedule` (
 
 INSERT INTO `doctorschedule` (`scheduleId`, `scheduleDate`, `scheduleDay`, `startTime`, `endTime`, `bookAvail`) VALUES
 (1, '2021-04-03', 'Monday', '01:30:00', '02:00:00', 'notavail'),
-(2, '2021-04-03', 'Monday', '03:00:00', '00:00:00', 'notavail');
+(2, '2021-04-03', 'Monday', '03:00:00', '00:00:00', 'notavail'),
+(3, '2021-04-05', 'Monday', '04:00:00', '04:30:00', 'available');
 
 -- --------------------------------------------------------
 
@@ -190,7 +191,15 @@ INSERT INTO `doctorslog` (`id`, `uid`, `username`, `userip`, `loginTime`, `logou
 (64, 7, 'test@demo.com', 0x3a3a3100000000000000000000000000, '2021-03-21 11:17:39', NULL, 1),
 (65, 7, 'test@demo.com', 0x3a3a3100000000000000000000000000, '2021-03-22 00:32:21', NULL, 1),
 (66, 7, 'test@demo.com', 0x3a3a3100000000000000000000000000, '2021-03-27 00:22:07', '27-03-2021 05:54:37 AM', 1),
-(67, 7, 'test@demo.com', 0x3a3a3100000000000000000000000000, '2021-03-27 00:28:00', '27-03-2021 06:12:28 AM', 1);
+(67, 7, 'test@demo.com', 0x3a3a3100000000000000000000000000, '2021-03-27 00:28:00', '27-03-2021 06:12:28 AM', 1),
+(68, NULL, 'rabeleda', 0x3a3a3100000000000000000000000000, '2021-04-04 14:39:03', NULL, 0),
+(69, NULL, 'rabeleda', 0x3a3a3100000000000000000000000000, '2021-04-04 14:39:22', NULL, 0),
+(70, 7, 'test@demo.com', 0x3a3a3100000000000000000000000000, '2021-04-04 14:39:37', '04-04-2021 08:09:38 PM', 1),
+(71, NULL, 'rabeleda', 0x3a3a3100000000000000000000000000, '2021-04-04 16:21:02', NULL, 0),
+(72, NULL, 'rabeleda', 0x3a3a3100000000000000000000000000, '2021-04-04 16:21:09', NULL, 0),
+(73, 7, 'test@demo.com', 0x3a3a3100000000000000000000000000, '2021-04-04 16:21:14', NULL, 1),
+(74, 7, 'test@demo.com', 0x3a3a3100000000000000000000000000, '2021-04-04 17:10:18', '04-04-2021 10:40:48 PM', 1),
+(75, 9, 'rabeleda', 0x3a3a3100000000000000000000000000, '2021-04-04 18:40:42', '05-04-2021 03:58:59 AM', 1);
 
 -- --------------------------------------------------------
 
@@ -221,6 +230,161 @@ INSERT INTO `doctorspecilization` (`id`, `specilization`, `creationDate`, `updat
 (10, 'Bones Specialist demo', '2017-01-07 08:07:53', '0000-00-00 00:00:00'),
 (11, 'Test', '2019-06-23 17:51:06', '2019-06-23 17:55:06'),
 (12, 'Dermatologist', '2019-11-10 18:36:36', '2019-11-10 18:36:50');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `medicines`
+--
+
+CREATE TABLE `medicines` (
+  `id` int(20) NOT NULL,
+  `medicine_name` varchar(100) CHARACTER SET latin1 NOT NULL,
+  `dosage` varchar(100) CHARACTER SET latin1 NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `formulation` varchar(30) CHARACTER SET latin1 NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `medicines`
+--
+
+INSERT INTO `medicines` (`id`, `medicine_name`, `dosage`, `quantity`, `formulation`) VALUES
+(5, 'PREDNISONE', '5mg', 100, 'Tablet'),
+(6, 'HYDROXYZINE', '10mg', 100, 'Tablet'),
+(7, 'METHORTREXATE', '2.5mg', 100, 'Tablet'),
+(8, 'SULTAMICILLIN', '750mg', 100, 'Tablet'),
+(9, 'SULTAMICILLIN', '375mg', 100, 'Tablet'),
+(10, 'COTRIMOXAZOLE', '800mg', 100, 'Tablet'),
+(11, 'METRONIDAZOLE', '500mg', 100, 'Tablet'),
+(12, 'RANITIDINE', '150mg', 100, 'Tablet'),
+(13, 'CIPROFLOXACIN', '500mg', 100, 'Tablet'),
+(14, 'KETOCONAZOLE', '200mg', 100, 'Tablet'),
+(15, 'OFLOXACIN', '400mg', 100, 'Tablet'),
+(16, 'PARACETAMOL/TRAMADOL', '325mg', 100, 'Tablet'),
+(17, 'Norfloxacin', '400mg', 100, 'Tablet'),
+(18, 'Aciclovir', '200mg', 100, 'Tablet'),
+(19, 'Aciclovir', '400mg', 100, 'Tablet'),
+(20, 'Aciclovir', '800mg', 100, 'Tablet'),
+(21, 'Diosmin Hesperidin', '450mg', 100, 'Tablet'),
+(22, 'Clarithromycin', '500mg', 100, 'Tablet'),
+(23, 'Cefuroxime', '500mg', 100, 'Tablet'),
+(24, 'Cefixime', '500mg', 100, 'Tablet'),
+(25, 'Rosuvastatin', '10mg', 100, 'Tablet'),
+(26, 'Gabapentin', '300mg', 100, 'Tablet'),
+(27, 'Cloxacillin', '500mg', 100, 'Capsule'),
+(28, 'Mepenamic', '500mg', 100, 'Capsule'),
+(29, 'Clindamycin', '300mg', 100, 'Capsule'),
+(30, 'Doxycycline', '', 100, 'Capsule'),
+(31, 'Tetracycline', '500mg', 100, 'Capsule'),
+(32, 'Isotretinoin (isonoin)', '20mg', 100, 'Capsule'),
+(33, 'Isotretinoin (acne trex)', '10mg', 100, 'Capsule'),
+(34, 'Biotin ', '8mg', 90, 'Capsule'),
+(35, 'Heliocare Ultra', '', 100, 'Capsule'),
+(36, 'Fenofibrate', '200mg', 100, 'Capsule'),
+(37, 'Omeprazole', '40mg', 100, 'Capsule'),
+(38, 'Itraconazole', '100mg', 80, 'Capsule'),
+(39, 'Rabeprazole', '20mg', 100, 'Capsule'),
+(40, 'Livolin Forte', '', 100, 'Capsule'),
+(41, 'Skizin Capsule', '', 100, 'Capsule'),
+(42, 'Cefixime', '200mg', 100, 'Capsule'),
+(43, 'Prednisone', '20mg', 100, 'Syrup'),
+(44, 'Prednisone', '15mg', 100, 'Syrup'),
+(45, 'Prednisone', '10mg', 100, 'Syrup'),
+(46, 'Diphenhydramine', '12.5mg/5ml', 100, 'Syrup'),
+(47, 'Cetirizine', '5mg/5ml', 100, 'Syrup'),
+(48, 'Cloxacillin', '250mg/5ml', 100, 'Syrup'),
+(49, 'Clarithromycin', '250mg/5ml', 100, 'Syrup'),
+(50, 'Cefixime', '100mg/5ml', 100, 'Syrup'),
+(51, 'Cetirizine', '10mg', 100, 'Tablet'),
+(52, 'BILASTINE', '20mg', 100, 'Tablet'),
+(53, 'Hair Grower Shampoo', '', 100, 'Shampoo'),
+(54, 'Tar Shampoo', '', 100, 'Shampoo'),
+(55, 'Ketoconazole Shampoo', 'n/a', 100, 'Shampoo'),
+(56, 'Bioteez', 'n/a', 100, 'Shampoo'),
+(57, 'Selenium Sulfide', 'n/a', 100, 'Shampoo'),
+(58, 'Araderm', 'n/a', 100, 'Lotion'),
+(59, 'Triacinate ', 'n/a', 100, 'Lotion'),
+(60, 'BPO', 'n/a', 100, 'Lotion'),
+(61, 'Clobate ', 'n/a', 100, 'Lotion'),
+(62, 'Triamcinolone', 'n/a', 100, 'Lotion'),
+(63, 'Cetaphil Pro Ad ', 'n/a', 100, 'Lotion'),
+(64, 'Cetaphil Ultra Hydrating ', 'n/a', 100, 'Lotion'),
+(65, 'Cetaphil Brightening', 'n/a', 100, 'Lotion'),
+(66, 'Permethrin', 'n/a', 100, 'Lotion'),
+(67, 'Clarifying Lotion 1', 'n/a', 100, 'Lotion'),
+(68, 'Clarifying Lotion 2', 'n/a', 100, 'Lotion'),
+(69, 'Hypo Soap Bar', 'n/a', 100, 'Soap/Liquids'),
+(70, 'Oatmeal Bar', 'n/a', 100, 'Soap/Liquids'),
+(71, 'Zen Hydra Antibacterial', 'n/a', 100, 'Soap/Liquids'),
+(72, 'Zen Hydra Pine Tar', 'n/a', 100, 'Soap/Liquids'),
+(73, 'Zen Hydra Pine Tar Shampoo & Body Wash', 'n/a', 100, 'Soap/Liquids'),
+(74, 'Cetaphil Pro Ad Wash', 'n/a', 100, 'Soap/Liquids'),
+(75, 'Cetaphil Brightness Reveal Bar', 'n/a', 100, 'Soap/Liquids'),
+(76, 'Trixera Bar', 'n/a', 100, 'Soap/Liquids'),
+(77, 'Hypo Liquid Soap', 'n/a', 100, 'Soap/Liquids'),
+(78, 'Oatsense Facial Wash', 'n/a', 100, 'Soap/Liquids'),
+(79, 'Ecze Aleen Foam Wash', 'n/a', 100, 'Soap/Liquids'),
+(80, 'Klenz It Foam Wash', 'n/a', 100, 'Soap/Liquids'),
+(81, 'Dillan Emollients', 'n/a', 100, 'Soap/Liquids'),
+(82, 'Xeracalm', 'n/a', 100, 'Soap/Liquids'),
+(83, 'Acne Gel #2', 'n/a', 100, 'Gel'),
+(84, 'Ery Gel', 'n/a', 100, 'Gel'),
+(85, 'Xeragel', 'n/a', 100, 'Gel'),
+(86, 'Bliziny', 'n/a', 100, 'Gel'),
+(87, 'Xamiol', 'n/a', 100, 'Gel'),
+(88, 'Epiduo', 'n/a', 100, 'Gel'),
+(89, 'Vitises', 'n/a', 100, 'Gel'),
+(90, 'Pigmenting ', 'n/a', 100, 'Gel'),
+(91, 'Hair Grower Solution 2', 'n/a', 100, 'Solution'),
+(92, 'Clobate Scalp Solutiin', 'n/a', 100, 'Solution'),
+(93, 'Triacinate Scalp Solution', 'n/a', 100, 'Solution'),
+(94, 'Trichogen', 'n/a', 100, 'Solution'),
+(95, 'Seskavel Anti Hair Loss', 'n/a', 100, 'Solution'),
+(96, 'Caviar Serum', 'n/a', 100, 'Solution'),
+(97, 'C-Enhance Serum', 'n/a', 100, 'Solution'),
+(98, 'Anti Perspirant Plus', 'n/a', 100, 'Others'),
+(99, 'Wet Compress', 'n/a', 100, 'Others'),
+(100, 'Cetaphil Toner', 'n/a', 100, 'Others'),
+(101, 'Xerolan Spray', 'n/a', 100, 'Others'),
+(102, 'Azelaic Spray', 'n/a', 100, 'Others'),
+(103, 'Candina Powder', 'n/a', 100, 'Others'),
+(104, 'Araderm Ointment 2', 'n/a', 100, 'Ointment'),
+(105, 'Araderm Ointment 3', 'n/a', 100, 'Ointment'),
+(106, 'SSA-H Ointment', 'n/a', 100, 'Ointment'),
+(107, 'Scabicidal Ointment', 'n/a', 100, 'Ointment'),
+(108, 'Bactreat Ointment', 'n/a', 100, 'Ointment'),
+(109, 'Daivobet Ointment', 'n/a', 100, 'Ointment'),
+(110, 'Dipsotrex Ointment', 'n/a', 100, 'Ointment'),
+(111, 'Triacina Ointment', 'n/a', 100, 'Ointment'),
+(112, 'Clobate Ointment', 'n/a', 100, 'Ointment'),
+(113, 'Tacrolimus 0.13% (Tacroz)', 'n/a', 100, 'Ointment'),
+(114, 'Tacrolimus Forte 0.01%', 'n/a', 100, 'Ointment'),
+(115, 'Tacrolimus 0.03% (Rocimuz)', 'n/a', 100, 'Ointment'),
+(116, 'Araderm Cream 2', 'n/a', 100, 'Cream'),
+(117, 'Araderm Cream 3', 'n/a', 100, 'Cream'),
+(118, 'Tineazole Cream', 'n/a', 100, 'Cream'),
+(119, 'Tineazole HA Cream', 'n/a', 100, 'Cream'),
+(120, 'Lactaderm Cream 2', 'n/a', 100, 'Cream'),
+(121, 'Lactaderm Cream 1', 'n/a', 100, 'Cream'),
+(122, 'Caviar Cream', 'n/a', 100, 'Cream'),
+(123, 'Tretinoin Cream', 'n/a', 100, 'Cream'),
+(124, 'Superblock SPF ', '50+', 100, 'Cream'),
+(125, 'Akerat', '30', 100, 'Cream'),
+(126, 'Fucidin', '2%', 100, 'Cream'),
+(127, 'Cetaphil Brightening Day & Night Cream', 'n/a', 100, 'Cream'),
+(128, 'Emaxx Cream', 'n/a', 100, 'Cream'),
+(129, 'Triacinate Cream', 'n/a', 100, 'Cream'),
+(130, 'Clobate Cream', 'n/a', 100, 'Cream'),
+(131, 'Sofinox Cream', 'n/a', 100, 'Cream'),
+(132, 'Ctranex Cream', 'n/a', 100, 'Cream'),
+(133, 'Triobloc Cream', 'n/a', 100, 'Cream'),
+(134, 'Cyto Rescue Cream', 'n/a', 100, 'Cream'),
+(135, 'Cyto Repair Cream', 'n/a', 100, 'Cream'),
+(136, 'Quad Block SPF 110', 'n/a', 100, 'Cream'),
+(137, 'Sertaconazole Cream (onabet)', 'n/a', 100, 'Cream'),
+(139, 'PREDNISONE', '20mg', 100, 'Tablet'),
+(140, 'PREDNISONE', '30mg', 100, 'Tablet');
 
 -- --------------------------------------------------------
 
@@ -268,7 +432,7 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`product_id`, `product_name`, `dosage`, `quantity`, `formulation`) VALUES
-(5, 'PREDNISONE', '5mg', 100, 'Tablet'),
+(5, 'PREDNISONE', '5mg', 30, 'Tablet'),
 (6, 'HYDROXYZINE', '10mg', 100, 'Tablet'),
 (7, 'METHORTREXATE', '2.5mg', 100, 'Tablet'),
 (8, 'SULTAMICILLIN', '750mg', 100, 'Tablet'),
@@ -293,18 +457,18 @@ INSERT INTO `product` (`product_id`, `product_name`, `dosage`, `quantity`, `form
 (27, 'Cloxacillin', '500mg', 100, 'Capsule'),
 (28, 'Mepenamic', '500mg', 100, 'Capsule'),
 (29, 'Clindamycin', '300mg', 100, 'Capsule'),
-(30, 'Doxycycline', 'n/a', 100, 'Capsule'),
+(30, 'Doxycycline', '', 100, 'Capsule'),
 (31, 'Tetracycline', '500mg', 100, 'Capsule'),
 (32, 'Isotretinoin (isonoin)', '20mg', 100, 'Capsule'),
 (33, 'Isotretinoin (acne trex)', '10mg', 100, 'Capsule'),
 (34, 'Biotin ', '8mg', 90, 'Capsule'),
-(35, 'Heliocare Ultra', 'n/a', 100, 'Capsule'),
+(35, 'Heliocare Ultra', '', 100, 'Capsule'),
 (36, 'Fenofibrate', '200mg', 100, 'Capsule'),
 (37, 'Omeprazole', '40mg', 100, 'Capsule'),
 (38, 'Itraconazole', '100mg', 80, 'Capsule'),
 (39, 'Rabeprazole', '20mg', 100, 'Capsule'),
-(40, 'Livolin Forte', 'n/a', 100, 'Capsule'),
-(41, 'Skizin Capsule', 'n/a', 100, 'Capsule'),
+(40, 'Livolin Forte', '', 100, 'Capsule'),
+(41, 'Skizin Capsule', '', 100, 'Capsule'),
 (42, 'Cefixime', '200mg', 100, 'Capsule'),
 (43, 'Prednisone', '20mg', 100, 'Syrup'),
 (44, 'Prednisone', '15mg', 100, 'Syrup'),
@@ -316,8 +480,8 @@ INSERT INTO `product` (`product_id`, `product_name`, `dosage`, `quantity`, `form
 (50, 'Cefixime', '100mg/5ml', 100, 'Syrup'),
 (51, 'Cetirizine', '10mg', 100, 'Tablet'),
 (52, 'BILASTINE', '20mg', 100, 'Tablet'),
-(53, 'Hair Grower Shampoo', 'n/a', 100, 'Shampoo'),
-(54, 'Tar Shampoo', 'n/a', 100, 'Shampoo'),
+(53, 'Hair Grower Shampoo', '', 100, 'Shampoo'),
+(54, 'Tar Shampoo', '', 100, 'Shampoo'),
 (55, 'Ketoconazole Shampoo', 'n/a', 100, 'Shampoo'),
 (56, 'Bioteez', 'n/a', 100, 'Shampoo'),
 (57, 'Selenium Sulfide', 'n/a', 100, 'Shampoo'),
@@ -644,6 +808,12 @@ ALTER TABLE `doctorspecilization`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `medicines`
+--
+ALTER TABLE `medicines`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `prescriptions`
 --
 ALTER TABLE `prescriptions`
@@ -718,19 +888,25 @@ ALTER TABLE `doctors`
 -- AUTO_INCREMENT for table `doctorschedule`
 --
 ALTER TABLE `doctorschedule`
-  MODIFY `scheduleId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `scheduleId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `doctorslog`
 --
 ALTER TABLE `doctorslog`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
 
 --
 -- AUTO_INCREMENT for table `doctorspecilization`
 --
 ALTER TABLE `doctorspecilization`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT for table `medicines`
+--
+ALTER TABLE `medicines`
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=144;
 
 --
 -- AUTO_INCREMENT for table `prescriptions`
@@ -742,7 +918,7 @@ ALTER TABLE `prescriptions`
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `product_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=141;
+  MODIFY `product_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=142;
 
 --
 -- AUTO_INCREMENT for table `tblcontactus`
