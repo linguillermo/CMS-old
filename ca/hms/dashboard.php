@@ -10,7 +10,7 @@ check_login();
 <html lang="en">
 	<head>
 		<title>User  | Dashboard</title>
-		
+
 		<link href="http://fonts.googleapis.com/css?family=Lato:300,400,400italic,600,700|Raleway:300,400,500,600,700|Crete+Round:400italic" rel="stylesheet" type="text/css" />
 		<link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
 		<link rel="stylesheet" href="vendor/fontawesome/css/font-awesome.min.css">
@@ -29,12 +29,12 @@ check_login();
 
 	</head>
 	<body>
-		<div id="app">		
-<?php include('include/sidebar.php');?>
+		<div id="app">
+<!-- <?php include('include/sidebar.php');?>
 			<div class="app-content">
-				
-						<?php include('include/header.php');?>
-						
+
+						<?php include('include/header.php');?> -->
+
 				<!-- end: TOP NAVBAR -->
 				<div class="main-content" >
 					<div class="wrap-content container" id="container">
@@ -63,7 +63,7 @@ check_login();
 										<div class="panel-body">
 											<span class="fa-stack fa-2x"> <i class="fa fa-square fa-stack-2x text-primary"></i> <i class="fa fa-smile-o fa-stack-1x fa-inverse"></i> </span>
 											<h2 class="StepTitle">My Profile</h2>
-											
+
 											<p class="links cl-effect-1">
 												<a href="edit-profile.php">
 													Update Profile
@@ -77,7 +77,7 @@ check_login();
 										<div class="panel-body">
 											<span class="fa-stack fa-2x"> <i class="fa fa-square fa-stack-2x text-primary"></i> <i class="fa fa-paperclip fa-stack-1x fa-inverse"></i> </span>
 											<h2 class="StepTitle">My Appointments</h2>
-										
+
 											<p class="cl-effect-1">
 												<a href="appointment-history.php">
 													View Appointment History
@@ -91,7 +91,7 @@ check_login();
 										<div class="panel-body">
 											<span class="fa-stack fa-2x"> <i class="fa fa-square fa-stack-2x text-primary"></i> <i class="fa fa-terminal fa-stack-1x fa-inverse"></i> </span>
 											<h2 class="StepTitle"> Book My Appointment</h2>
-											
+
 											<p class="links cl-effect-1">
 												<a href="book-appointment.php">
 													Book Appointment
@@ -102,21 +102,16 @@ check_login();
 								</div>
 							</div>
 						</div>
-			
-					
-					
-						
-						
-					
+
 						<!-- end: SELECT BOXES -->
-						
+
 					</div>
 				</div>
 			</div>
 			<!-- start: FOOTER -->
 	<?php include('include/footer.php');?>
 			<!-- end: FOOTER -->
-		
+
 			<!-- start: SETTINGS -->
 	<?php include('include/setting.php');?>
 			<>

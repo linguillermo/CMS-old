@@ -24,8 +24,8 @@
 								<li  style="padding-top:2% ">
 								<h2>Hospital Management System</h2>
 							</li>
-						
-						
+
+
 							<li class="dropdown current-user">
 								<a href class="dropdown-toggle" data-toggle="dropdown">
 									<img src="assets/images/images.jpg" > <span class="username">
@@ -36,15 +36,15 @@
 									<i class="ti-angle-down"></i></i></span>
 								</a>
 								<ul class="dropdown-menu dropdown-dark">
-									
-								
+
+
 									<li>
 										<a href="change-password.php">
 											Change Password
 										</a>
 									</li>
 									<li>
-										<a href="logout.php">
+										<a href="index.php">
 											Log Out
 										</a>
 									</li>
@@ -59,7 +59,7 @@
 						</div>
 						<!-- end: MENU TOGGLER FOR MOBILE DEVICES -->
 					</div>
-				
-					
+
+
 					<!-- end: NAVBAR COLLAPSE -->
 				</header>
