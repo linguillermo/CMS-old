@@ -69,7 +69,7 @@
                     <p>Providing supportive care for your dermatological needs</p>
                     <p>
                         <a class="btn btn-lg btn-primary page-scroll" href="#appointment" role="button">MAKE AN APPOINTMENT</a>
-                        <a class="caption-link" href="#" role="button">Inspinia Theme</a>
+                        
                     </p>
                 </div>
 
@@ -87,81 +87,89 @@
 <section id="services" class="container services">
     <div class="row">
         <div class="col-sm-3">
-            <h2>Full responsive</h2>
-            <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus.</p>
-            <p><a class="navy-link" href="#" role="button">Details &raquo;</a></p>
+            <h2>Consultation</h2>
+            <p>Guides you towards the specific medical services needed to improve your health.</p>
+            
         </div>
         <div class="col-sm-3">
-            <h2>LESS/SASS Files</h2>
-            <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus.</p>
-            <p><a class="navy-link" href="#" role="button">Details &raquo;</a></p>
+            <h2>Partial Ungiectomy</h2>
+            <p>Surgical removal of a portion of a fingernail or toenail which causes pain or discomfort.</p>
+            
         </div>
         <div class="col-sm-3">
-            <h2>6 Charts Library</h2>
-            <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus.</p>
-            <p><a class="navy-link" href="#" role="button">Details &raquo;</a></p>
+            <h2>Steroid Injection</h2>
+            <p>Treatment that delivers a high dose of medication that can help relieve pain and inflammation in a specific area of your body.</p>
+            
         </div>
         <div class="col-sm-3">
-            <h2>Advanced Forms</h2>
-            <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus.</p>
-            <p><a class="navy-link" href="#" role="button">Details &raquo;</a></p>
+            <h2>Mole removal</h2>
+            <p>Removal of cosmetic moles, skin tags and other benign skin growths.</p>
+            
         </div>
     </div>
 </section>
 
-<section  class="container features">
+<section  class="container services">
     <div class="row">
         <div class="col-lg-12 text-center">
             <div class="navy-line"></div>
-            <h1>Over 40+ unique view<br/> <span class="navy"> with many custom components</span> </h1>
-            <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. </p>
+            <h1>Our Services</h1>
+            <p>Clinica Abeleda offers a wide range of dermatological services. </p>
         </div>
     </div>
     <div class="row">
-        <div class="col-md-3 text-center wow fadeInLeft">
-            <div>
-                <i class="fa fa-mobile features-icon"></i>
-                <h2>Full responsive</h2>
-                <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus.</p>
+        <div class="col-md-3 wow fadeInLeft">
+            <div >
+                
+                <h2>Sweatox </h2>
+                <p>Relatively pain-free treatment that helps to reduce excess sweating of the underarms.</p>
             </div>
             <div class="m-t-lg">
-                <i class="fa fa-bar-chart features-icon"></i>
-                <h2>6 Charts Library</h2>
-                <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus.</p>
+                
+                <h2>Acne Treatment</h2>
+                <p>Provides effective medical and laser acne treatments to overcome your skin concerns.</p>
             </div>
         </div>
         <div class="col-md-6 text-center  wow zoomIn">
-            <img src="img/landing/perspective.png" alt="dashboard" class="img-fluid">
+            <img src="img/landing/ds1.jpg" alt="dashboard" class="img-fluid">
         </div>
-        <div class="col-md-3 text-center wow fadeInRight">
+        <div class="col-md-3 text-right wow fadeInRight">
             <div>
-                <i class="fa fa-envelope features-icon"></i>
-                <h2>Mail pages</h2>
-                <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus.</p>
+                
+                <h2>Excision Biopsy</h2>
+                <p>Surgical removal of an entire tumor and some normal tissue around it.</p>
             </div>
             <div class="m-t-lg">
-                <i class="fa fa-google features-icon"></i>
-                <h2>AngularJS version</h2>
-                <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus.</p>
+                
+                <h2>Punch Biopsy</h2>
+                <p>Procedure that acquires tissue for laboratory examination by taking a punch-size piece of skin from the body.</p>
             </div>
         </div>
     </div>
+    
+</section>
+
+<section class="container services">
     <div class="row">
-        <div class="col-lg-12 text-center">
-            <div class="navy-line"></div>
-            <h1>Discover great feautres</h1>
-            <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. </p>
+        <div class="col-sm-3">
+            <h2>Fractional RF</h2>
+            <p>Revolutionary treatment that visibly tightens your skin and reduces the signs of ageing.</p>
+            
         </div>
-    </div>
-    <div class="row features-block">
-        <div class="col-lg-6 features-text wow fadeInLeft">
-            <small>INSPINIA</small>
-            <h2>Perfectly designed </h2>
-            <p>INSPINIA Admin Theme is a premium admin dashboard template with flat design concept. It is fully responsive admin dashboard template built with Bootstrap 3+ Framework, HTML5 and CSS3, Media query. It has a huge collection of reusable UI components and integrated with latest jQuery plugins.</p>
-            <a href="" class="btn btn-primary">Learn more</a>
+        <div class="col-sm-3">
+            <h2>IPL </h2>
+            <p>Treatment that removes age spots, sun damage, freckles, birthmarks, varicose veins, wrinkle treatment and wrinkle reduction, rosacea, and unwanted body hair.</p>
+            
         </div>
-        <div class="col-lg-6 text-right wow fadeInRight">
-            <img src="img/landing/dashboard.png" alt="dashboard" class="img-fluid float-right">
+        <div class="col-sm-3">
+            <h2>Electocauttery</h2>
+            <p>Procedure that uses heat to destroy abnormal cell mass, such as a tumor or other lesion.</p>
+            
+        </div>
+        <div class="col-sm-3">
+            <h2>Mole removal</h2>
+            <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus.</p>
+            
         </div>
     </div>
 </section>
