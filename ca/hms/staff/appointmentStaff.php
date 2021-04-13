@@ -122,7 +122,6 @@ include_once 'dbconnect.php';
                                                    <th><input type="text" class="form-control" placeholder="Last  Name" disabled></th>
                                                    <th><input type="text" class="form-control" placeholder="Contact #" disabled></th>
                                                    <th><input type="text" class="form-control" placeholder="Reason for Appointment" disabled></th>
-                                                   <th><input type="text" class="form-control" placeholder="Day" disabled></th>
                                                    <th><input type="text" class="form-control" placeholder="Date" disabled></th>
                                                    <th><input type="text" class="form-control" placeholder="Start" disabled></th>
                                                    <th><input type="text" class="form-control" placeholder="End" disabled></th>
@@ -163,7 +162,6 @@ include_once 'dbconnect.php';
                                                    echo "<td>" . $appointment['lastName'] . "</td>";
                                                    echo "<td>" . $appointment['contactNo'] . "</td>";
                                                    echo "<td>" . $appointment['appComment'] . "</td>";
-                                                   echo "<td>" . $appointment['scheduleDay'] . "</td>";
                                                    echo "<td>" . $appointment['scheduleDate'] . "</td>";
                                                    echo "<td>" . $appointment['startTime'] . "</td>";
                                                    echo "<td>" . $appointment['endTime'] . "</td>";

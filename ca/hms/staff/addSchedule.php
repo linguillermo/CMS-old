@@ -194,7 +194,7 @@ alert('Added fail. Please try again.');
                                </div>
                               </div>
                              </div>
-                             <div class="form-group form-group-lg">
+                             <!-- <div class="form-group form-group-lg">
                               <label class="control-label col-sm-2 requiredField" for="scheduleday">
                                Day
                                <span class="asteriskField">
@@ -226,7 +226,7 @@ alert('Added fail. Please try again.');
                                 </option>
                                </select>
                               </div>
-                             </div>
+                             </div> -->
                              <div class="form-group form-group-lg">
                               <label class="control-label col-sm-2 requiredField" for="starttime">
                                Start Time
@@ -318,7 +318,7 @@ alert('Added fail. Please try again.');
                             <tr class="filters">
                                 <th><input type="text" class="form-control" placeholder="scheduleId" disabled></th>
                                 <th><input type="text" class="form-control" placeholder="scheduleDate" disabled></th>
-                                <th><input type="text" class="form-control" placeholder="scheduleDay" disabled></th>
+                                <!-- <th><input type="text" class="form-control" placeholder="scheduleDay" disabled></th> -->
                                 <th><input type="text" class="form-control" placeholder="startTime." disabled></th>
                                 <th><input type="text" class="form-control" placeholder="endTime" disabled></th>
                                 <th><input type="text" class="form-control" placeholder="bookAvail" disabled></th>
@@ -337,7 +337,7 @@ alert('Added fail. Please try again.');
                             echo "<tr>";
                                 echo "<td>" . $doctorschedule['scheduleId'] . "</td>";
                                 echo "<td>" . $doctorschedule['scheduleDate'] . "</td>";
-                                echo "<td>" . $doctorschedule['scheduleDay'] . "</td>";
+                                // echo "<td>" . $doctorschedule['scheduleDay'] . "</td>";
                                 echo "<td>" . $doctorschedule['startTime'] . "</td>";
                                 echo "<td>" . $doctorschedule['endTime'] . "</td>";
                                 echo "<td>" . $doctorschedule['bookAvail'] . "</td>";

@@ -121,7 +121,6 @@ header("Location: appointment.php");
 					<div class="panel panel-default">
 						<div class="panel-heading">Appointment Information</div>
 						<div class="panel-body">
-							Day: <?php echo $userRow['scheduleDay'] ?><br>
 							Date: <?php echo $userRow['scheduleDate'] ?><br>
 							Time: <?php echo $userRow['startTime'] ?> - <?php echo $userRow['endTime'] ?><br>
 						</div>
