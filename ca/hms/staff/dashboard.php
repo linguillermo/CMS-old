@@ -70,7 +70,11 @@ check_login();
                 </li>
 
                 <li>
+<<<<<<< HEAD
+                    <a href="Inventory/inventory.php"><i class="fa fa-medkit"></i> <span class="nav-label">Medicine Stocks</span></a>
+=======
                     <a href="manage-medicines.php"><i class="fa fa-medkit"></i> <span class="nav-label">Medicine Stocks</span></a>
+>>>>>>> 650be83fd8b71a3b15ff9de78dc7b5896776165f
 
                 </li>
 
@@ -102,10 +106,6 @@ check_login();
                 <li>
                     <span class="m-r-sm text-muted welcome-message">Welcome to Clinica Abeleda</span>
                 </li>
-
-
-
-
                 <li>
                     <a href="logout.php">
                         <i class="fa fa-sign-out"></i> Log out
