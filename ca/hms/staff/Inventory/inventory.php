@@ -56,7 +56,7 @@
                         </div>
                     </li>
                     <li>
-                        <a href="staff-dashboard.html"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboard</span></a>
+                        <a href="staff/dashboard.html"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboard</span></a>
 
                     </li>
                     <li>
