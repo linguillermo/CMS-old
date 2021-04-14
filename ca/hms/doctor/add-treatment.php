@@ -41,7 +41,7 @@ if(isset($_POST['submit']))
       $sql = "INSERT INTO tblmedicineused (patientID, medicineusedID, medicineID, medicineinfo, quantity) VALUES ('$patientID', '$medicineusedID', '" . $_POST["id"][$a] . "', '" . $_POST["medicineinfo"][$a] . "', '" . $_POST["quantity"][$a] . "')";
 			mysqli_query($con, $sql);
     }
-    
+
 		// for ($a = 0; $a < count($_POST["id"]); $a++)
 		// {
 		// 	$sql = "INSERT INTO tblmedicineused (patientID, medicineusedID, medicineID, medicineinfo, quantity) VALUES ('$patientID', '$medicineusedID', '" . $_POST["id"][$a] . "', '" . $_POST["medicineinfo"][$a] . "', '" . $_POST["quantity"][$a] . "')";
@@ -297,10 +297,10 @@ if(isset($_POST['submit']))
 
 
                                                         <div class="col-md-2">
-                                                            <div class="col-sm-5"><input name="weight" placeholder="Qty" class="form-control wd-450" id="qty"></div>
+                                                            <div><input name="weight" placeholder="Qty" class="form-control wd-450" id="qty"></div>
                                                         </div>
 
-                                                        <div class="col-sm-2">
+                                                        <div class="col-md-2">
                                                             <button class="btn btn-primary" type="button" id="submit1">Add Medicine</button>
                                                         </div>
                                                     </div>
@@ -312,15 +312,17 @@ if(isset($_POST['submit']))
 
                                                             <thead>
                                                             <tr>
-                                                                <th style="width: 20%">
+                                                              <th style="width:5%">
+                                                                  Quantity
+                                                              </th>
+
+                                                                <th style="width: 90%">
                                                                     Medicine
                                                                 </th>
 
-                                                                <th>
-                                                                    Quantity
-                                                                </th>
 
-                                                                <th>
+
+                                                                <th style="width:5%">
                                                                     Actions
                                                                 </th>
                                                             </tr>
@@ -445,7 +447,7 @@ if(isset($_POST['submit']))
             var selected = $('.chosen-select :selected');
             var qty = document.getElementById("qty").value;
 
-                 $('#table1').append('<tr><td>'+selected.text()+'<input type="text"  name="medicineinfo[]" value="'+selected.text()+'" hidden><input type="text"  name="id[]" value="'+selected.val()+'" hidden><input type="text"  name="quantity[]" value="'+qty+'" hidden></td><td>'+qty+'</td><td style="width:5%"><button class="btn btn-white btn-sm" class="button" onclick="deleteRow(this)" style="width:100%"><i class="fa fa-trash"></i></button></td></tr>');
+                 $('#table1').append('<tr><td style="width:5%">'+qty+'</td><td style="width:90%">'+selected.text()+'<input type="text"  name="medicineinfo[]" value="'+selected.text()+'" hidden><input type="text"  name="id[]" value="'+selected.val()+'" hidden><input type="text"  name="quantity[]" value="'+qty+'" hidden></td><td style="width:5%"><button class="btn btn-white btn-sm" class="button" onclick="deleteRow(this)"><i class="fa fa-trash"></i></button></td></tr>');
             // $('#table1').append('<tr><td>'+$(this).text()+'</td></tr>');
             //if you need ah text like days do with that
 
