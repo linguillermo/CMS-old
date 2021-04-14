@@ -36,7 +36,7 @@ include_once 'dbconnect.php';
                 <ul class="nav metismenu" id="side-menu">
                     <li class="nav-header">
                         <div class="dropdown profile-element">
-                            <img alt="image" class="rounded-circle" src="../img/New Project.png"/>
+                            <img alt="image" class="rounded-circle" src="insp/img/New Project.png">
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                                 <span class="block m-t-xs font-bold">Anna Santos</span>
                                 <span class="text-muted text-xs block">Staff<b class="caret"></b></span>
@@ -58,8 +58,7 @@ include_once 'dbconnect.php';
 
                     </li>
                     <li>
-                        <a href="staff-patient-records.html"><i class="fa fa-table"></i> <span class="nav-label">Patients</span></a>
-
+                        <a href="manage-patient.php"><i class="fa fa-id-card"></i> <span class="nav-label">Patient Records</span></a>
                     </li>
 
                     <li class="active">
@@ -71,10 +70,8 @@ include_once 'dbconnect.php';
                     </li>
 
                     <li>
-                        <a href="#"><i class="fa fa-table"></i> <span class="nav-label">Medicine Stocks</span><span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level collapse">
-                            <li><a href="../inventory.php">Medicines</a></li>
-                            <li class="active"><a href="staff-stocks.html">Stocks</a></li>
+                        <a href="Inventory/inventory.php"><i class="fa fa-table"></i> <span class="nav-label">Medicine Stocks</span></a>
+
                         </ul>
                     </li>
                 </ul>
@@ -125,7 +122,6 @@ include_once 'dbconnect.php';
                                                    <th><input type="text" class="form-control" placeholder="Last  Name" disabled></th>
                                                    <th><input type="text" class="form-control" placeholder="Contact #" disabled></th>
                                                    <th><input type="text" class="form-control" placeholder="Reason for Appointment" disabled></th>
-                                                   <th><input type="text" class="form-control" placeholder="Day" disabled></th>
                                                    <th><input type="text" class="form-control" placeholder="Date" disabled></th>
                                                    <th><input type="text" class="form-control" placeholder="Start" disabled></th>
                                                    <th><input type="text" class="form-control" placeholder="End" disabled></th>
@@ -166,7 +162,6 @@ include_once 'dbconnect.php';
                                                    echo "<td>" . $appointment['lastName'] . "</td>";
                                                    echo "<td>" . $appointment['contactNo'] . "</td>";
                                                    echo "<td>" . $appointment['appComment'] . "</td>";
-                                                   echo "<td>" . $appointment['scheduleDay'] . "</td>";
                                                    echo "<td>" . $appointment['scheduleDate'] . "</td>";
                                                    echo "<td>" . $appointment['startTime'] . "</td>";
                                                    echo "<td>" . $appointment['endTime'] . "</td>";
@@ -185,7 +180,7 @@ include_once 'dbconnect.php';
                                        echo "</div>";
                                        echo "</div>";
                                        ?>
-                  
+
                                        <!-- <table>
                                        <tr>
                                         <td colspan="5">
