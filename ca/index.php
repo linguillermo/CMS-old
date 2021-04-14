@@ -19,14 +19,16 @@
     <!-- Custom styles for this template -->
     <link href="css/style1.css" rel="stylesheet">
 
-    <!-- for appointment  calendar-->
+    <!-- for appointment  calendar
     <link href="appointment_plugins/css/date/style.css" rel="stylesheet">
     <link href="appointment_plugins/css/date/style1.css" rel="stylesheet">
     <link href="appointment_plugins/css/date/blocks.css" rel="stylesheet">
-    <link href="appointment_plugins/css/date/date/bootstrap-datepicker.css" rel="stylesheet">
-    <link href="appointment_plugins/css/date/date/bootstrap-datepicker3.css" rel="stylesheet">
+    
     <link rel="stylesheet" href="https://formden.com/static/cdn/font-awesome/4.4.0/css/font-awesome.min.css" />
-    <link href="css/date/material.css" rel="stylesheet">
+    <link href="css/date/material.css" rel="stylesheet">-->
+	
+	<link href="appointment_plugins/css/date/date/bootstrap-datepicker.css" rel="stylesheet">
+    <link href="appointment_plugins/css/date/date/bootstrap-datepicker3.css" rel="stylesheet">
 
 </head>
 <body id="page-top" class="landing-page no-skin-config">
@@ -42,9 +44,9 @@
                 </div>
                 <div class="collapse navbar-collapse justify-content-end" id="navbar">
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a class="nav-link page-scroll" href="#page-top">Home</a></li>
+                        <li><a class="nav-link page-scroll" href="#page-top" style="color:#096e76">Home</a></li>
                         <li><a class="nav-link page-scroll" href="#services">Services</a></li>
-						<li><a class="nav-link page-scroll" href="#appointment">Appointment</a></li>
+						
 						<li><a class="nav-link page-scroll" href="#team">About Us</a></li>
 
                         <li><a class="nav-link page-scroll" href="#contact">Contact</a></li>
@@ -68,7 +70,57 @@
                         </h1>
                     <p>Providing supportive care for your dermatological needs</p>
                     <p>
-                        <a class="btn btn-lg btn-primary page-scroll" href="#appointment" role="button">MAKE AN APPOINTMENT</a>
+                     <!--   <a class="btn btn-lg btn-primary page-scroll" href="#appointment" role="button">MAKE AN APPOINTMENT</a>-->
+						<div class="col-sm-12" style="padding:0px">
+                              <h2>Make appointment today!</h2>
+                              
+
+                              <!-- date textbox -->
+
+                              <div class="input-group" style="margin-bottom:10px;">
+                                  <div class="input-group-addon">
+                                      <i class="fa fa-calendar">
+                                      </i>
+                                  </div>
+                                  <input class="form-control" id="date" name="date" value="<?php echo date("Y-m-d")?>" onchange="showUser(this.value)"/>
+                              </div>
+
+                              <!-- date textbox end -->
+
+                              <!-- script start -->
+                              <script>
+                                  function showUser(str) {
+
+                                      if (str == "") {
+                                          document.getElementById("txtHint").innerHTML = "";
+                                          return;
+                                      } else {
+                                          if (window.XMLHttpRequest) {
+                                              // code for IE7+, Firefox, Chrome, Opera, Safari
+                                              xmlhttp = new XMLHttpRequest();
+                                          } else {
+                                              // code for IE6, IE5
+                                              xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                                          }
+                                          xmlhttp.onreadystatechange = function() {
+                                              if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                                                  document.getElementById("txtHint").innerHTML = xmlhttp.responseText;
+                                              }
+                                          };
+                                          xmlhttp.open("GET","appointment_plugins/getschedule.php?q="+str,true);
+                                          console.log(str);
+                                          xmlhttp.send();
+                                      }
+                                  }
+                              </script>
+
+                              <!-- script start end -->
+
+                              <!-- table appointment start -->
+                              <div id="txtHint"><b> </b></div>
+
+                              <!-- table appointment end -->
+                          </div>
                         
                     </p>
                 </div>
@@ -174,74 +226,7 @@
     </div>
 </section>
 
-<section id="appointment" class="gray-section team">
-    <div class="container">
-      <section id="promo-1" class="content-block promo-1 min-height-600px bg-offwhite">
-                  <div class="container">
-                      <div class="row">
-                          <div class="col-md-5">
-                              <h2>Make appointment today!</h2>
-                              <p>Click to make an appointment!</p>
 
-                              <!-- date textbox -->
-
-                              <div class="input-group" style="margin-bottom:10px;">
-                                  <div class="input-group-addon">
-                                      <i class="fa fa-calendar">
-                                      </i>
-                                  </div>
-                                  <input class="form-control" id="date" name="date" value="<?php echo date("Y-m-d")?>" onchange="showUser(this.value)"/>
-                              </div>
-
-                              <!-- date textbox end -->
-
-                              <!-- script start -->
-                              <script>
-                                  function showUser(str) {
-
-                                      if (str == "") {
-                                          document.getElementById("txtHint").innerHTML = "";
-                                          return;
-                                      } else {
-                                          if (window.XMLHttpRequest) {
-                                              // code for IE7+, Firefox, Chrome, Opera, Safari
-                                              xmlhttp = new XMLHttpRequest();
-                                          } else {
-                                              // code for IE6, IE5
-                                              xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-                                          }
-                                          xmlhttp.onreadystatechange = function() {
-                                              if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                                                  document.getElementById("txtHint").innerHTML = xmlhttp.responseText;
-                                              }
-                                          };
-                                          xmlhttp.open("GET","appointment_plugins/getschedule.php?q="+str,true);
-                                          console.log(str);
-                                          xmlhttp.send();
-                                      }
-                                  }
-                              </script>
-
-                              <!-- script start end -->
-
-                              <!-- table appointment start -->
-                              <div id="txtHint"><b> </b></div>
-
-                              <!-- table appointment end -->
-                          </div>
-                          <!-- /.col -->
-                         <!--  <div class="col-md-6 col-md-offset-1">
-                              <div class="video-wrapper">
-                                  <iframe width="560" height="315" src="http://www.youtube.com/embed/FEoQFbzLYhc?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
-                              </div>
-                          </div> -->
-                          <!-- /.col -->
-                      </div>
-                      <!-- /.row -->
-                  </div>
-              </section>
-    </div>
-</section>
 
 <section class="features" id="team">
     <div class="container">
@@ -249,61 +234,32 @@
             <div class="col-lg-12 text-center">
                 <div class="navy-line"></div>
                 <h1>Our Team</h1>
-                <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod.</p>
+                
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-4 wow fadeInLeft">
+            <div class="col-sm-3 wow fadeInLeft">
                 <div class="team-member">
-                    <img src="img/landing/avatar3.jpg" class="img-fluid rounded-circle img-small" alt="">
-                    <h4><span class="navy">Amelia</span> Smith</h4>
-                    <p>Lorem ipsum dolor sit amet, illum fastidii dissentias quo ne. Sea ne sint animal iisque, nam an soluta sensibus. </p>
-                    <ul class="list-inline social-icon">
-                        <li class="list-inline-item"><a href="#"><i class="fa fa-twitter"></i></a>
-                        </li>
-                        <li class="list-inline-item"><a href="#"><i class="fa fa-facebook"></i></a>
-                        </li>
-                        <li class="list-inline-item"><a href="#"><i class="fa fa-linkedin"></i></a>
-                        </li>
-                    </ul>
+                    
                 </div>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-6">
                 <div class="team-member wow zoomIn">
                     <img src="img/landing/avatar1.jpg" class="img-fluid rounded-circle" alt="">
-                    <h4><span class="navy">John</span> Novak</h4>
-                    <p>Lorem ipsum dolor sit amet, illum fastidii dissentias quo ne. Sea ne sint animal iisque, nam an soluta sensibus.</p>
-                    <ul class="list-inline social-icon">
-                        <li class="list-inline-item"><a href="#"><i class="fa fa-twitter"></i></a>
-                        </li>
-                        <li class="list-inline-item"><a href="#"><i class="fa fa-facebook"></i></a>
-                        </li>
-                        <li class="list-inline-item"><a href="#"><i class="fa fa-linkedin"></i></a>
-                        </li>
-                    </ul>
+                    <h4><span class="navy">Ma. Rochelle A. De Guzman - Abeleda,</span> MD</h4>
+                    <p>Fellowm Philippines Academy of Clinical and Cosmetic Dermatology <br>
+						An Affiliate Society of the Philippine Medical Association</p>
+					
+                    
                 </div>
             </div>
-            <div class="col-sm-4 wow fadeInRight">
+            <div class="col-sm-3 wow fadeInRight">
                 <div class="team-member">
-                    <img src="img/landing/avatar2.jpg" class="img-fluid rounded-circle img-small" alt="">
-                    <h4><span class="navy">Peter</span> Johnson</h4>
-                    <p>Lorem ipsum dolor sit amet, illum fastidii dissentias quo ne. Sea ne sint animal iisque, nam an soluta sensibus.</p>
-                    <ul class="list-inline social-icon">
-                        <li class="list-inline-item"><a href="#"><i class="fa fa-twitter"></i></a>
-                        </li>
-                        <li class="list-inline-item"><a href="#"><i class="fa fa-facebook"></i></a>
-                        </li>
-                        <li class="list-inline-item"><a href="#"><i class="fa fa-linkedin"></i></a>
-                        </li>
-                    </ul>
+                    
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-lg-12 text-center m-t-lg m-b-lg">
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut eaque, laboriosam veritatis, quos non quis ad perspiciatis, totam corporis ea, alias ut unde.</p>
-            </div>
-        </div>
+        
     </div>
 
 </section>

@@ -13,7 +13,7 @@ if(isset($_POST['submit']))
     $status = "1";
 
     $vid=$_GET['viewid'];
-    $bp=$_POST['bp'];
+    $medicineused=$_POST['medicineused'];
     $labs=$_POST['labs'];
     $weight=$_POST['weight'];
     $temp=$_POST['temp'];
@@ -22,7 +22,8 @@ if(isset($_POST['submit']))
     $log = "INSERT INTO userlog (uid,username,userip,status)
               VALUES ('$uId','$username','$userip','$status')";
 
-    $query.=mysqli_query($con, "insert   tblmedicalhistory(PatientID,BloodPressure,Laboratories,Weight,Temperature,MedicalPres)value('$vid','$bp','$labs','$weight','$temp','$pres')");
+      $query.=mysqli_query($con, "insert   tblmedicalhistory(PatientID,medicineused,Laboratories,Weight,Temperature,MedicalPres)value('$vid','$medicineused','$labs','$weight','$temp','$pres')");
+      $medicineusedID = mysqli_insert_id($con);
     if ($query) {
     echo '<script>alert("Medicle history has been added.")</script>';
     echo "<script>window.location.href ='view-patient.php?viewid=$vid'</script>";
@@ -32,6 +33,28 @@ if(isset($_POST['submit']))
     {
       echo '<script>alert("Something Went Wrong. Please try again")</script>';
     }
+
+
+
+    $patientID = $_GET['viewid'];
+
+    $sql = "INSERT INTO medicineused (patientID) VALUES ('$patientID')";
+		mysqli_query($con, $sql);
+
+    for ($a = 0; $a < count($_POST["id"]); $a++)
+    {
+      $query = mysqli_query($con,"update medicines set quantity=quantity - '" . $_POST["quantity"][$a] . "' where ID='" . $_POST["id"][$a] . "'");
+      mysqli_query($con, $query);
+
+      $sql = "INSERT INTO tblmedicineused (patientID, medicineusedID, medicineID, medicineinfo, quantity) VALUES ('$patientID', '$medicineusedID', '" . $_POST["id"][$a] . "', '" . $_POST["medicineinfo"][$a] . "', '" . $_POST["quantity"][$a] . "')";
+			mysqli_query($con, $sql);
+    }
+
+		// for ($a = 0; $a < count($_POST["id"]); $a++)
+		// {
+		// 	$sql = "INSERT INTO tblmedicineused (patientID, medicineusedID, medicineID, medicineinfo, quantity) VALUES ('$patientID', '$medicineusedID', '" . $_POST["id"][$a] . "', '" . $_POST["medicineinfo"][$a] . "', '" . $_POST["quantity"][$a] . "')";
+		// 	mysqli_query($con, $sql);
+		// }
 
 
 }
@@ -231,7 +254,7 @@ if(isset($_POST['submit']))
                                 <li><a class="nav-link active" data-toggle="tab" href="#tab-1"> Info</a></li>
 
 
-                                <li><a class="nav-link" data-toggle="tab" href="#tab-4"> Images</a></li>
+
                             </ul>
                             <div class="tab-content">
                                 <div id="tab-1" class="tab-pane active">
@@ -255,88 +278,65 @@ if(isset($_POST['submit']))
                                                     </textarea>
                                                 </div>
                                             </div>
-                                            <div class="form-group row"><label class="col-sm-2 col-form-label">Medication</label>
+                                            <div class="form-group row"><label class="col-sm-2 col-form-label">Medication Used</label>
                                                 <div class="col-sm-10">
                                                     <div class="row">
-                                                        <div class="col-md-2">
+                                                        <div class="col-md-3">
 
                                                             <div class="form-group">
 
                                                                 <div>
                                                                     <select data-placeholder="Choose a Country..." class="chosen-select"  tabindex="2">
-                                                                    <option value="">Medicine</option>
-                                                                    <option value="Ibuprofen">Ibuprofen</option>
-                                                                    <option value="Paracetamol">Paracetamol</option>
-                                                                    <option value="Tylenol">Tylenol</option>
 
+                                                                      <?php
+
+                                                            	                             $ret=mysqli_query($con,"select * from medicines");
+
+                                                            	while ($row=mysqli_fetch_array($ret)) {
+                                                            	                             ?>
+
+                                                                    <option value="<?php  echo $row['id'];?>"><?php  echo $row['medicine_name'];?> <?php  echo $row['dosage'];?> (<?php  echo $row['formulation'];?>)</option>
+
+                                                                    <?php } ?>
                                                                     </select>
                                                                 </div>
                                                             </div>
                                                         </div>
 
 
-                                                        <div class="col-sm-2">
-                                                            <input class="touchspin1" type="text" value="" placeholder="0" name="demo1">
+                                                        <div class="col-md-2">
+                                                            <div><input name="weight" placeholder="Qty" class="form-control wd-450" id="qty"></div>
                                                         </div>
 
-                                                        <div class="col-sm-2">
-                                                            <a href="#" class="btn btn-primary">Add Medicine</a>
+                                                        <div class="col-md-2">
+                                                            <button class="btn btn-primary" type="button" id="submit1">Add Medicine</button>
                                                         </div>
                                                     </div>
 
 
 
                                                     <div class="table-responsive">
-                                                        <table class="table table-stripped table-bordered">
+                                                        <table class="table table-stripped table-bordered" id="table1">
 
                                                             <thead>
                                                             <tr>
-                                                                <th style="width: 20%">
+                                                              <th style="width:5%">
+                                                                  Quantity
+                                                              </th>
+
+                                                                <th style="width: 90%">
                                                                     Medicine
                                                                 </th>
-                                                                <th style="width: 50%">
-                                                                    Description
-                                                                </th>
-                                                                <th>
-                                                                    Quantity
-                                                                </th>
 
-                                                                <th>
+
+
+                                                                <th style="width:5%">
                                                                     Actions
                                                                 </th>
                                                             </tr>
                                                             </thead>
                                                             <tbody>
-                                                            <tr>
-                                                                <td>
-                                                                    Medicine 1
-                                                                </td>
-                                                                <td>
-                                                                    Insert Medicine Description Here
-                                                                </td>
-                                                                <td>
-                                                                    1
-                                                                </td>
 
-                                                                <td>
-                                                                        <button class="btn btn-white"><i class="fa fa-trash"></i> </button>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>
-                                                                    Medicine 2
-                                                                </td>
-                                                                <td>
-                                                                    Insert Medicine Description Here
-                                                                </td>
-                                                                <td>
-                                                                    1
-                                                                </td>
-
-                                                                <td>
-                                                                    <button class="btn btn-white"><i class="fa fa-trash"></i> </button>
-                                                                </td>
-                                                            </tr>
 
 
                                                             </tbody>
@@ -350,11 +350,8 @@ if(isset($_POST['submit']))
 
                                         </fieldset>
 
-																				<div style="text-align: center; padding: 10px;">
-														                <a type="button" class="btn btn-danger" href="view-patient.php?viewid=<?php echo $vid;?>" data-dismiss="modal">Cancel</a>
-														                <button type="submit" name="submit" class="btn btn-primary">Submit</button>
-														            </div>
-</form>
+
+
                                     </div>
 
 
@@ -364,91 +361,16 @@ if(isset($_POST['submit']))
 
 
 
-                                <div id="tab-4" class="tab-pane">
-                                    <div class="panel-body">
 
-                                        <div class="table-responsive">
-                                            <table class="table table-bordered table-stripped">
-                                                <thead>
-                                                <tr>
-                                                    <th>
-                                                        Image preview
-                                                    </th>
-                                                    <th>
-                                                        Description
-                                                    </th>
-                                                    <th>
-                                                        Actions
-                                                    </th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr>
-                                                    <td>
-                                                        <img src="img/gallery/lesion.jpg" style="width: 150px">
-                                                    </td>
-                                                    <td>
-                                                        <textarea class="form-control" rows="4" cols="50">Within and surrounding the foci of necrosis, there were moderate numbers of lymphocytes, a few plasma cells and mononuclear phagocytes, rare neutrophils and scattered petechial hemorrhages.
-                                                        </textarea>
-                                                    </td>
-                                                    <td>
-                                                        <div class="fileinput fileinput-new" data-provides="fileinput">
-                                                            <span class="btn btn-default btn-file"><span class="fileinput-new">Select file</span><span class="fileinput-exists">Change</span><input type="hidden" value="" name="..."><input type="file" name=""></span>
-                                                            <span class="fileinput-filename"></span>
-                                                            <a href="#" class="close fileinput-exists" data-dismiss="fileinput" style="float: none">×</a>
-                                                        </div>
-                                                        <button class="btn btn-white"><i class="fa fa-trash"></i> </button>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <img src="img/gallery/lesion.jpg" style="width: 150px">
-                                                    </td>
-                                                    <td>
-                                                        <textarea class="form-control" rows="4" cols="50">Within and surrounding the foci of necrosis, there were moderate numbers of lymphocytes, a few plasma cells and mononuclear phagocytes, rare neutrophils and scattered petechial hemorrhages.
-                                                        </textarea>
-                                                    </td>
-                                                    <td>
-                                                        <div class="fileinput fileinput-new" data-provides="fileinput">
-                                                            <span class="btn btn-default btn-file"><span class="fileinput-new">Select file</span><span class="fileinput-exists">Change</span><input type="hidden" value="" name="..."><input type="file" name=""></span>
-                                                            <span class="fileinput-filename"></span>
-                                                            <a href="#" class="close fileinput-exists" data-dismiss="fileinput" style="float: none">×</a>
-                                                        </div>
-                                                        <button class="btn btn-white"><i class="fa fa-trash"></i> </button>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <img src="img/gallery/lesion.jpg" style="width: 150px">
-                                                    </td>
-                                                    <td>
-                                                        <textarea class="form-control" rows="4" cols="50">Within and surrounding the foci of necrosis, there were moderate numbers of lymphocytes, a few plasma cells and mononuclear phagocytes, rare neutrophils and scattered petechial hemorrhages.
-                                                        </textarea>
-                                                    </td>
-                                                    <td>
-                                                        <div class="fileinput fileinput-new" data-provides="fileinput">
-                                                            <span class="btn btn-default btn-file"><span class="fileinput-new">Select file</span><span class="fileinput-exists">Change</span><input type="hidden" value="" name="..."><input type="file" name=""></span>
-                                                            <span class="fileinput-filename"></span>
-                                                            <a href="#" class="close fileinput-exists" data-dismiss="fileinput" style="float: none">×</a>
-                                                        </div>
-                                                        <button class="btn btn-white"><i class="fa fa-trash"></i> </button>
-                                                    </td>
-                                                </tr>
-
-                                                </tbody>
-                                            </table>
-                                        </div>
-
-                                    </div>
-                                </div>
                             </div>
                     </div>
                 </div>
             </div>
             <div style="text-align: center; padding: 10px;">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                <a href="sample-patient.html" type="button" class="btn btn-primary">Save</a>
+              <a type="button" class="btn btn-danger" href="view-patient.php?viewid=<?php echo $vid;?>" data-dismiss="modal">Cancel</a>
+                                          <button type="submit" name="submit" class="btn btn-primary">Save</button>
             </div>
+            </form>
         </div>
         <div class="footer">
 
@@ -525,6 +447,26 @@ if(isset($_POST['submit']))
             });
 
     });
+
+
+
+    $("#submit1").click(function () {
+        {
+            var selected = $('.chosen-select :selected');
+            var qty = document.getElementById("qty").value;
+
+                 $('#table1').append('<tr><td style="width:5%">'+qty+'</td><td style="width:90%">'+selected.text()+'<input type="text"  name="medicineinfo[]" value="'+selected.text()+'" hidden><input type="text"  name="id[]" value="'+selected.val()+'" hidden><input type="text"  name="quantity[]" value="'+qty+'" hidden></td><td style="width:5%"><button class="btn btn-white btn-sm" class="button" onclick="deleteRow(this)"><i class="fa fa-trash"></i></button></td></tr>');
+            // $('#table1').append('<tr><td>'+$(this).text()+'</td></tr>');
+            //if you need ah text like days do with that
+
+        }
+    });
+
+
+    function deleteRow(r) {
+    var i = r.parentNode.parentNode.rowIndex;
+    document.getElementById("table1").deleteRow(i);
+  }
 </script>
 
 <script>

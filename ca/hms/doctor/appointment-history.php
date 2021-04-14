@@ -61,13 +61,10 @@ mysqli_query($con,"update appointment set doctorStatus='0' where id ='".$_GET['i
 
 							</li>
 							<li>
-									<a href="manage-patient.php"><i class="fa fa-table"></i> <span class="nav-label">Patient Records</a>
-									<!-- <ul class="nav nav-second-level collapse">
-											<li><a href="">Patient Records</a></li>
-											<li><a href="doctor-treatment-records.html">Treatment Records</a></li>
-											<li><a href="doctor-prescription-records.html">Prescription Records</a></li>
 
-									</ul> -->
+									<a href="manage-patient.php"><i class="fa fa-table"></i> <span class="nav-label">Patient Records</span></a>
+
+
 							</li>
 							<li class="active">
 									<a href="appointment-history.php"><i class="fa fa-calendar"></i> <span class="nav-label">Appointments</span>  </a>
