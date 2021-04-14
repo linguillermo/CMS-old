@@ -7,24 +7,27 @@ check_login();
 if(isset($_POST['submit']))
   {
 
+
     $vid=$_GET['viewid'];
     $bp=$_POST['bp'];
     $labs=$_POST['labs'];
     $weight=$_POST['weight'];
     $temp=$_POST['temp'];
-   $pres=$_POST['pres'];
+    $pres=$_POST['pres'];
+
 
 
       $query.=mysqli_query($con, "insert   tblmedicalhistory(PatientID,BloodPressure,Laboratories,Weight,Temperature,MedicalPres)value('$vid','$bp','$labs','$weight','$temp','$pres')");
     if ($query) {
     echo '<script>alert("Medicle history has been added.")</script>';
     echo "<script>window.location.href ='view-patient.php?viewid=$vid'</script>";
+    mysqli_query ($con, $log);
+
   }
   else
     {
       echo '<script>alert("Something Went Wrong. Please try again")</script>';
     }
-
 
 }
 
@@ -32,8 +35,16 @@ if(isset($_POST['submit']))
 
 if (isset($_POST["addInvoice"]))
 	{
+    //for logs
+    $username = $_SESSION['dlogin'];
+    $id = $_SESSION['id'];
+    $userip = "Added Prescription";
+    $status = "1";
 
 		$patientID = $_GET['viewid'];
+
+    $log = "INSERT INTO userlog (uid,username,userip,status)
+           VALUES ('$uId','$username','$userip','$status')";
 
     $sql = "INSERT INTO prescriptions (patientID) VALUES ('$patientID')";
 		mysqli_query($con, $sql);
@@ -43,6 +54,7 @@ if (isset($_POST["addInvoice"]))
 		{
 			$sql = "INSERT INTO tblprescription (patientID, prescID, Medication, Type, Quantity, morningBM, morningAM, afternoonBM, afternoonAM, eveningBM, eveningAM, duration, instructions) VALUES ('$patientID', '$prescID', '" . $_POST["Medication"][$a] . "', '" . $_POST["Type"][$a] . "', '" . $_POST["Quantity"][$a] . "', '" . $_POST["morningBM"][$a] . "', '" . $_POST["morningAM"][$a] . "', '" . $_POST["afternoonBM"][$a] . "', '" . $_POST["afternoonAM"][$a] . "', '" . $_POST["eveningBM"][$a] . "', '" . $_POST["eveningAM"][$a] . "', '" . $_POST["duration"][$a] . "', '" . $_POST["instructions"][$a] . "')";
 			mysqli_query($con, $sql);
+      mysqli_query($con, $log);
 		}
 
 		echo "<p>Invoice has been added.</p>";

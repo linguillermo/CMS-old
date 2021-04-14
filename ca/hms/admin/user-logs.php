@@ -138,39 +138,39 @@ check_login();
                                 <thead>
                                     <tr>
 																			<th class="center">#</th>
-																			<th>User ID</th>
+																			<!-- <th>User ID</th> -->
 																			<th>User Name</th>
 																			<th>Login Time</th>
-																			<th>Logout Time</th>
+																			<th>Activity</th>
 																			<th>Status</th>
                                     </tr>
                                     </thead>
                                     <tbody>
 
 																			<?php
-$sql=mysqli_query($con,"select * from userlog ");
-$cnt=1;
-while($row=mysqli_fetch_array($sql))
-{
-?>
+																				$sql=mysqli_query($con,"select * from userlog order by loginTime desc");
+																				$cnt=1;
+																				while($row=mysqli_fetch_array($sql))
+																				{
+																				?>
 
 
 																				<tr>
 																					<td class="center"><?php echo $cnt;?>.</td>
-																					<td class="hidden-xs"><?php echo $row['uid'];?></td>
+																					<!-- <td class="hidden-xs"><?php echo $row['uid'];?></td> -->
 																					<td><?php echo $row['username'];?></td>
-																					<td><?php echo date('F j, Y', strtotime($row['loginTime']));?></td>
-																					<td><?php echo date('F j, Y', strtotime($row['logout']));?></td>
+																					<td><?php echo date('F j, Y, g:i a', strtotime($row['loginTime']));?></td>
+																					<td><?php echo $row['userip'];?></td>
 
 																					<td>
 																						<?php if($row['status']==1)
-{
-	echo "Success";
-}
-else
-{
-	echo "Failed";
-}?></td>
+																					{
+																						echo "Success";
+																					}
+																					else
+																					{
+																						echo "Failed";
+																					}?></td>
                                     </tr>
 
 

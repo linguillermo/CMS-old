@@ -61,13 +61,13 @@ mysqli_query($con,"update appointment set doctorStatus='0' where id ='".$_GET['i
 
 							</li>
 							<li>
-									<a href="#"><i class="fa fa-table"></i> <span class="nav-label">Patients</span><span class="fa arrow"></span></a>
-									<ul class="nav nav-second-level collapse">
-											<li><a href="manage-patient.php">Patient Records</a></li>
+									<a href="manage-patient.php"><i class="fa fa-table"></i> <span class="nav-label">Patient Records</a>
+									<!-- <ul class="nav nav-second-level collapse">
+											<li><a href="">Patient Records</a></li>
 											<li><a href="doctor-treatment-records.html">Treatment Records</a></li>
 											<li><a href="doctor-prescription-records.html">Prescription Records</a></li>
 
-									</ul>
+									</ul> -->
 							</li>
 							<li class="active">
 									<a href="appointment-history.php"><i class="fa fa-calendar"></i> <span class="nav-label">Appointments</span>  </a>
@@ -76,7 +76,6 @@ mysqli_query($con,"update appointment set doctorStatus='0' where id ='".$_GET['i
 
 			</div>
 	</nav>
-
 	<div id="page-wrapper" class="gray-bg">
 			<div class="row border-bottom">
 			<nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
@@ -92,10 +91,6 @@ mysqli_query($con,"update appointment set doctorStatus='0' where id ='".$_GET['i
 					<li>
 							<span class="m-r-sm text-muted welcome-message">Welcome to Clinica Abeleda</span>
 					</li>
-
-
-
-
 					<li>
 							<a href="logout.php">
 									<i class="fa fa-sign-out"></i> Log out
@@ -104,157 +99,208 @@ mysqli_query($con,"update appointment set doctorStatus='0' where id ='".$_GET['i
 
 			</ul>
 
-			</nav>
-			</div>
+		</nav>
+	</div><br><br>
+								<div class="panel panel-primary filterable">
+																		 <!-- Default panel contents -->
+																		<div class="panel-heading">
+																		 <h3 class="panel-title">Appointment List</h3>
+																		 <div class="pull-right"><br>
+																				 <button class="btn btn-outline-success btn-filter"><span class="fa fa-filter"></span> Filter</button>
+																				 <!-- <button class='btn btn-outline-success' type='submit' value='Submit' name='submit'>Update</button> -->
+																		 </div>
+																	 </div><br><br>
+																		 <div class="panel-body">
+																		 <!-- Table -->
+																		 <table class="table table-hover table-bordered">
+																				 <thead>
+																						 <tr class="filters">
+																								 <th><input type="text" class="form-control" placeholder="First Name" disabled></th>
+																								 <th><input type="text" class="form-control" placeholder="Last  Name" disabled></th>
+																								 <th><input type="text" class="form-control" placeholder="Contact #" disabled></th>
+																								 <th><input type="text" class="form-control" placeholder="Reason for Appointment" disabled></th>
+																								 <th><input type="text" class="form-control" placeholder="Date" disabled></th>
+																								 <th><input type="text" class="form-control" placeholder="Start" disabled></th>
+																								 <th><input type="text" class="form-control" placeholder="End" disabled></th>
+																								 <th><input type="text" class="form-control" placeholder="Status" disabled></th>
+																								 <th><input type="text" class="form-control" placeholder="Complete" disabled></th>
+																								 <!-- <th><input type="text" class="form-control" placeholder="Delete" disabled></th> -->
+																						 </tr>
+																				 </thead>
 
-			<div class="wrapper wrapper-content animated fadeInRight">
+																				 <?php
+																				 $res=mysqli_query($con,"SELECT b.*,c.*
+																																 FROM appointment b
+																																 JOIN doctorschedule c
+																																 On b.scheduleId=c.scheduleId
+																																 Order By appId desc");
+																							 if (!$res) {
+																								 printf("Error: %s\n", mysqli_error($con));
+																								 exit();
+																						 }
+																				 while ($appointment=mysqli_fetch_array($res)) {
 
+																						 if ($appointment['status']=='process') {
+																								 $status="danger";
+																								 $icon='remove';
+																								 $checked='';
 
-					<div class="row">
-							<div class="col-lg-12">
-									<div class="ibox ">
-											<div class="ibox-title">
-													<h5>Approved Appointments</h5>
-
-													<div class="ibox-tools">
-
-													</div>
-											</div>
-											<div class="ibox-content">
-
-													<div class="row">
-															<div class="col-sm-9 m-b-xs">
-																	<div data-toggle="buttons" class="btn-group btn-group-toggle">
-																			<label class="btn btn-sm btn-white"> <input type="radio" id="option1" name="options"> Day </label>
-																			<label class="btn btn-sm btn-white active"> <input type="radio" id="option2" name="options"> Week </label>
-																			<label class="btn btn-sm btn-white"> <input type="radio" id="option3" name="options"> Month </label>
-																	</div>
-															</div>
-															<div class="col-sm-3">
-																	<div class="input-group mb-3">
-																			<input type="text" class="form-control form-control-sm m-b-xs" id="filter"
-														 placeholder="Search in table">
-																			<div class="input-group-append">
-																					<button class="btn btn-sm btn-primary" type="button"><i class="fa fa-search"></i></button>
-																			</div>
-																	</div>
-															</div>
-													</div>
-
-													<table class="table table-striped" data-page-size="8" data-filter=#filter>
-															<thead>
-															<tr>
-
-																	<th>#</th>
-																	<th>Name </th>
-																	<th>Address </th>
-																	<th>Phone No</th>
-																	<th>Date</th>
-																	<th>Time</th>
-																	<th>Description</th>
-																	<th>Action</th>
-															</tr>
-															</thead>
-															<tbody>
-
-																<?php
-$sql=mysqli_query($con,"select users.fullName as fname,appointment.*  from appointment join users on users.id=appointment.userId where appointment.doctorId='".$_SESSION['id']."'");
-$cnt=1;
-while($row=mysqli_fetch_array($sql))
-{
-?>
-
-															<tr>
-																	<td><?php echo $cnt;?></td>
-																	<td><?php echo $row['fname'];?></td>
-																	<td><?php echo $row['doctorSpecialization'];?></td>
-																	<td><?php echo $row['consultancyFees'];?></td>
-																	<td><?php echo $row['appointmentDate'];?> / <?php echo
-												 $row['appointmentTime'];?></td>
-																	<td><?php echo $row['postingDate'];?></td>
-																	<td>
-																		<?php if(($row['userStatus']==1) && ($row['doctorStatus']==1))
-{
-echo "Active";
-}
-if(($row['userStatus']==0) && ($row['doctorStatus']==1))
-{
-echo "Cancel by Patient";
-}
-
-if(($row['userStatus']==1) && ($row['doctorStatus']==0))
-{
-echo "Cancel by you";
-}
+																						 } else {
+																								 $status="success";
+																								 $icon='ok';
+																								 $checked = 'disabled';
+																						 }
 
 
+																						 echo "<tbody>";
+																						 echo "<tr class='$status'>";
 
-											?>
-																	</td>
-																	<td>
-																		<?php if(($row['userStatus']==1) && ($row['doctorStatus']==1))
-	{ ?>
+																								 echo "<td>" . $appointment['firstName'] . "</td>";
+																								 echo "<td>" . $appointment['lastName'] . "</td>";
+																								 echo "<td>" . $appointment['contactNo'] . "</td>";
+																								 echo "<td>" . $appointment['appComment'] . "</td>";
+																								 echo "<td>" . $appointment['scheduleDate'] . "</td>";
+																								 echo "<td>" . $appointment['startTime'] . "</td>";
+																								 echo "<td>" . $appointment['endTime'] . "</td>";
+																								 echo "<td><span class='glyphicon glyphicon-".$icon."' aria-hidden='true'></span>".' '."". $appointment['status'] . "</td>";
+																								 echo "<form method='POST'>";
+																								 echo "<td class='text-center'><input type='checkbox' name='enable' id='enable' value='".$appointment['appId']."' onclick='chkit(".$appointment['appId'].",this.checked);' ".$checked."></td>";
+																								 // echo "<td class='text-center'><a href='#' id='".$appointment['appId']."' class='delete'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span>
+																								 echo "</span>;
 
+																				 </td>";
 
-		<a href="appointment-history.php?id=<?php echo $row['id']?>&cancel=update" onClick="return confirm('Are you sure you want to cancel this appointment ?')"class="btn btn-transparent btn-xs tooltips" title="Cancel Appointment" tooltip-placement="top" tooltip="Remove">Cancel</a>
-		<?php } else {
+																				 }
+																		echo "</tbody>";
+																		echo "</table>";
+																		echo "<div class='panel panel-default'>";
+																		echo "<div class='col-md-offset-3 pull-right'>";
+																		// echo "<button class='btn btn-primary' type='submit' value='Submit' name='submit'>Update</button>";
+																		 echo "</div>";
+																		 echo "</div>";
+																		 ?>
 
-			echo "Canceled";
-			} ?>
-		</td>
-															</tr>
-															<?php
-$cnt=$cnt+1;
-											 }?>
-															</tbody>
-													</table>
-											</div>
-									</div>
-							</div>
-					</div>
-			</div>
-			<div class="footer">
-					<div>
-							<strong>Copyright</strong> Clinica Abeleda &copy; 2020
-					</div>
-			</div>
+																		 <!-- <table>
+																		 <tr>
+																			<td colspan="5">
+																					<ul class="pagination float-right" ></ul>
+																			</td>
+																		</tr>
+																	</table> -->
+																 </div>
+														 </div>
+														 <!-- Mainly scripts -->
+														 <script src="insp/js/jquery-3.1.1.min.js"></script>
+														 <script src="insp/js/popper.min.js"></script>
+														 <script src="insp/js/bootstrap.js"></script>
+														 <script src="insp/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+														 <script src="insp/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 
-			</div>
-			</div>
+														 <!-- FooTable -->
+														 <script src="insp/js/plugins/footable/footable.all.min.js"></script>
 
+														 <!-- Custom and plugin javascript -->
+														 <script src="insp/js/inspinia.js"></script>
+														 <script src="insp/js/plugins/pace/pace.min.js"></script>
+														 <script src="insp/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 
+														 <!-- Page-Level Scripts -->
+																 <!-- panel end -->
+						 <script type="text/javascript">
+						 function chkit(uid, chk) {
+								chk = (chk==true ? "1" : "0");
+								var url = "checkdbs.php?userid="+uid+"&chkYesNo="+chk;
+								if(window.XMLHttpRequest) {
+									 req = new XMLHttpRequest();
+								} else if(window.ActiveXObject) {
+									 req = new ActiveXObject("Microsoft.XMLHTTP");
+								}
+								// Use get instead of post.
+								req.open("GET", url, true);
+								req.send(null);
+						 }
+						 </script>
+														 </div>
+														 <!-- /.container-fluid -->
+												 </div>
+												 <!-- /#page-wrapper -->
+										 </div>
+										 <!-- /#wrapper -->
+										 <!-- jQuery -->
+										 <script src="../patient/assets/js/jquery.js"></script>
+										 <script type="text/javascript">
 
-	<!-- Mainly scripts -->
-	<script src="insp/js/jquery-3.1.1.min.js"></script>
-	<script src="insp/js/popper.min.js"></script>
-	<script src="insp/js/bootstrap.js"></script>
-	<script src="insp/js/plugins/metisMenu/jquery.metisMenu.js"></script>
-	<script src="insp/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+										 // echo "<td class='text-center'><a href='#' id='".$appointment['appId']."' class='delete'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></a>
+						 $(function() {
+						 $(".delete").click(function(){
+						 var element = $(this);
+						 var appid = element.attr("id");
+						 var info = 'id=' + appid;
+						 if(confirm("Are you sure you want to delete this?"))
+						 {
+							$.ajax({
+								type: "POST",
+								url: "deleteAppointment.php",
+								data: info,
+								success: function(){
+							}
+						 });
+							 $(this).parent().parent().fadeOut(300, function(){ $(this).remove();});
+							}
+						 return false;
+						 });
+						 });
+						 </script>
+										 <!-- Bootstrap Core JavaScript -->
+										 <script src="../patient/assets/js/bootstrap.min.js"></script>
+										 <!-- Latest compiled and minified JavaScript -->
+											<!-- script for jquery datatable start-->
+										 <script type="text/javascript">
+												 /*
+												 Please consider that the JS part isn't production ready at all, I just code it to show the concept of merging filters and titles together !
+												 */
+												 $(document).ready(function(){
+														 $('.filterable .btn-filter').click(function(){
+																 var $panel = $(this).parents('.filterable'),
+																 $filters = $panel.find('.filters input'),
+																 $tbody = $panel.find('.table tbody');
+																 if ($filters.prop('disabled') == true) {
+																		 $filters.prop('disabled', false);
+																		 $filters.first().focus();
+																 } else {
+																		 $filters.val('').prop('disabled', true);
+																		 $tbody.find('.no-result').remove();
+																		 $tbody.find('tr').show();
+																 }
+														 });
 
-	<!-- FooTable -->
-	<script src="insp/js/plugins/footable/footable.all.min.js"></script>
-
-	<!-- Custom and plugin javascript -->
-	<script src="insp/js/inspinia.js"></script>
-	<script src="insp/js/plugins/pace/pace.min.js"></script>
-
-	<!-- Page-Level Scripts -->
-	<script>
-			$(document).ready(function() {
-
-					$('.footable').footable();
-					$('.footable2').footable();
-
-			});
-
-	</script>
-		<script>
-			jQuery(document).ready(function() {
-				Main.init();
-				FormElements.init();
-			});
-		</script>
-		<!-- end: JavaScript Event Handlers for this page -->
-		<!-- end: CLIP-TWO JAVASCRIPTS -->
+														 $('.filterable .filters input').keyup(function(e){
+																 /* Ignore tab key */
+																 var code = e.keyCode || e.which;
+																 if (code == '9') return;
+																 /* Useful DOM data and selectors */
+																 var $input = $(this),
+																 inputContent = $input.val().toLowerCase(),
+																 $panel = $input.parents('.filterable'),
+																 column = $panel.find('.filters th').index($input.parents('th')),
+																 $table = $panel.find('.table'),
+																 $rows = $table.find('tbody tr');
+																 /* Dirtiest filter function ever ;) */
+																 var $filteredRows = $rows.filter(function(){
+																		 var value = $(this).find('td').eq(column).text().toLowerCase();
+																		 return value.indexOf(inputContent) === -1;
+																 });
+																 /* Clean previous no-result if exist */
+																 $table.find('tbody .no-result').remove();
+																 /* Show all rows, hide filtered ones (never do that outside of a demo ! xD) */
+																 $rows.show();
+																 $filteredRows.hide();
+																 /* Prepend no-result row if all rows are filtered */
+																 if ($filteredRows.length === $rows.length) {
+																		 $table.find('tbody').prepend($('<tr class="no-result text-center"><td colspan="'+ $table.find('.filters th').length +'">No result found</td></tr>'));
+																 }
+														 });
+												 });
+										 </script>
 	</body>
 </html>

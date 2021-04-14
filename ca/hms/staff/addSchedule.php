@@ -1,5 +1,10 @@
 <?php
+session_start();
+error_reporting(0);
+include('include/config.php');
+include('include/checklogin.php');
 include_once 'dbconnect.php';
+check_login();
 // include_once 'connection/server.php';
 
 // $res=mysqli_query($con,"SELECT * FROM doctor");
@@ -8,12 +13,22 @@ include_once 'dbconnect.php';
 
 
 if (isset($_POST['submit'])) {
+
+$username=$_SESSION['login'];
+$userid = $_GET['userid'];
+$userip = "Added Appointment Schedule";
+$status = "1";
+
+
 $date = mysqli_real_escape_string($con,$_POST['date']);
 $scheduleday  = mysqli_real_escape_string($con,$_POST['scheduleday']);
 $starttime     = mysqli_real_escape_string($con,$_POST['starttime']);
 $endtime     = mysqli_real_escape_string($con,$_POST['endtime']);
 $bookavail         = mysqli_real_escape_string($con,$_POST['bookavail']);
 
+
+$log = "INSERT INTO userlog (uid,username,userip,status)
+         VALUES ('$uId','$username','$userip','$status')";
 //INSERT
 $query = " INSERT INTO doctorschedule (  scheduleDate, scheduleDay, startTime, endTime,  bookAvail)
 VALUES ( '$date', '$scheduleday', '$starttime', '$endtime', '$bookavail' ) ";
@@ -26,6 +41,7 @@ if( $result )
 <script type="text/javascript">
 alert('Schedule added successfully.');
 </script>
+<?php mysqli_query($con,$log); ?>
 <?php
 }
 else
@@ -84,7 +100,7 @@ alert('Added fail. Please try again.');
                                 <li><a class="dropdown-item" href="contacts.html">Contacts</a></li>
                                 <li><a class="dropdown-item" href="mailbox.html">Mailbox</a></li>
                                 <li class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="login.html">Logout</a></li>
+                                <li><a class="dropdown-item" href="login.php">Logout</a></li>
                             </ul>
                         </div>
                         <div class="logo-element">
@@ -133,7 +149,7 @@ alert('Added fail. Please try again.');
                 <span class="m-r-sm text-muted welcome-message">Welcome to Clinica Abeleda</span>
             </li>
             <li>
-                <a href="login.html">
+                <a href="logout.php">
                     <i class="fa fa-sign-out"></i> Log out
                 </a>
             </li>
@@ -326,7 +342,7 @@ alert('Added fail. Please try again.');
                         </thead>
 
                         <?php
-                        $result=mysqli_query($con,"SELECT * FROM doctorschedule");
+                        $result=mysqli_query($con,"SELECT * FROM doctorschedule ORDER BY scheduleId desc");
 
 
 

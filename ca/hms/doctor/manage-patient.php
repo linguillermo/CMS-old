@@ -7,6 +7,12 @@ check_login();
 
 if(isset($_POST['submit']))
 {
+	//for logs
+	$username = $_SESSION['dlogin'];
+	$id = $_SESSION['id'];
+	$userip = "Added New Patient";
+	$status = "1";
+
 	$docid=$_SESSION['id'];
 	$patname=$_POST['patname'];
 $patcontact=$_POST['patcontact'];
@@ -20,10 +26,14 @@ $patage = (date("md", date("U", mktime(0, 0, 0, $patbday1[0], $patbday1[1], $pat
 $gender=$_POST['gender'];
 $patoccupation=$_POST['patoccupation'];
 
+$log = "INSERT INTO userlog (uid,username,userip,status)
+			 VALUES ('$uId','$username','$userip','$status')";
+
 $sql=mysqli_query($con,"insert into tblpatient(Docid,PatientName,PatientContno,PatientAdd,PatientAge,PatientBday,PatientGender,PatientOccupation) values('$docid','$patname','$patcontact','$pataddress','$patage','$patbday','$gender','$patoccupation')");
 if($sql)
 {
 echo "<script>alert('Patient info added Successfully');</script>";
+mysqli_query($con,$log);
 header('location:manage-patient.php');
 
 }

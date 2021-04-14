@@ -1,5 +1,11 @@
 <?php
+
+session_start();
+error_reporting(0);
+include('include/config.php');
+include('include/checklogin.php');
 include_once 'dbconnect.php';
+check_login();
 
 ?>
 
@@ -46,7 +52,7 @@ include_once 'dbconnect.php';
                                 <li><a class="dropdown-item" href="contacts.html">Contacts</a></li>
                                 <li><a class="dropdown-item" href="mailbox.html">Mailbox</a></li>
                                 <li class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="login.html">Logout</a></li>
+                                <li><a class="dropdown-item" href="logout.php">Logout</a></li>
                             </ul>
                         </div>
                         <div class="logo-element">
@@ -95,7 +101,7 @@ include_once 'dbconnect.php';
                 <span class="m-r-sm text-muted welcome-message">Welcome to Clinica Abeleda</span>
             </li>
             <li>
-                <a href="login.html">
+                <a href="logout.php">
                     <i class="fa fa-sign-out"></i> Log out
                 </a>
             </li>

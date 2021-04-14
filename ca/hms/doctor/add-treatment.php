@@ -6,19 +6,27 @@ include('include/checklogin.php');
 check_login();
 if(isset($_POST['submit']))
   {
+    //for logs
+    $username = $_SESSION['dlogin'];
+    $id = $_SESSION['id'];
+    $userip = "Added Treatment";
+    $status = "1";
 
     $vid=$_GET['viewid'];
     $bp=$_POST['bp'];
     $labs=$_POST['labs'];
     $weight=$_POST['weight'];
     $temp=$_POST['temp'];
-   $pres=$_POST['pres'];
+    $pres=$_POST['pres'];
 
+    $log = "INSERT INTO userlog (uid,username,userip,status)
+              VALUES ('$uId','$username','$userip','$status')";
 
-      $query.=mysqli_query($con, "insert   tblmedicalhistory(PatientID,BloodPressure,Laboratories,Weight,Temperature,MedicalPres)value('$vid','$bp','$labs','$weight','$temp','$pres')");
+    $query.=mysqli_query($con, "insert   tblmedicalhistory(PatientID,BloodPressure,Laboratories,Weight,Temperature,MedicalPres)value('$vid','$bp','$labs','$weight','$temp','$pres')");
     if ($query) {
     echo '<script>alert("Medicle history has been added.")</script>';
     echo "<script>window.location.href ='view-patient.php?viewid=$vid'</script>";
+    mysqli_query($con,$log);
   }
   else
     {

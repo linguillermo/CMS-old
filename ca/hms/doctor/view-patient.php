@@ -34,6 +34,12 @@ if(isset($_POST['submit']))
 <?php
 if(isset($_POST['save']))
 {
+  //for logs
+  $username = $_SESSION['dlogin'];
+  $id = $_SESSION['id'];
+  $userip = "Edited Patient";
+  $status = "1";
+
 	$eid=$_GET['viewid'];
 	$patname=$_POST['patname'];
 $patcontact=$_POST['patcontact'];
@@ -45,11 +51,15 @@ $patage = (date("md", date("U", mktime(0, 0, 0, $patbday1[0], $patbday1[1], $pat
     : (date("Y") - $patbday1[2]));
 $gender=$_POST['gender'];
 $patoccupation=$_POST['patoccupation'];
+
+$log = "INSERT INTO userlog (uid,username,userip,status)
+          VALUES ('$uId','$username','$userip','$status')";
+
 $sql=mysqli_query($con,"update tblpatient set PatientName='$patname',PatientContno='$patcontact',PatientAdd='$pataddress',PatientBday='$patbday',PatientAge='$patage',PatientGender='$gender',PatientOccupation='$patoccupation' where ID='$eid'");
 if($sql)
 {
 /* echo "<script>alert('Patient info updated Successfully');</script>"; */
-
+mysqli_query ($con, $log);
 
 }
 }
