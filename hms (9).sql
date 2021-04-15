@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 14, 2021 at 05:51 PM
+-- Generation Time: Apr 15, 2021 at 06:51 AM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 8.0.3
 
@@ -63,7 +63,8 @@ CREATE TABLE `appointment` (
 --
 
 INSERT INTO `appointment` (`appId`, `patientIc`, `scheduleId`, `firstName`, `lastName`, `contactNo`, `appComment`, `status`) VALUES
-(2, 8888, 2, 'Linette', 'Guillermo', '09153160599', 'Facial Cleaning', 'done');
+(6, 0, 4, 'James', 'Suarez', '45565656', 'rashes', 'process'),
+(7, 0, 3, 'try', 'chech', '345345345', 'fgfgfg', 'done');
 
 -- --------------------------------------------------------
 
@@ -121,7 +122,10 @@ CREATE TABLE `doctorschedule` (
 INSERT INTO `doctorschedule` (`scheduleId`, `scheduleDate`, `scheduleDay`, `startTime`, `endTime`, `bookAvail`) VALUES
 (1, '2021-04-03', 'Monday', '01:30:00', '02:00:00', 'notavail'),
 (2, '2021-04-03', 'Monday', '03:00:00', '00:00:00', 'notavail'),
-(3, '2021-04-05', 'Monday', '04:00:00', '04:30:00', 'available');
+(3, '2021-04-05', 'Monday', '04:00:00', '04:30:00', 'notavail'),
+(4, '2021-04-16', '', '01:00:00', '02:00:00', 'notavail'),
+(5, '2021-04-16', '', '02:00:00', '03:00:00', 'notavail'),
+(6, '2021-04-16', '', '03:00:00', '04:00:00', 'notavail');
 
 -- --------------------------------------------------------
 
@@ -203,7 +207,11 @@ INSERT INTO `doctorslog` (`id`, `uid`, `username`, `userip`, `loginTime`, `logou
 (76, 9, 'rabeleda', 0x3a3a3100000000000000000000000000, '2021-04-12 19:15:47', NULL, 1),
 (77, 9, 'rabeleda', 0x3a3a3100000000000000000000000000, '2021-04-13 18:31:31', '14-04-2021 06:42:16 PM', 1),
 (78, 9, 'rabeleda', 0x3a3a3100000000000000000000000000, '2021-04-14 13:20:18', '14-04-2021 06:55:18 PM', 1),
-(79, 9, 'rabeleda', 0x3a3a3100000000000000000000000000, '2021-04-14 13:50:45', '14-04-2021 09:19:53 PM', 1);
+(79, 9, 'rabeleda', 0x3a3a3100000000000000000000000000, '2021-04-14 13:50:45', '14-04-2021 09:19:53 PM', 1),
+(80, 9, 'rabeleda', 0x3a3a3100000000000000000000000000, '2021-04-14 23:27:39', '15-04-2021 05:11:12 AM', 1),
+(81, 9, 'rabeleda', 0x3a3a3100000000000000000000000000, '2021-04-14 23:44:27', '15-04-2021 05:35:38 AM', 1),
+(82, 9, 'rabeleda', 0x3a3a3100000000000000000000000000, '2021-04-15 02:31:36', '15-04-2021 08:27:38 AM', 1),
+(83, 9, 'rabeleda', 0x3a3a3100000000000000000000000000, '2021-04-15 02:58:00', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -721,31 +729,25 @@ INSERT INTO `tblmedicineused` (`patientID`, `ID`, `CreationDate`, `medicineusedI
 CREATE TABLE `tblpatient` (
   `ID` int(10) NOT NULL,
   `Docid` int(10) DEFAULT NULL,
-  `PatientName` varchar(200) DEFAULT NULL,
+  `PatientName` text CHARACTER SET utf8 DEFAULT NULL,
   `PatientContno` bigint(10) DEFAULT NULL,
-  `PatientEmail` varchar(200) DEFAULT NULL,
-  `PatientGender` varchar(50) DEFAULT NULL,
-  `PatientAdd` mediumtext DEFAULT NULL,
+  `PatientEmail` varchar(200) CHARACTER SET utf8 DEFAULT NULL,
+  `PatientGender` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
+  `PatientAdd` longtext CHARACTER SET utf8 DEFAULT NULL,
   `PatientAge` int(10) DEFAULT NULL,
-  `PatientMedhis` mediumtext DEFAULT NULL,
+  `PatientMedhis` longtext CHARACTER SET utf8 DEFAULT NULL,
   `CreationDate` timestamp NULL DEFAULT current_timestamp(),
   `UpdationDate` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
-  `PatientOccupation` varchar(200) DEFAULT NULL,
-  `PatientBday` varchar(200) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `PatientOccupation` varchar(200) CHARACTER SET utf8 DEFAULT NULL,
+  `PatientBday` varchar(200) CHARACTER SET utf8 DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
 -- Dumping data for table `tblpatient`
 --
 
 INSERT INTO `tblpatient` (`ID`, `Docid`, `PatientName`, `PatientContno`, `PatientEmail`, `PatientGender`, `PatientAdd`, `PatientAge`, `PatientMedhis`, `CreationDate`, `UpdationDate`, `PatientOccupation`, `PatientBday`) VALUES
-(8, 7, 'Linette Guillermo', 9173039719, NULL, 'Female', 'Quezon City', 25, NULL, '2021-03-13 15:00:53', '2021-03-17 11:41:11', 'System Analyst', '12/26/1995'),
-(9, 7, 'Bon Martinez', 91534536261, NULL, 'Male', 'Quezon City1', 30, NULL, '2021-03-13 15:07:21', '2021-03-21 18:06:07', 'Student1', '03/17/1991'),
-(10, 7, 'Carl Atienza', 9176453546, NULL, NULL, 'Tierra Evelina, Quezon City', 20, NULL, '2021-03-13 16:11:37', NULL, 'Plumber', '03/16/2000'),
-(11, 7, 'James Suarez', 9274563654, NULL, NULL, 'North Belton Community, Quezon City', 21, NULL, '2021-03-13 17:19:47', '2021-03-13 17:20:11', 'IT Support', '03/25/1999'),
-(12, 7, 'Armand Betan', 9178365674, NULL, NULL, 'Quezon City', 30, NULL, '2021-03-14 13:07:15', NULL, 'Student', '03/16/1990'),
-(13, 7, 'Ara Abeleda', 9173334567, NULL, NULL, 'Nueva Ecija', 24, NULL, '2021-03-15 14:21:09', NULL, 'Student', '03/23/1996'),
-(14, 7, 'Aaron Roque', 9183736734, NULL, 'Male', 'Bulacan', 20, NULL, '2021-03-15 14:52:49', '2021-03-15 14:56:01', 'Student', '03/19/2000');
+(31, 9, 'Qy8yUWlhc1pDOXN0bENpRkpJQU91dz09OjriLVzP+VHdDntz6Qyy8TQi', 992738924, NULL, 'Female', 'Quezon City', -1, NULL, '2021-04-15 04:44:17', NULL, 'Student', '04/27/2021');
 
 -- --------------------------------------------------------
 
@@ -803,7 +805,31 @@ CREATE TABLE `userlog` (
 
 INSERT INTO `userlog` (`id`, `uid`, `username`, `userip`, `loginTime`, `logout`, `status`) VALUES
 (24, 2, 'test@gmail.com', 0x3a3a3100000000000000000000000000, '2021-03-07 14:57:46', NULL, 1),
-(25, 2, 'test@gmail.com', 0x3a3a3100000000000000000000000000, '2021-03-12 23:55:48', NULL, 1);
+(25, 2, 'test@gmail.com', 0x3a3a3100000000000000000000000000, '2021-03-12 23:55:48', NULL, 1),
+(26, 0, 'staff1', 0x4164646564204170706f696e746d656e, '2021-04-14 18:47:11', NULL, 1),
+(27, 0, 'staff1', 0x4164646564204170706f696e746d656e, '2021-04-14 18:47:49', NULL, 1),
+(28, 0, 'staff1', 0x4164646564204170706f696e746d656e, '2021-04-14 18:48:00', NULL, 1),
+(29, 0, '', 0x55706461746564204170706f696e746d, '2021-04-14 23:23:34', NULL, 1),
+(30, 0, '', 0x55706461746564204170706f696e746d, '2021-04-14 23:23:47', NULL, 1),
+(31, 0, '', 0x55706461746564204170706f696e746d, '2021-04-14 23:23:55', NULL, 1),
+(32, 0, '', 0x55706461746564204170706f696e746d, '2021-04-14 23:23:56', NULL, 1),
+(33, 0, 'rabeleda', 0x4164646564204e65772050617469656e, '2021-04-15 02:31:51', NULL, 1),
+(34, 0, 'rabeleda', 0x4164646564204e65772050617469656e, '2021-04-15 02:34:13', NULL, 1),
+(35, 0, 'rabeleda', 0x4164646564204e65772050617469656e, '2021-04-15 02:37:04', NULL, 1),
+(36, 0, 'rabeleda', 0x4164646564204e65772050617469656e, '2021-04-15 02:39:50', NULL, 1),
+(37, 0, 'rabeleda', 0x4164646564204e65772050617469656e, '2021-04-15 03:02:37', NULL, 1),
+(38, 0, 'rabeleda', 0x4164646564204e65772050617469656e, '2021-04-15 03:06:42', NULL, 1),
+(39, 0, 'rabeleda', 0x4164646564204e65772050617469656e, '2021-04-15 03:49:30', NULL, 1),
+(40, 0, 'rabeleda', 0x4164646564204e65772050617469656e, '2021-04-15 03:53:19', NULL, 1),
+(41, 0, 'rabeleda', 0x4164646564204e65772050617469656e, '2021-04-15 04:19:58', NULL, 1),
+(42, 0, 'rabeleda', 0x4164646564204e65772050617469656e, '2021-04-15 04:20:14', NULL, 1),
+(43, 0, 'rabeleda', 0x4164646564204e65772050617469656e, '2021-04-15 04:27:49', NULL, 1),
+(44, 0, 'rabeleda', 0x4164646564204e65772050617469656e, '2021-04-15 04:32:43', NULL, 1),
+(45, 0, 'rabeleda', 0x4164646564204e65772050617469656e, '2021-04-15 04:37:36', NULL, 1),
+(46, 0, 'rabeleda', 0x4164646564204e65772050617469656e, '2021-04-15 04:39:50', NULL, 1),
+(47, 0, 'rabeleda', 0x4164646564204e65772050617469656e, '2021-04-15 04:42:01', NULL, 1),
+(48, 0, 'rabeleda', 0x4164646564204e65772050617469656e, '2021-04-15 04:43:11', NULL, 1),
+(49, 0, 'rabeleda', 0x4164646564204e65772050617469656e, '2021-04-15 04:44:17', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -954,7 +980,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `appointment`
 --
 ALTER TABLE `appointment`
-  MODIFY `appId` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `appId` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `doctors`
@@ -966,13 +992,13 @@ ALTER TABLE `doctors`
 -- AUTO_INCREMENT for table `doctorschedule`
 --
 ALTER TABLE `doctorschedule`
-  MODIFY `scheduleId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `scheduleId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `doctorslog`
 --
 ALTER TABLE `doctorslog`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
 
 --
 -- AUTO_INCREMENT for table `doctorspecilization`
@@ -1026,7 +1052,7 @@ ALTER TABLE `tblmedicineused`
 -- AUTO_INCREMENT for table `tblpatient`
 --
 ALTER TABLE `tblpatient`
-  MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `tblprescription`
@@ -1038,7 +1064,7 @@ ALTER TABLE `tblprescription`
 -- AUTO_INCREMENT for table `userlog`
 --
 ALTER TABLE `userlog`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT for table `users`
