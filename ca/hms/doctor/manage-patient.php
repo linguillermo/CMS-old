@@ -6,6 +6,8 @@ include('include/config.php');
 include('include/checklogin.php');
 check_login();
 
+
+
 if(isset($_POST['submit']))
 {
 	//for logs
@@ -16,7 +18,7 @@ if(isset($_POST['submit']))
 
 	$docid=$_SESSION['id'];
 	// $patname=$_POST['patname'];
-	$patname=encryptString($_POST['patname'], ENCRYPTION_KEY);
+	$patname=encryptthis($_POST['patname'], key);
 $patcontact=$_POST['patcontact'];
 $pataddress=$_POST['pataddress'];
 $patbday=$_POST['patbday'];
@@ -42,6 +44,10 @@ header('location:manage-patient.php');
 }
 
 ?>
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -262,14 +268,14 @@ error:function (){}
 																				$cnt=1;
 																				while($row=mysqli_fetch_array($sql))
 																				{
+																					$name=decryptthis($row['PatientName'], key);
 
-																				
 																				?>
 
 
 																				<tr>
 																					<td class="center"><?php echo $cnt;?>.</td>
-																					<td class="hidden-xs"><?php echo decryptString($row['PatientName'], ENCRYPTION_KEY);?></td>
+																					<td class="hidden-xs"><?php echo $name;?></td>
 																					<td><?php echo $row['PatientAdd'];?></td>
 																					<td>0<?php echo $row['PatientContno'];?></td>
 																					<td><?php echo date('F j, Y', strtotime($row['PatientBday']));?></td>
