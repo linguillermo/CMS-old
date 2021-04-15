@@ -2,7 +2,7 @@
 
 include_once 'dbconnect.php';
 $q = $_GET['q'];
-$res = mysqli_query($con,"SELECT * FROM doctorschedule WHERE scheduleDate='$q'");
+$res = mysqli_query($con,"SELECT * FROM doctorschedule WHERE scheduleDate='$q' and bookAvail='available'");
 if (!$res) {
 die("Error running $sql: " . mysqli_error());
 }
@@ -21,9 +21,9 @@ die("Error running $sql: " . mysqli_error());
         echo "   <table class='table table-hover'>";
             echo " <thead>";
                 echo " <tr>";
-                    echo " <th>App Id</th>";
-                    echo " <th>Day</th>";
-                    echo " <th>Date</th>";
+
+
+
                     echo "  <th>Start Time</th>";
                     echo "  <th>End Time</th>";
                     echo " <th>Availability</th>";
@@ -55,19 +55,19 @@ die("Error running $sql: " . mysqli_error());
                     // } else {
                     // $btnstate="";
                     // }
-                    echo "<td>" . $row['scheduleId'] . "</td>";
-                    echo "<td>" . $row['scheduleDay'] . "</td>";
-                    echo "<td>" . $row['scheduleDate'] . "</td>";
+
+
+
                     echo "<td>" . $row['startTime'] . "</td>";
                     echo "<td>" . $row['endTime'] . "</td>";
                     echo "<td> <span class='label label-".$avail."'>". $row['bookAvail'] ."</span></td>";
-                    echo "<td><a href='appointment_plugins/setAppointment.php?&appid=" . $row['scheduleId'] . "&scheduleDate=".$q."' class='btn btn-".$btnclick." ".$btnstate." btn-xs' role='button' >Set Appointment</a></td>";
+                    echo "<td><button type='button' class='btn btn-success btn-xs ".$btnstate." passingID'  data-id='10' data-toggle='modal' data-target='#myModal5' onclick='$(\"#scheduleid\").val(\"" . $row['scheduleId'] . "\");'>Set Appointment</button></td>";
                     // echo "<td><a href='appointment.php?&appid=" . $row['scheduleId'] . "&scheduleDate=".$q."'>Book</a></td>";
                     // <td><button type='button' class='btn btn-primary btn-xs' data-toggle='modal' data-target='#exampleModal'>Book Now</button></td>";
                     //triggered when modal is about to be shown
                     ?>
 
-                    </script>
+
                     <!-- ?> -->
                 </tr>
 
@@ -77,6 +77,15 @@ die("Error running $sql: " . mysqli_error());
                 ?>
             </tbody>
             <!-- modal start -->
+
+
+
+
+
+
+
+
+
 
 
 

@@ -98,94 +98,92 @@ mysqli_query($con,"update appointment set doctorStatus='0' where id ='".$_GET['i
 
 		</nav>
 	</div><br><br>
-								<div class="panel panel-primary filterable">
-																		 <!-- Default panel contents -->
-																		<div class="panel-heading">
-																		 <h3 class="panel-title">Appointment List</h3>
-																		 <div class="pull-right"><br>
-																				 <button class="btn btn-outline-success btn-filter"><span class="fa fa-filter"></span> Filter</button>
-																				 <!-- <button class='btn btn-outline-success' type='submit' value='Submit' name='submit'>Update</button> -->
-																		 </div>
-																	 </div><br><br>
-																		 <div class="panel-body">
-																		 <!-- Table -->
-																		 <table class="table table-hover table-bordered">
-																				 <thead>
-																						 <tr class="filters">
-																								 <th><input type="text" class="form-control" placeholder="First Name" disabled></th>
-																								 <th><input type="text" class="form-control" placeholder="Last  Name" disabled></th>
-																								 <th><input type="text" class="form-control" placeholder="Contact #" disabled></th>
-																								 <th><input type="text" class="form-control" placeholder="Reason for Appointment" disabled></th>
-																								 <th><input type="text" class="form-control" placeholder="Date" disabled></th>
-																								 <th><input type="text" class="form-control" placeholder="Start" disabled></th>
-																								 <th><input type="text" class="form-control" placeholder="End" disabled></th>
-																								 <th><input type="text" class="form-control" placeholder="Status" disabled></th>
-																								 <th><input type="text" class="form-control" placeholder="Complete" disabled></th>
-																								 <!-- <th><input type="text" class="form-control" placeholder="Delete" disabled></th> -->
-																						 </tr>
-																				 </thead>
+	<div class="panel panel-primary filterable">
+											 <!-- Default panel contents -->
+											<div class="panel-heading">
+											 <h3 class="panel-title">Appointment List</h3>
+											 <div class="pull-right"><br>
+													 <button class="btn btn-outline-success btn-filter"><span class="fa fa-filter"></span> Filter</button>
+													 <!-- <button class='btn btn-outline-success' type='submit' value='Submit' name='submit'>Update</button> -->
+											 </div>
+										 </div><br><br>
+											 <div class="panel-body">
+											 <!-- Table -->
+											 <table class="table table-hover table-bordered">
+													 <thead>
+															 <tr class="filters">
+																	 <th><input type="text" class="form-control" placeholder="First Name" disabled></th>
+																	 <th><input type="text" class="form-control" placeholder="Last  Name" disabled></th>
+																	 <th><input type="text" class="form-control" placeholder="Contact #" disabled></th>
+																	 <th><input type="text" class="form-control" placeholder="Reason for Appointment" disabled></th>
+																	 <th><input type="text" class="form-control" placeholder="Date" disabled></th>
+																	 <th><input type="text" class="form-control" placeholder="Start" disabled></th>
+																	 <th><input type="text" class="form-control" placeholder="End" disabled></th>
+																	 <th><input type="text" class="form-control" placeholder="Status" disabled></th>
+																	 <!-- <th><input type="text" class="form-control" placeholder="Complete" disabled></th> -->
+																	 <!-- <th><input type="text" class="form-control" placeholder="Delete" disabled></th> -->
+															 </tr>
+													 </thead>
 
-																				 <?php
-																				 $res=mysqli_query($con,"SELECT b.*,c.*
-																																 FROM appointment b
-																																 JOIN doctorschedule c
-																																 On b.scheduleId=c.scheduleId
-																																 Order By appId desc");
-																							 if (!$res) {
-																								 printf("Error: %s\n", mysqli_error($con));
-																								 exit();
-																						 }
-																				 while ($appointment=mysqli_fetch_array($res)) {
+													 <?php
+													 $res=mysqli_query($con,"SELECT b.*,c.*
+																									 FROM appointment b
+																									 JOIN doctorschedule c
+																									 On b.scheduleId=c.scheduleId
+																									 Order By appId desc");
+																 if (!$res) {
+																	 printf("Error: %s\n", mysqli_error($con));
+																	 exit();
+															 }
+													 while ($appointment=mysqli_fetch_array($res)) {
 
-																						 if ($appointment['status']=='process') {
-																								 $status="danger";
-																								 $icon='remove';
-																								 $checked='';
+															 if ($appointment['status']=='process') {
+																	 $status="danger";
+																	 $icon='remove';
+																	 $checked='';
 
-																						 } else {
-																								 $status="success";
-																								 $icon='ok';
-																								 $checked = 'disabled';
-																						 }
+															 } else {
+																	 $status="success";
+																	 $icon='ok';
+																	 $checked = 'disabled';
+															 }
 
 
-																						 echo "<tbody>";
-																						 echo "<tr class='$status'>";
+															 echo "<tbody>";
+															 echo "<tr class='$status'>";
 
-																								 echo "<td>" . $appointment['firstName'] . "</td>";
-																								 echo "<td>" . $appointment['lastName'] . "</td>";
-																								 echo "<td>" . $appointment['contactNo'] . "</td>";
-																								 echo "<td>" . $appointment['appComment'] . "</td>";
-																								 echo "<td>" . $appointment['scheduleDate'] . "</td>";
-																								 echo "<td>" . $appointment['startTime'] . "</td>";
-																								 echo "<td>" . $appointment['endTime'] . "</td>";
-																								 echo "<td><span class='glyphicon glyphicon-".$icon."' aria-hidden='true'></span>".' '."". $appointment['status'] . "</td>";
-																								 echo "<form method='POST'>";
-																								 echo "<td class='text-center'><input type='checkbox' name='enable' id='enable' value='".$appointment['appId']."' onclick='chkit(".$appointment['appId'].",this.checked);' ".$checked."></td>";
-																								 // echo "<td class='text-center'><a href='#' id='".$appointment['appId']."' class='delete'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span>
-																								 echo "</span>;
+																	 echo "<td>" . $appointment['firstName'] . "</td>";
+																	 echo "<td>" . $appointment['lastName'] . "</td>";
+																	 echo "<td>" . $appointment['contactNo'] . "</td>";
+																	 echo "<td>" . $appointment['appComment'] . "</td>";
+																	 echo "<td>" . $appointment['scheduleDate'] . "</td>";
+																	 echo "<td>" . $appointment['startTime'] . "</td>";
+																	 echo "<td>" . $appointment['endTime'] . "</td>";
+																	 echo "<td><span class='glyphicon glyphicon-".$icon."' aria-hidden='true'></span>".' '."". $appointment['status'] . "</td>";
+																	 // echo "<form method='POST'>";
+																	 // echo "<td class='text-center'><input type='checkbox' name='enable' id='enable' value='".$appointment['appId']."' onclick='chkit(".$appointment['appId'].",this.checked);' ".$checked."></td>";
+														// 			 echo "<td class='text-center'><a href='#' id='".$appointment['appId']."' class='delete'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></a>
+													 // </td>";
 
-																				 </td>";
+													 }
+											echo "</tbody>";
+											echo "</table>";
+											echo "<div class='panel panel-default'>";
+											echo "<div class='col-md-offset-3 pull-right'>";
+											// echo "<button class='btn btn-primary' type='submit' value='Submit' name='submit'>Update</button>";
+											 echo "</div>";
+											 echo "</div>";
+											 ?>
 
-																				 }
-																		echo "</tbody>";
-																		echo "</table>";
-																		echo "<div class='panel panel-default'>";
-																		echo "<div class='col-md-offset-3 pull-right'>";
-																		// echo "<button class='btn btn-primary' type='submit' value='Submit' name='submit'>Update</button>";
-																		 echo "</div>";
-																		 echo "</div>";
-																		 ?>
-
-																		 <!-- <table>
-																		 <tr>
-																			<td colspan="5">
-																					<ul class="pagination float-right" ></ul>
-																			</td>
-																		</tr>
-																	</table> -->
-																 </div>
-														 </div>
+											 <!-- <table>
+											 <tr>
+												<td colspan="5">
+														<ul class="pagination float-right" ></ul>
+												</td>
+											</tr>
+										</table> -->
+									 </div>
+							 </div>
 														 <!-- Mainly scripts -->
 														 <script src="insp/js/jquery-3.1.1.min.js"></script>
 														 <script src="insp/js/popper.min.js"></script>

@@ -1,6 +1,7 @@
 <?php
 session_start();
 error_reporting(0);
+require "include/aes256.php";
 include('include/config.php');
 include('include/checklogin.php');
 check_login();
@@ -14,7 +15,8 @@ if(isset($_POST['submit']))
 	$status = "1";
 
 	$docid=$_SESSION['id'];
-	$patname=$_POST['patname'];
+	// $patname=$_POST['patname'];
+	$patname=encryptString($_POST['patname'], ENCRYPTION_KEY);
 $patcontact=$_POST['patcontact'];
 $pataddress=$_POST['pataddress'];
 $patbday=$_POST['patbday'];
@@ -260,12 +262,14 @@ error:function (){}
 																				$cnt=1;
 																				while($row=mysqli_fetch_array($sql))
 																				{
+
+																				
 																				?>
 
 
 																				<tr>
 																					<td class="center"><?php echo $cnt;?>.</td>
-																					<td class="hidden-xs"><?php echo $row['PatientName'];?></td>
+																					<td class="hidden-xs"><?php echo decryptString($row['PatientName'], ENCRYPTION_KEY);?></td>
 																					<td><?php echo $row['PatientAdd'];?></td>
 																					<td>0<?php echo $row['PatientContno'];?></td>
 																					<td><?php echo date('F j, Y', strtotime($row['PatientBday']));?></td>
@@ -332,6 +336,8 @@ error:function (){}
 			});
 
 	</script>
+
+
 
 	<script>
     $(document).ready(function(){
