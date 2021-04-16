@@ -18,22 +18,23 @@ if(isset($_POST['submit']))
 
 	$docid=$_SESSION['id'];
 	// $patname=$_POST['patname'];
-	$patname=encryptthis($_POST['patname'], key);
-$patcontact=$_POST['patcontact'];
-$pataddress=$_POST['pataddress'];
-$patbday=$_POST['patbday'];
+$patname=encryptthis($_POST['patname'], key);
+$patcontact=encryptthis($_POST['patcontact'], key);
+$pataddress=encryptthis($_POST['pataddress'], key);
+$patbday=encryptthis($_POST['patbday'], key);
 //$patage=$_POST['patage'];
 $patbday1 = explode("/", $patbday);
 $patage = (date("md", date("U", mktime(0, 0, 0, $patbday1[0], $patbday1[1], $patbday1[2]))) > date("md")
     ? ((date("Y") - $patbday1[2]) - 1)
     : (date("Y") - $patbday1[2]));
-$gender=$_POST['gender'];
-$patoccupation=$_POST['patoccupation'];
+$gender=encryptthis($_POST['gender'], key);
+$patoccupation=encryptthis($_POST['patoccupation'],key);
 
 $log = "INSERT INTO userlog (uid,username,userip,status)
 			 VALUES ('$uId','$username','$userip','$status')";
 
-$sql=mysqli_query($con,"insert into tblpatient(Docid,PatientName,PatientContno,PatientAdd,PatientAge,PatientBday,PatientGender,PatientOccupation) values('$docid','$patname','$patcontact','$pataddress','$patage','$patbday','$gender','$patoccupation')");
+$sql=mysqli_query($con,"insert into tblpatient(Docid,PatientName,PatientContno,PatientAdd,PatientAge,PatientBday,PatientGender,PatientOccupation)
+values('$docid','$patname','$patcontact','$pataddress','$patage','$patbday','$gender','$patoccupation')");
 if($sql)
 {
 echo "<script>alert('Patient info added Successfully');</script>";
@@ -269,6 +270,9 @@ error:function (){}
 																				while($row=mysqli_fetch_array($sql))
 																				{
 																					$name=decryptthis($row['PatientName'], key);
+																					$patadd=decryptthis($row['PatientAdd'], key);
+																					$patcontno=decryptthis($row['PatientContno'], key);
+																					$patientbday=decryptthis($row['PatientBday'],key);
 
 																				?>
 
@@ -276,9 +280,9 @@ error:function (){}
 																				<tr>
 																					<td class="center"><?php echo $cnt;?>.</td>
 																					<td class="hidden-xs"><?php echo $name;?></td>
-																					<td><?php echo $row['PatientAdd'];?></td>
-																					<td>0<?php echo $row['PatientContno'];?></td>
-																					<td><?php echo date('F j, Y', strtotime($row['PatientBday']));?></td>
+																					<td><?php echo $patadd;?></td>
+																					<td>0<?php echo $patcontno;?></td>
+																					<td><?php echo date('F j, Y', strtotime($patientbday));?></td>
 
 																					<td>
 																						<!-- <a href="edit-patient.php?editid=<?php echo $row['ID'];?>" class="btn btn-info btn-xs">Edit</a> -->

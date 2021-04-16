@@ -10,9 +10,18 @@ $userid = $_GET['userid'];
 $chkYesNo = $_GET['chkYesNo'];
 
 $update = mysqli_query($con,"UPDATE appointment SET status='done' WHERE appId=$userid");
-
 $log =  mysqli_query($con,"INSERT INTO userlog (uid,username,userip,status)
-         VALUES ('$uId','$username','$userip','$status')");
+     VALUES ('$uId','$username','$userip','$status')");
+if($update)
+{
+
+    echo "<script>alert('Updated Successfully');</script>";
+    echo "<script>window.location.href ='appointmentStaff.php'</script>";
+}
+else
+{
+    echo "<script>window.location.href ='view-patient.php?viewid=$vid'</script>";
+}
 
 
 ?>

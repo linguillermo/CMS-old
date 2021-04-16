@@ -1,34 +1,35 @@
 <?php
 session_start();
 error_reporting(0);
+require "include/aes256.php";
 include('include/config.php');
 include('include/checklogin.php');
 check_login();
-if(isset($_POST['submit']))
-  {
-
-    $vid=$_GET['viewid'];
-    $bp=$_POST['bp'];
-    $labs=$_POST['labs'];
-    $weight=$_POST['weight'];
-    $temp=$_POST['temp'];
-   $pres=$_POST['pres'];
-
-
-      $query.=mysqli_query($con, "insert   tblmedicalhistory(PatientID,BloodPressure,Laboratories,Weight,Temperature,MedicalPres)value('$vid','$bp','$labs','$weight','$temp','$pres')");
-    if ($query) {
-    echo '<script>alert("Medicle history has been added.")</script>';
-    echo "<script>window.location.href ='view-patient.php?viewid=$vid'</script>";
-  }
-  else
-    {
-      echo '<script>alert("Something Went Wrong. Please try again")</script>';
-    }
-
-
-}
-
-?>
+// if(isset($_POST['submit']))
+//   {
+//
+//     $vid=$_GET['viewid'];
+//     $bp=$_POST['bp'];
+//     $labs=$_POST['labs'];
+//     $weight=$_POST['weight'];
+//     $temp=$_POST['temp'];
+//    $pres=$_POST['pres'];
+//
+//
+//       $query.=mysqli_query($con, "insert   tblmedicalhistory(PatientID,BloodPressure,Laboratories,Weight,Temperature,MedicalPres)value('$vid','$bp','$labs','$weight','$temp','$pres')");
+//     if ($query) {
+//     echo '<script>alert("Medicle history has been added.")</script>';
+//     echo "<script>window.location.href ='view-patient.php?viewid=$vid'</script>";
+//   }
+//   else
+//     {
+//       echo '<script>alert("Something Went Wrong. Please try again")</script>';
+//     }
+//
+//
+// }
+//
+// ?>
 
 
 <?php
@@ -36,19 +37,20 @@ if(isset($_POST['save']))
 {
 	$eid=$_GET['editid'];
   $vid=$_GET['viewid'];
-  $bp=$_POST['bp'];
-  $labs=$_POST['labs'];
-  $weight=$_POST['weight'];
+  $labs=encryptthis($_POST['labs'], key);
+  $weights=encryptthis($_POST['weight'], key);
   $temp=$_POST['temp'];
- $pres=$_POST['pres'];
+  $pres=encryptthis($_POST['pres'], key);
 
-$sql=mysqli_query($con,"update tblmedicalhistory set BloodPressure='$bp',Laboratories='$labs',Weight='$weight',Temperature='$temp',MedicalPres='$pres' where ID='$eid'");
+$sql=mysqli_query($con,"UPDATE tblmedicalhistory SET Laboratories='$labs',Weight='$weights',Temperature='$temp',MedicalPres='$pres' WHERE ID='$eid'");
 if($sql)
 {
  echo "<script>alert('Patient info updated Successfully');</script>";
  echo "<script>window.location.href ='view-patient.php?viewid=$vid'</script>";
 
-
+}
+else {
+ echo "<script>alert('Error editing profile!');</script>";
 }
 
 
@@ -222,8 +224,12 @@ if($sql)
 					<?php
 	                             $vid=$_GET['viewid'];
 	                             $ret=mysqli_query($con,"select * from tblpatient where ID='$vid'");
-	$cnt=1;
-	while ($row=mysqli_fetch_array($ret)) {
+                               $cnt=1;
+                              	while ($row=mysqli_fetch_array($ret)) {
+                                 $gender = decryptthis($row['PatientGender'], key);
+                                 $patientContact=decryptthis($row['PatientContno'], key);
+                                 $patadd=decryptthis($row['PatientAdd'], key);
+                                 $patoccupt=decryptthis($row['PatientOccupation'], key);
 	                             ?>
 
             <div class="ibox">
@@ -232,7 +238,7 @@ if($sql)
                         <div class="col-lg-12">
                             <div class="m-b-md">
 
-                                <h2><?php  echo $row['PatientName'];?></h2>
+                                <h2><?php  echo decryptthis($row['PatientName'], key);?></h2>
                             </div>
 
                         </div>
@@ -241,19 +247,19 @@ if($sql)
 	                      <div class="col-lg-6">
 	                          <dl class="row mb-0">
 	                              <div class="col-sm-4 text-sm-right"><dt>Gender:</dt> </div>
-	                              <div class="col-sm-8 text-sm-left"><dd class="mb-1"><?php  echo $row['PatientGender'];?></dd></div>
+	                              <div class="col-sm-8 text-sm-left"><dd class="mb-1"><?php  echo $gender;?></dd></div>
 	                          </dl>
 	                          <dl class="row mb-0">
 	                              <div class="col-sm-4 text-sm-right"><dt>Address:</dt> </div>
-	                              <div class="col-sm-8 text-sm-left"><dd class="mb-1"><?php  echo $row['PatientAdd'];?></dd> </div>
+	                              <div class="col-sm-8 text-sm-left"><dd class="mb-1"><?php  echo $patadd;?></dd> </div>
 	                          </dl>
 	                          <dl class="row mb-0">
 	                              <div class="col-sm-4 text-sm-right"><dt>Phone No:</dt> </div>
-	                              <div class="col-sm-8 text-sm-left"> <dd class="mb-1"><?php  echo $row['PatientContno'];?></dd></div>
+	                              <div class="col-sm-8 text-sm-left"> <dd class="mb-1"><?php  echo $patientContact;?></dd></div>
 	                          </dl>
 	                          <dl class="row mb-0">
 	                              <div class="col-sm-4 text-sm-right"><dt>Occupation:</dt> </div>
-	                              <div class="col-sm-8 text-sm-left"> <dd class="mb-1"><?php  echo $row['PatientOccupation'];?></dd></div>
+	                              <div class="col-sm-8 text-sm-left"> <dd class="mb-1"><?php  echo $patoccupt;?></dd></div>
 	                          </dl>
 	                          <dl class="row mb-0">
 	                              <div class="col-sm-4 text-sm-right"><dt>Date of Birth:</dt> </div>
@@ -316,21 +322,22 @@ if($sql)
                             <div class="tab-content">
                                 <div id="tab-1" class="tab-pane active">
                                     <div class="panel-body">
-																				<form method="post" name="submit">
+																				<form method="POST" name="submit">
                                         <fieldset>
 
 																						<div class="form-group row"><label class="col-sm-2 col-form-label">Weight:</label>
-                                                <div class="col-md-4"><input name="weight" value="<?php  echo $row['Weight'];?>" class="form-control wd-450"></div>
+                                                <div class="col-md-4"><input name="weight" value="<?php  echo decryptthis($row['Weight'], key);?>" class="form-control wd-450"></div>
                                             </div>
+
 																						<div class="form-group row"><label class="col-sm-2 col-form-label">Laboratories:</label>
-                                                <div class="col-md-4"><input name="labs" value="<?php  echo $row['Laboratories'];?>" class="form-control wd-450"></div>
+                                                <div class="col-md-4"><input name="labs" value="<?php  echo decryptthis($row['Laboratories'], key);?>" class="form-control wd-450"></div>
                                             </div>
 
 
                                             <div class="form-group row"><label class="col-sm-2 col-form-label">Description:</label>
                                                 <div class="col-sm-10">
                                                     <textarea class="summernote" name="pres">
-                                                        <?php  echo $row['MedicalPres'];?>
+                                                        <?php  echo decryptthis($row['MedicalPres'], key);?>
 
                                                     </textarea>
                                                 </div>

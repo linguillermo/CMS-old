@@ -1,5 +1,6 @@
 <?php
 include_once 'dbconnect.php';
+require "appointment_plugins/include/aes256.php";
 // $appid=null;
 // $appdate=null;
 
@@ -21,9 +22,9 @@ if (isset($_POST['submit'])) {
 // $patientIc = 8888;
 
 $scheduleid = mysqli_real_escape_string($con,$_POST['scheduleid']);
-$firstName = mysqli_real_escape_string($con,$_POST['fname']);
-$lastName = mysqli_real_escape_string($con,$_POST['lname']);
-$contactNo = mysqli_real_escape_string($con,$_POST['contact']);
+$firstName = encryptthis(mysqli_real_escape_string($con,$_POST['fname']), key);
+$lastName = encryptthis(mysqli_real_escape_string($con,$_POST['lname']), key);
+$contactNo = encryptthis(mysqli_real_escape_string($con,$_POST['contact']), key);
 $reason = mysqli_real_escape_string($con,$_POST['reason']);
 $avail = "notavail";
 
@@ -737,13 +738,7 @@ header("Location: index.php");
                           </div>
 
                             </div>
-
-
-
-
-
-
-                        <input type="text" class="form-control" name="scheduleid" id="scheduleid" value="">
+                        <!-- <input type="text" class="form-control" name="scheduleid" id="scheduleid" value=""> -->
 
 
 

@@ -1,6 +1,7 @@
 <?php
 session_start();
 error_reporting(0);
+require "include/aes256.php";
 include('include/config.php');
 include('include/checklogin.php');
 check_login();
@@ -152,9 +153,9 @@ mysqli_query($con,"update appointment set doctorStatus='0' where id ='".$_GET['i
 															 echo "<tbody>";
 															 echo "<tr class='$status'>";
 
-																	 echo "<td>" . $appointment['firstName'] . "</td>";
-																	 echo "<td>" . $appointment['lastName'] . "</td>";
-																	 echo "<td>" . $appointment['contactNo'] . "</td>";
+																	 echo "<td>" . decryptthis($appointment['firstName'], key) . "</td>";
+																	 echo "<td>" . decryptthis($appointment['lastName'], key) . "</td>";
+																	 echo "<td>" . decryptthis($appointment['contactNo'], key). "</td>";
 																	 echo "<td>" . $appointment['appComment'] . "</td>";
 																	 echo "<td>" . $appointment['scheduleDate'] . "</td>";
 																	 echo "<td>" . $appointment['startTime'] . "</td>";

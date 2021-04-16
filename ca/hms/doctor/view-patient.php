@@ -1,6 +1,7 @@
 <?php
 session_start();
 error_reporting(0);
+require "include/aes256.php";
 include('include/config.php');
 include('include/checklogin.php');
 check_login();
@@ -12,10 +13,10 @@ if(isset($_POST['submit']))
     $labs=$_POST['labs'];
     $weight=$_POST['weight'];
     $temp=$_POST['temp'];
-   $pres=$_POST['pres'];
+    $pres=$_POST['pres'];
 
 
-      $query.=mysqli_query($con, "insert   tblmedicalhistory(PatientID,BloodPressure,Laboratories,Weight,Temperature,MedicalPres)value('$vid','$bp','$labs','$weight','$temp','$pres')");
+   $query.=mysqli_query($con, "insert   tblmedicalhistory(PatientID,BloodPressure,Laboratories,Weight,Temperature,MedicalPres)value('$vid','$bp','$labs','$weight','$temp','$pres')");
     if ($query) {
     echo '<script>alert("Medicle history has been added.")</script>';
     echo "<script>window.location.href ='manage-patient.php'</script>";
@@ -42,26 +43,26 @@ if(isset($_POST['save']))
 
 	$eid=$_GET['viewid'];
 	$patname=$_POST['patname'];
-$patcontact=$_POST['patcontact'];
-$pataddress=$_POST['pataddress'];
-$patbday=$_POST['patbday'];
-$patbday1 = explode("/", $patbday);
-$patage = (date("md", date("U", mktime(0, 0, 0, $patbday1[0], $patbday1[1], $patbday1[2]))) > date("md")
-    ? ((date("Y") - $patbday1[2]) - 1)
-    : (date("Y") - $patbday1[2]));
-$gender=$_POST['gender'];
-$patoccupation=$_POST['patoccupation'];
+  $patcontact=$_POST['patcontact'];
+  $pataddress=$_POST['pataddress'];
+  $patbday=$_POST['patbday'];
+  $patbday1 = explode("/", $patbday);
+  $patage = (date("md", date("U", mktime(0, 0, 0, $patbday1[0], $patbday1[1], $patbday1[2]))) > date("md")
+      ? ((date("Y") - $patbday1[2]) - 1)
+      : (date("Y") - $patbday1[2]));
+  $gender=$_POST['gender'];
+  $patoccupation=$_POST['patoccupation'];
 
-$log = "INSERT INTO userlog (uid,username,userip,status)
-          VALUES ('$uId','$username','$userip','$status')";
+  $log = "INSERT INTO userlog (uid,username,userip,status)
+            VALUES ('$uId','$username','$userip','$status')";
 
-$sql=mysqli_query($con,"update tblpatient set PatientName='$patname',PatientContno='$patcontact',PatientAdd='$pataddress',PatientBday='$patbday',PatientAge='$patage',PatientGender='$gender',PatientOccupation='$patoccupation' where ID='$eid'");
-if($sql)
-{
-/* echo "<script>alert('Patient info updated Successfully');</script>"; */
-mysqli_query ($con, $log);
+  $sql=mysqli_query($con,"update tblpatient set PatientName='$patname',PatientContno='$patcontact',PatientAdd='$pataddress',PatientBday='$patbday',PatientAge='$patage',PatientGender='$gender',PatientOccupation='$patoccupation' where ID='$eid'");
+  if($sql)
+  {
+  /* echo "<script>alert('Patient info updated Successfully');</script>"; */
+  mysqli_query ($con, $log);
 
-}
+  }
 }
 ?>
 <!DOCTYPE html>
@@ -167,8 +168,13 @@ mysqli_query ($con, $log);
         <?php
                              $vid=$_GET['viewid'];
                              $ret=mysqli_query($con,"select * from tblpatient where ID='$vid'");
-$cnt=1;
-while ($row=mysqli_fetch_array($ret)) {
+                              $cnt=1;
+                              while ($row=mysqli_fetch_array($ret))
+                              {
+                                  $gender = decryptthis($row['PatientGender'], key);
+                                  $patientContact=decryptthis($row['PatientContno'], key);
+                                  $patadd=decryptthis($row['PatientAdd'], key);
+                                  $patoccupt=decryptthis($row['PatientOccupation'], key);
                              ?>
 
           <div class="ibox">
@@ -177,37 +183,29 @@ while ($row=mysqli_fetch_array($ret)) {
                       <div class="col-lg-12">
                           <div class="m-b-md">
                               <a href="#" class="btn btn-white btn-xs float-right" data-toggle="modal" data-target="#myModal5">Edit Patient Profile</a>
-                              <h2><?php  echo $row['PatientName'];?></h2>
+                              <h2><?php echo decryptthis( $row['PatientName'],key);?></h2>
                           </div>
 
                       </div>
                   </div>
 
-
-
-
-
-
-
-
-
                   <div class="row">
                       <div class="col-lg-6">
                           <dl class="row mb-0">
                               <div class="col-sm-4 text-sm-right"><dt>Gender:</dt> </div>
-                              <div class="col-sm-8 text-sm-left"><dd class="mb-1"><?php  echo $row['PatientGender'];?></dd></div>
+                              <div class="col-sm-8 text-sm-left"><dd class="mb-1"><?php  echo $gender;?></dd></div>
                           </dl>
                           <dl class="row mb-0">
                               <div class="col-sm-4 text-sm-right"><dt>Address:</dt> </div>
-                              <div class="col-sm-8 text-sm-left"><dd class="mb-1"><?php  echo $row['PatientAdd'];?></dd> </div>
+                              <div class="col-sm-8 text-sm-left"><dd class="mb-1"><?php  echo $patadd;?></dd> </div>
                           </dl>
                           <dl class="row mb-0">
                               <div class="col-sm-4 text-sm-right"><dt>Phone No:</dt> </div>
-                              <div class="col-sm-8 text-sm-left"> <dd class="mb-1"><?php  echo $row['PatientContno'];?></dd></div>
+                              <div class="col-sm-8 text-sm-left"> <dd class="mb-1"><?php  echo $patientContact;?></dd></div>
                           </dl>
                           <dl class="row mb-0">
                               <div class="col-sm-4 text-sm-right"><dt>Occupation:</dt> </div>
-                              <div class="col-sm-8 text-sm-left"> <dd class="mb-1"><?php  echo $row['PatientOccupation'];?></dd></div>
+                              <div class="col-sm-8 text-sm-left"> <dd class="mb-1"><?php  echo $patoccupt;?></dd></div>
                           </dl>
                           <dl class="row mb-0">
                               <div class="col-sm-4 text-sm-right"><dt>Date of Birth:</dt> </div>
@@ -269,17 +267,23 @@ while ($row=mysqli_fetch_array($ret)) {
                                           $ret=mysqli_query($con,"select * from tblpatient where ID='$eid'");
                                           $cnt=1;
                                           while ($row=mysqli_fetch_array($ret)) {
+                                            $patname = decryptthis ($row['PatientName'], key);
+                                            $patgender = decryptthis($row['PatientGender'], key);
+                                            $patientContact=decryptthis($row['PatientContno'], key);
+                                            $patadd=decryptthis($row['PatientAdd'], key);
+                                            $patoccupt=decryptthis($row['PatientOccupation'], key);
+                                            $patbday=decryptthis($row['PatientBday'], key);
 
                                           ?>
                                             <div class="form-group row"><label class="col-sm-2 col-form-label">Patient Name</label>
 
-                                              <div class="col-sm-10"><input type="text" name="patname" value="<?php  echo $row['PatientName'];?>" class="form-control"></div>
+                                              <div class="col-sm-10"><input type="text" name="patname" value="<?php  echo $patname;?>" class="form-control"></div>
 
 
                                             </div>
                                             <div class="hr-line-dashed"></div>
                                             <div class="form-group row"><label class="col-sm-2 col-form-label">Address</label>
-                                                <div class="col-sm-10"><input type="text" name="pataddress" class="form-control" value="<?php  echo $row['PatientAdd'];?>">
+                                                <div class="col-sm-10"><input type="text" name="pataddress" class="form-control" value="<?php  echo $patadd;?>">
                                                 </div>
                                             </div>
                                             <div class="hr-line-dashed"></div>
@@ -290,7 +294,7 @@ while ($row=mysqli_fetch_array($ret)) {
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-addon">+63</span>
                                                         </div>
-                                                        <input type="text" name="patcontact" class="form-control"  value="<?php  echo $row['PatientContno'];?>">
+                                                        <input type="text" name="patcontact" class="form-control"  value="<?php  echo $patientContact;?>">
                                                     </div>
 
                                                 </div>
@@ -299,11 +303,11 @@ while ($row=mysqli_fetch_array($ret)) {
                                             <div class="form-group row" id="data_1"><label class="col-sm-2 col-form-label">Date of Birth</label>
 
                                                 <div class="col-sm-5"><div class="input-group date">
-                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" name="patbday" class="form-control" value="<?php  echo $row['PatientBday'];?>">
+                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" name="patbday" class="form-control" value="<?php  echo $patbday;?>">
                                                 </div></div>
 
                                                 <label class="col-sm-1 col-form-label">Gender</label>
-                                                <div class="col-sm-4"><input type="text" name="gender" value="<?php  echo $row['PatientGender'];?>" class="form-control">
+                                                <div class="col-sm-4"><input type="text" name="gender" value="<?php  echo $patgender;?>" class="form-control">
                                                 </div>
 
 
@@ -311,7 +315,7 @@ while ($row=mysqli_fetch_array($ret)) {
                                             </div>
                                             <div class="hr-line-dashed"></div>
                                             <div class="form-group row"><label class="col-sm-2 col-form-label">Occupation</label>
-                                                <div class="col-sm-10"><input type="text" name="patoccupation" value="<?php  echo $row['PatientOccupation'];?>" value class="form-control">
+                                                <div class="col-sm-10"><input type="text" name="patoccupation" value="<?php  echo $patoccupt;?>" value class="form-control">
                                                 </div>
                                             </div>
 <?php } ?>
@@ -371,13 +375,16 @@ $ret=mysqli_query($con,"select * from tblmedicalhistory  where PatientID='$vid'"
                                   </thead>
                                   <tbody>
                                     <?php
-while ($row=mysqli_fetch_array($ret)) {
+                                    while ($row=mysqli_fetch_array($ret))
+                                    {
+                                      $weightTreat= decryptthis($row['Weight'], key);
+                                      $labTreat= decryptthis($row['Laboratories'], key);
   ?>
                                       <tr>
                                         <td><?php  echo date('F j, Y g:i A', strtotime($row['CreationDate']));?></td>
 
-                                        <td><?php  echo $row['Weight'];?> kgs</td>
-                                        <td><?php  echo $row['Laboratories'];?></td>
+                                        <td><?php  echo $weightTreat;?> kgs</td>
+                                        <td><?php  echo $labTreat;?></td>
 
                                           <td><a href="edit-treatment.php?viewid=<?php echo $vid;?>&editid=<?php echo $row['ID'];?>" class="btn btn-primary btn-xs">View</a></td>
                                       </tr>
@@ -515,11 +522,6 @@ while ($row=mysqli_fetch_array($ret)) {
 
   <script>
     $(document).ready(function(){
-
-
-
-
-
         $('.input-group.date').datepicker({
             todayBtn: "linked",
             keyboardNavigation: false,
@@ -531,10 +533,7 @@ while ($row=mysqli_fetch_array($ret)) {
     });
 </script>
 
-
-
-
-		<script>
+<script>
 			jQuery(document).ready(function() {
 				Main.init();
 				FormElements.init();

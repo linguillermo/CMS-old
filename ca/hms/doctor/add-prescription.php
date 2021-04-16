@@ -1,6 +1,7 @@
 <?php
 session_start();
 error_reporting(0);
+require "include/aes256.php";
 include('include/config.php');
 include('include/checklogin.php');
 check_login();
@@ -132,7 +133,7 @@ if (isset($_POST["addInvoice"]))
 
   							</li>
                 <li>
-                    <a href="doctor-approved-appointments.html"><i class="fa fa-calendar"></i> <span class="nav-label">Appointments</span>  </a>
+                    <a href="appointment-history.php"><i class="fa fa-calendar"></i> <span class="nav-label">Appointments</span>  </a>
                 </li>
             </ul>
 
@@ -175,8 +176,13 @@ if (isset($_POST["addInvoice"]))
 					<?php
 	                             $vid=$_GET['viewid'];
 	                             $ret=mysqli_query($con,"select * from tblpatient where ID='$vid'");
-	$cnt=1;
-	while ($row=mysqli_fetch_array($ret)) {
+                            	$cnt=1;
+                            	while ($row=mysqli_fetch_array($ret))
+                              {
+                                $gender = decryptthis($row['PatientGender'], key);
+                                $patientContact=decryptthis($row['PatientContno'], key);
+                                $patadd=decryptthis($row['PatientAdd'], key);
+                                $patoccupt=decryptthis($row['PatientOccupation'], key);
 	                             ?>
 
             <div class="ibox">
@@ -185,7 +191,7 @@ if (isset($_POST["addInvoice"]))
                         <div class="col-lg-12">
                             <div class="m-b-md">
 
-                                <h2><?php  echo $row['PatientName'];?></h2>
+                                <h2><?php  echo decryptthis($row['PatientName'], key);?></h2>
                             </div>
 
                         </div>
@@ -194,19 +200,19 @@ if (isset($_POST["addInvoice"]))
 	                      <div class="col-lg-6">
 	                          <dl class="row mb-0">
 	                              <div class="col-sm-4 text-sm-right"><dt>Gender:</dt> </div>
-	                              <div class="col-sm-8 text-sm-left"><dd class="mb-1"><?php  echo $row['PatientGender'];?></dd></div>
+	                              <div class="col-sm-8 text-sm-left"><dd class="mb-1"><?php  echo $gender;?></dd></div>
 	                          </dl>
 	                          <dl class="row mb-0">
 	                              <div class="col-sm-4 text-sm-right"><dt>Address:</dt> </div>
-	                              <div class="col-sm-8 text-sm-left"><dd class="mb-1"><?php  echo $row['PatientAdd'];?></dd> </div>
+	                              <div class="col-sm-8 text-sm-left"><dd class="mb-1"><?php  echo $patadd;?></dd> </div>
 	                          </dl>
 	                          <dl class="row mb-0">
 	                              <div class="col-sm-4 text-sm-right"><dt>Phone No:</dt> </div>
-	                              <div class="col-sm-8 text-sm-left"> <dd class="mb-1"><?php  echo $row['PatientContno'];?></dd></div>
+	                              <div class="col-sm-8 text-sm-left"> <dd class="mb-1"><?php  echo $patientContact;?></dd></div>
 	                          </dl>
 	                          <dl class="row mb-0">
 	                              <div class="col-sm-4 text-sm-right"><dt>Occupation:</dt> </div>
-	                              <div class="col-sm-8 text-sm-left"> <dd class="mb-1"><?php  echo $row['PatientOccupation'];?></dd></div>
+	                              <div class="col-sm-8 text-sm-left"> <dd class="mb-1"><?php  echo $patoccupt;?></dd></div>
 	                          </dl>
 	                          <dl class="row mb-0">
 	                              <div class="col-sm-4 text-sm-right"><dt>Date of Birth:</dt> </div>

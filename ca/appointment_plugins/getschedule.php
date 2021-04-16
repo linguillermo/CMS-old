@@ -61,7 +61,7 @@ die("Error running $sql: " . mysqli_error());
                     echo "<td>" . $row['startTime'] . "</td>";
                     echo "<td>" . $row['endTime'] . "</td>";
                     echo "<td> <span class='label label-".$avail."'>". $row['bookAvail'] ."</span></td>";
-                    echo "<td><button type='button' class='btn btn-success btn-xs ".$btnstate." passingID'  data-id='10' data-toggle='modal' data-target='#myModal5' onclick='$(\"#scheduleid\").val(\"" . $row['scheduleId'] . "\");'>Set Appointment</button></td>";
+                    echo "<td><button type='button' class='btn btn-success btn-xs ".$btnstate." passingID'  data-id='10' data-toggle='modal' data-target='#myModal5' onclick='$(\"#scheduleid\").val(\"" . $row['scheduleId'] . "\");'>Book Appointment</button></td>";
                     // echo "<td><a href='appointment.php?&appid=" . $row['scheduleId'] . "&scheduleDate=".$q."'>Book</a></td>";
                     // <td><button type='button' class='btn btn-primary btn-xs' data-toggle='modal' data-target='#exampleModal'>Book Now</button></td>";
                     //triggered when modal is about to be shown
