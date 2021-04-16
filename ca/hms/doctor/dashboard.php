@@ -41,7 +41,8 @@ check_login();
 							<li class="nav-header">
 									<div class="dropdown profile-element">
 											<img alt="image" class="rounded-circle" src="insp/img/New Project.png"/>
-											<?php $query=mysqli_query($con,"select * from users where id='".$_SESSION['id']."'");
+											<?php
+															$query=mysqli_query($con,"select * from users where id='".$_SESSION['id']."'");
 															while($row=mysqli_fetch_array($query))
 															{ ?>
 
@@ -78,8 +79,6 @@ check_login();
 									<a href="appointment-history.php"><i class="fa fa-calendar"></i> <span class="nav-label">Appointments</span>  </a>
 							</li>
 
-
-
 					</ul>
 
 			</div>
@@ -100,10 +99,6 @@ check_login();
 							<li>
 									<span class="m-r-sm text-muted welcome-message">Welcome to Clinica Abeleda</span>
 							</li>
-
-
-
-
 							<li>
 									<a href="logout.php">
 											<i class="fa fa-sign-out"></i> Log out
@@ -125,11 +120,21 @@ check_login();
 													<i class="fa fa-calendar-o fa-5x"></i>
 											</div>
 											<div class="col-8 text-right">
-													<span> Today's Appointments </span>
-													<h2 class="font-bold">15</h2>
-											</div>
+													<span> Pending Appointments </span>
+													<?php
+													$result = mysqli_query($con, "SELECT * FROM appointment where status='process'");
+
+													while(mysqli_fetch_array($result))
+													{
+														$rows = mysqli_num_rows($result);
+													}
+													 ?>
+														<h2 class="font-bold"><?php echo $rows ?></h2>
+
+
 									</div>
 							</div>
+						</div>
 					</div>
 					<div class="col-lg-3">
 							<div class="widget style1 yellow-bg">
@@ -138,14 +143,20 @@ check_login();
 													<i class="fas fa-pills fa-5x"></i>
 											</div>
 											<div class="col-8 text-right">
-													<span> Medicine Stocks </span>
-													<h2 class="font-bold">12</h2>
+												<span> Medicine Stocks </span>
+												<?php
+												$result = mysqli_query($con, "SELECT * FROM medicines");
+
+												while(mysqli_fetch_array($result))
+												{
+													$rowsMed = mysqli_num_rows($result);
+												}
+												 ?>
+													<h2 class="font-bold"><?php echo $rowsMed; ?></h2>
 											</div>
 									</div>
 							</div>
 					</div>
-
-
 			</div>
 
 
