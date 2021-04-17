@@ -54,13 +54,17 @@ if (isset($_POST["addInvoice"]))
 		for ($a = 0; $a < count($_POST["Medication"]); $a++)
 		{
 			$sql = "INSERT INTO tblprescription (patientID, prescID, Medication, Type, Quantity, morningBM, morningAM, afternoonBM, afternoonAM, eveningBM, eveningAM, duration, instructions)
-      VALUES ('$patientID', '$prescID', '" . encryptthis($_POST["Medication"][$a], key) . "', '"
-      . encryptthis($_POST["Type"][$a], key) . "', '"
-      . encryptthis($_POST["Quantity"][$a], key) . "', '" . encryptthis($_POST["morningBM"][$a], key) . "', '"
-      . encryptthis($_POST["morningAM"][$a], key) . "', '" . encryptthis($_POST["afternoonBM"][$a], key) . "', '"
-       . encryptthis($_POST["afternoonAM"][$a], key) . "', '" . encryptthis($_POST["eveningBM"][$a], key) . "', '"
-       . encryptthis($_POST["eveningAM"][$a], key) . "', '" . encyrptthis($_POST["duration"][$a], key) . "', '"
-        . encyrptthis($_POST["instructions"][$a], key). "')";
+      VALUES ('$patientID', '$prescID', '" . encryptthis($_POST["Medication"][$a], key) . "',
+      '" . encryptthis($_POST["Type"][$a], key) . "',
+      '" . encryptthis($_POST["Quantity"][$a], key) . "',
+      '" . encryptthis($_POST["morningBM"][$a], key) . "',
+      '" . encryptthis($_POST["morningAM"][$a], key) . "',
+      '" . encryptthis($_POST["afternoonBM"][$a], key) . "',
+      '" . encryptthis($_POST["afternoonAM"][$a], key) . "',
+      '" . encryptthis($_POST["eveningBM"][$a], key) . "',
+      '" . encryptthis($_POST["eveningAM"][$a], key) . "',
+      '" . encryptthis($_POST["duration"][$a], key) . "',
+      '" . encryptthis($_POST["instructions"][$a], key) . "')";
 			mysqli_query($con, $sql);
       mysqli_query($con, $log);
 		}

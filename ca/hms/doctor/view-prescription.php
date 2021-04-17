@@ -317,6 +317,7 @@ if (isset($_POST["addInvoice"]))
                                     $eveningBM=decryptthis($row['eveningBM'], key);
                                     $eveningAM=decryptthis($row['eveningAM'], key);
                                     $duration=decryptthis($row['duration'], key);
+                                    $instructions=decryptthis($row['instructions'], key)
                                 ?>
 
                                 <tr>
@@ -330,7 +331,7 @@ if (isset($_POST["addInvoice"]))
                                     <td style="text-align:center"><?php  echo $eveningBM;?></td>
                                     <td style="text-align:center"><?php  echo $eveningAM;?></td>
                                     <td style="text-align:center"><?php  echo $duration;?></td>
-                                    <td><?php  echo $row['instructions'];?></td>
+                                    <td><?php  echo $instructions;?></td>
 
 
                                 </tr>
