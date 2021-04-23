@@ -5,6 +5,20 @@ include('include/config.php');
 include('include/checklogin.php');
 check_login();
 
+if (isset($_POST['addTask']))
+{
+	$task = $_POST['taskInput'];
+
+	$queryTask = ($con,"INSERT INTO tbltodo value ('$task')");
+
+	if ($queryTask)
+	{
+		echo "Success!";
+	}
+	else {
+		echo "Fail";
+	}
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -158,42 +172,36 @@ check_login();
 							</div>
 					</div>
 			</div>
+			<!-- DASHBOARD CODE STARTS HERE -->
 
+			<div class="wrapper wrapper-content  animated fadeInRight">
+		            <div class="row">
+		                <div class="col-lg">
+		                    <div class="ibox">
+		                        <div class="ibox-content">
+		                            <h3>To-do</h3>
+		                            <p class="small"><i class="fa fa-hand-o-up"></i> Drag task between list</p>
 
-			<div class="row">
+																<form method="POST" action="">
+		                            <div class="input-group">
+		                                <input type="text" placeholder="Add new task. " class="input form-control-sm form-control" name="taskInput">
+		                                <span class="input-group-btn">
+		                                        <button type="button" class="btn btn-sm btn-white" name="addTask"> <i class="fa fa-plus"></i> Add task</button>
+		                                </span>
+		                            </div>
+															</form>
 
-					<div class="col-lg-12">
-							<div class="ibox ">
-									<div class="ibox-title">
-											<h5>Appointments </h5>
-											<div class="ibox-tools">
-													<a class="collapse-link">
-															<i class="fa fa-chevron-up"></i>
-													</a>
-													<a class="dropdown-toggle" data-toggle="dropdown" href="#">
-															<i class="fa fa-wrench"></i>
-													</a>
-													<ul class="dropdown-menu dropdown-user">
-															<li><a href="#" class="dropdown-item">Config option 1</a>
-															</li>
-															<li><a href="#" class="dropdown-item">Config option 2</a>
-															</li>
-													</ul>
-													<a class="close-link">
-															<i class="fa fa-times"></i>
-													</a>
-											</div>
-									</div>
-									<div class="ibox-content">
-											<div id="calendar"></div>
-									</div>
-							</div>
-					</div>
-
-			</div>
-
-
-			</div>
+		                            <ul class="sortable-list connectList agile-list" id="todo">
+		                                <li class="warning-element" id="task1">
+		                                    Simply dummy text of the printing and typesetting industry.
+		                                    <div class="agile-detail">
+		                                        <a href="#" class="float-right btn btn-xs btn-white">Tag</a>
+		                                        <i class="fa fa-clock-o"></i> 12.10.2015
+		                                    </div>
+		                            </ul>
+		                        </div>
+		                    </div>
+		                </div>
 
 
 			<div class="footer">
@@ -255,192 +263,21 @@ check_login();
 <script src="insp/js/plugins/fullcalendar/fullcalendar.min.js"></script>
 
 <script>
+		$(document).ready(function(){
 
-	$(document).ready(function() {
+				$("#todo, #inprogress, #completed").sortable({
+						connectWith: ".connectList",
+						update: function( event, ui ) {
 
-					$('.i-checks').iCheck({
-							checkboxClass: 'icheckbox_square-green',
-							radioClass: 'iradio_square-green'
-					});
+								var todo = $( "#todo" ).sortable( "toArray" );
+								var inprogress = $( "#inprogress" ).sortable( "toArray" );
+								var completed = $( "#completed" ).sortable( "toArray" );
+								$('.output').html("ToDo: " + window.JSON.stringify(todo) + "<br/>" + "In Progress: " + window.JSON.stringify(inprogress) + "<br/>" + "Completed: " + window.JSON.stringify(completed));
+						}
+				}).disableSelection();
 
-			/* initialize the external events
-			 -----------------------------------------------------------------*/
-
-
-			$('#external-events div.external-event').each(function() {
-
-					// store data so the calendar knows to render an event upon drop
-					$(this).data('event', {
-							title: $.trim($(this).text()), // use the element's text as the event title
-							stick: true // maintain when user navigates (see docs on the renderEvent method)
-					});
-
-					// make the event draggable using jQuery UI
-					$(this).draggable({
-							zIndex: 1111999,
-							revert: true,      // will cause the event to go back to its
-							revertDuration: 0  //  original position after the drag
-					});
-
-			});
-
-
-			/* initialize the calendar
-			 -----------------------------------------------------------------*/
-			var date = new Date();
-			var d = date.getDate();
-			var m = date.getMonth();
-			var y = date.getFullYear();
-
-			$('#calendar').fullCalendar({
-					header: {
-							left: 'prev,next today',
-							center: 'title',
-							right: 'month,agendaWeek,agendaDay'
-					},
-					editable: true,
-					droppable: true, // this allows things to be dropped onto the calendar
-					drop: function() {
-							// is the "remove after drop" checkbox checked?
-							if ($('#drop-remove').is(':checked')) {
-									// if so, remove the element from the "Draggable Events" list
-									$(this).remove();
-							}
-					},
-					events: [
-							{
-									title: 'Anna Malto',
-									start: new Date(y, m, 1)
-							},
-							/* {
-									title: 'Long Event',
-									start: new Date(y, m, d-5),
-									end: new Date(y, m, d-2)
-							}, */
-							{
-									id: 999,
-									title: 'Benedict Cruz',
-									start: new Date(y, m, d-3, 16, 0),
-									allDay: false
-							},
-							{
-									id: 999,
-									title: 'Carl Atienza',
-									start: new Date(y, m, d+4, 16, 0),
-									allDay: false
-							},
-							{
-									title: 'Bon Martinez',
-									start: new Date(y, m, d, 10, 30),
-									allDay: false
-							},
-							{
-									title: 'James Suarez',
-									start: new Date(y, m, d, 12, 0),
-									end: new Date(y, m, d, 14, 0),
-									allDay: false
-							},
-							{
-									title: 'Armand Betan',
-									start: new Date(y, m, d+1, 19, 0),
-									end: new Date(y, m, d+1, 22, 30),
-									allDay: false
-							},
-							{
-									title: 'Miko Gatchalian fb',
-									start: new Date(y, m, 28),
-									end: new Date(y, m, 29),
-									url: 'http://facebook.com/'
-							}
-					]
-			});
-
-
-	});
-
+		});
 </script>
 
-	<script>
-			$(document).ready(function() {
-
-
-					var d1 = [[1262304000000, 6], [1264982400000, 3057], [1267401600000, 20434], [1270080000000, 31982], [1272672000000, 26602], [1275350400000, 27826], [1277942400000, 24302], [1280620800000, 24237], [1283299200000, 21004], [1285891200000, 12144], [1288569600000, 10577], [1291161600000, 10295]];
-					var d2 = [[1262304000000, 5], [1264982400000, 200], [1267401600000, 1605], [1270080000000, 6129], [1272672000000, 11643], [1275350400000, 19055], [1277942400000, 30062], [1280620800000, 39197], [1283299200000, 37000], [1285891200000, 27000], [1288569600000, 21000], [1291161600000, 17000]];
-
-					var data1 = [
-							{ label: "Data 1", data: d1, color: '#17a084'},
-							{ label: "Data 2", data: d2, color: '#127e68' }
-					];
-					$.plot($("#flot-chart1"), data1, {
-							xaxis: {
-									tickDecimals: 0
-							},
-							series: {
-									lines: {
-											show: true,
-											fill: true,
-											fillColor: {
-													colors: [{
-															opacity: 1
-													}, {
-															opacity: 1
-													}]
-											},
-									},
-									points: {
-											width: 0.1,
-											show: false
-									},
-							},
-							grid: {
-									show: false,
-									borderWidth: 0
-							},
-							legend: {
-									show: false,
-							}
-					});
-
-					var lineData = {
-							labels: ["January", "February", "March", "April", "May", "June", "July"],
-							datasets: [
-									{
-											label: "Example dataset",
-											backgroundColor: "rgba(26,179,148,0.5)",
-											borderColor: "rgba(26,179,148,0.7)",
-											pointBackgroundColor: "rgba(26,179,148,1)",
-											pointBorderColor: "#fff",
-											data: [48, 48, 60, 39, 56, 37, 30]
-									},
-									{
-											label: "Example dataset",
-											backgroundColor: "rgba(220,220,220,0.5)",
-											borderColor: "rgba(220,220,220,1)",
-											pointBackgroundColor: "rgba(220,220,220,1)",
-											pointBorderColor: "#fff",
-											data: [65, 59, 40, 51, 36, 25, 40]
-									}
-							]
-					};
-
-					var lineOptions = {
-							responsive: true
-					};
-
-
-					var ctx = document.getElementById("lineChart").getContext("2d");
-					new Chart(ctx, {type: 'line', data: lineData, options:lineOptions});
-
-
-			});
-	</script>
-		<script>
-			jQuery(document).ready(function() {
-				Main.init();
-				FormElements.init();
-			});
-		</script>
-		<!-- end: JavaScript Event Handlers for this page -->
-		<!-- end: CLIP-TWO JAVASCRIPTS -->
 	</body>
 </html>
