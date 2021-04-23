@@ -6,6 +6,30 @@ include('include/checklogin.php');
 check_login();
 
 
+
+if (isset($_POST['addTask']))
+{
+	$queryTask = "INSERT INTO tbltodo (todoNotes) value ('$task')";
+	if (empty($_POST['addTask']))
+	{
+		echo "CANNOT BE EMPTY! MUST HAVE INPUTS!";
+	}
+	else {
+		mysqli_query ($con,$queryTask);
+	}
+	header('Location: dashboard.php');
+}
+
+// DELETE TASKS
+if (isset($_GET['del_task']))
+{
+	$id=$_GET['del_task'];
+
+mysqli_query($con, "DELETE FROM tbltodo WHERE todoID =".$id);
+header('Location: dashboard.php');
+}
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -79,9 +103,7 @@ check_login();
 							<li>
 									<a href="appointment-history.php"><i class="fa fa-calendar"></i> <span class="nav-label">Appointments</span>  </a>
 							</li>
-
 					</ul>
-
 			</div>
 	</nav>
 
@@ -112,7 +134,7 @@ check_login();
 			</div>
 
 
-			<div class="wrapper wrapper-content">
+			<div class="wrapper wrapper-content animated fadeInRight">
 			<div class="row">
 					<div class="col-lg-3">
 							<div class="widget style1 lazur-bg">
@@ -131,8 +153,6 @@ check_login();
 													}
 													 ?>
 														<h2 class="font-bold"><?php echo $rows ?></h2>
-
-
 									</div>
 							</div>
 						</div>
@@ -159,11 +179,13 @@ check_login();
 							</div>
 					</div>
 			</div>
+
+			<!-- ********************************************************************************************************************* -->
 			<!-- DASHBOARD CODE STARTS HERE -->
 
 			<div class="wrapper wrapper-content  animated fadeInRight">
 		            <div class="row">
-		                <div class="col-lg">
+		                <div class="col-lg" style="max-height: 580px; overflow-x: hidden; overflow-y: scroll;">
 		                    <div class="ibox">
 		                        <div class="ibox-content">
 		                            <h3>To-do</h3>
@@ -173,22 +195,33 @@ check_login();
 		                            <div class="input-group">
 		                                <input type="text" placeholder="Add new task. " class="input form-control-sm form-control" name="taskInput">
 		                                <span class="input-group-btn">
-		                                        <button type="button" class="btn btn-sm btn-white" name="addTask"> <i class="fa fa-plus"></i> Add task</button>
+		                                        <button type="submit" class="btn btn-sm btn-white" name="addTask"> <i class="fa fa-plus"></i> Add task</button>
 		                                </span>
 		                            </div>
 															</form>
+															 <?php
+															 		$tasks = mysqli_query($con, "SELECT * FROM tbltodo ORDER BY todoStamp desc");
+																	while ($row = mysqli_fetch_array($tasks)) {
+															 ?>
 
-		                            <ul class="sortable-list connectList agile-list" id="todo">
-		                                <li class="warning-element" id="task1">
-		                                    Simply dummy text of the printing and typesetting industry.
-		                                    <div class="agile-detail">
-		                                        <a href="#" class="float-right btn btn-xs btn-white">Tag</a>
-		                                        <i class="fa fa-clock-o"></i> 12.10.2015
-		                                    </div>
-		                            </ul>
+	                             <ul class="sortable-list connectList agile-list" id="todo">
+	                                 <li class="warning-element" id="<?php $taskID ?>">
+	                                    <?php echo $row['todoNotes']; ?>
+	                                     <div class="agile-detail">
+																				 <span>
+ 																			 		 <a href="dashboard.php?del_task=<?php echo $row['todoID']; ?>" class="float-right fa fa-minus" </a>
+																					 <a href="#" class="float-right btn btn-xs btn-white" id="pbutton" onclick="changeColor(this)">On-Going</a>
+																				 </span>
+	                                         <i class="fa fa-clock-o"></i><?php echo date('F j, Y, g:i a', $row['todoStamp']); ?>
+	                                     </div>
+	                                 </li>
+																 </ul>
+																 <?php } ?>
 		                        </div>
 		                    </div>
-		                </div>
+											</div>
+		               </div><br><br>
+
 
 
 			<div class="footer">
@@ -248,6 +281,19 @@ check_login();
 
 	<!-- Full Calendar -->
 <script src="insp/js/plugins/fullcalendar/fullcalendar.min.js"></script>
+<script>
+	function changeColor()
+	{
+		var x = document.getElementById("pbutton");
+		if (x.style.class == "")
+		 {
+			x.style.class = "fa fa-check";
+		}
+		else {
+			return x;
+		}
+	}
+</script>
 
 <script>
 		$(document).ready(function(){
