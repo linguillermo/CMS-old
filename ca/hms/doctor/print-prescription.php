@@ -2,6 +2,7 @@
   include_once 'FPDF/fpdf.php';
   $pdf = new FPDF('P','mm','Letter');
   $pdf->AddPage();
+  
 
   $pdf->SetFont("Arial","B",9);
       $pdf->SetFillColor(19, 41, 16);
@@ -29,6 +30,9 @@ $pdf->SetFont("Arial","B",10);
                   $pdf->Cell(0, 5, "An Affiliate Society of the Philippine Medical Association", 0, 1, 'C', true);
                   $pdf->Cell(0, 5, "", 0, 1, 'C', true);
 
+
+
+
 $pdf->SetFillColor(255);
 $pdf->SetTextColor(19, 41, 16);
 $pdf->SetFont("Arial","B",9);
@@ -43,29 +47,87 @@ $pdf->Cell(0, 5, "    Tel: (044) 463-0893", 0, 1 );
 $pdf->Cell(0, 5, "    Mobile: 0929-297-8560 (SMART)", 0, 1 );
 $pdf->Cell(0, 5, "                 0929-297-8560 (GLOBE)", 0, 1 );
 
+// Body start:
+
+ $conn = new mysqli('localhost', 'root', '', 'hms');
+	  
+	  
+	  if($conn->connect_error){
+  die("Error in DB connection: ".$conn->connect_errno." : ".$conn->connect_error); }
+
+
+      $vid=$_GET['viewid'];
+     $select = "SELECT * FROM tblpatient where ID='$vid'";
+     $result = $conn->query($select);
+
+  //$pdf = new FPDF('P','mm','Letter');
+  //$pdf->AliasNbPages();
+  //$pdf->AddPage();
+  
+  while($row = $result->fetch_object()){
+	 
+  $pname = $row->PatientName;
+  $paddress = $row->PatientAdd;
+  $pphone = $row->PatientContno;
+  $date = $row->CreationDate;
+  
 $pdf->Ln(5);
 $pdf->Cell(0, 5, "", 'T', 0, 'C');
+$pdf->Cell(5, 10, "", 'T', 0, 'C');
+
+
 $pdf->Ln(5);
-$pdf->SetFont('Arial', 'B', 12);
-$pdf->Cell(90, 5, "Linette Guillermo", 0, 1 );
+$pdf->SetFont("Arial","",12);
+$pdf->Cell(90, 5,$pname, 0, 1 );
 
-$pdf->SetFont('Arial', '', 10);
-$pdf->Cell(89, 5, "Female, 25 years old", 0, 1 );
 
-$pdf->Cell(90, 5, "+63 917 303 9717", 0, 1 );
-$pdf->Cell(89, 5, "West Avenue, Quezon City", 0, 1 );
+$pdf->SetFont("Arial","",10);
+
+	
+$pdf->Cell(90, 5,$paddress, 0, 1 );
+
+$pdf->Cell(90, 5,$pphone, 0, 1 );
+
+$pdf->Ln();
+
+  //}
+
+
+
+
 
 $pdf->Ln(5);
 $pdf->SetFont('Arial', 'B', 18);
 $pdf->Cell(130, 5, "Rx", 0, 0 );
 $pdf->SetFont('Arial', 'B', 10);
-$pdf->Cell(60, 5, "Date: ", 0, 1 );
+$pdf->Cell(60, 5, $date, 0, 1 );
+}
 
 $pdf->Ln(5);
-// $pdf->SetFillColor(36, 140, 129);
-// $pdf->Cell(130, 5, "Rx", 0, 0, 1 );
-// $pdf->Cell(60, 5, "Date: ", 0, 1 );
 
+						
+			 $prescid=$_GET['prescid'];
+			$select="select * from tblprescription where prescID='$prescid'";
+			$result = $conn->query($select);
+			
+	while($row = $result->fetch_object()){
+				
+		   $pmed = $row->Medication;
+           $pquant = $row->Quantity;
+		   $pinst = $row->instructions;
+		   $mbm = $row->morningBM;
+		   $mam = $row->morningAM;
+		   $abm = $row->afternoonBM;
+		   $aam = $row->afternoonAM;
+		   $ebm = $row->eveningBM; 
+		   $eam = $row->eveningAM;
+		   $dur = $row->duration;
+		 
+		   
+  
+  
+  
+  
 $pdf->SetFont('Arial', 'B', 10);
     $pdf->SetFillColor(245, 245, 245);
 
@@ -73,17 +135,48 @@ $pdf->SetFont('Arial', 'B', 10);
     $pdf->SetDrawColor(221, 221, 221);
     $pdf->SetLineWidth(0.4);
 
-    $pdf->Cell(60, 10, "Medication", 1, 0, 'C', true);
-    $pdf->Cell(25, 10, "Duration", 1, 1, 'C', true);
+    $pdf->Cell(40, 20, "Medication", 1, 0, 'C', true);
+	$pdf->Cell(20, 20, "Quantity", 1, 0, 'C', true);
+	$pdf->Cell(20, 10, "Morning", 1, 0, 'C', true);
+	$pdf->Cell(20, 10, "Afternoon", 1, 0, 'C', true);
+	$pdf->Cell(20, 10, "Night", 1, 0, 'C', true);
+	$pdf->Cell(20, 20, "Duration", 1, 0, 'C', true);
+	$pdf->Cell(50, 20, "Instructions", 1, 0, 'C', true);
+	
+	
+	
+	$pdf->Ln(10);
+	 $pdf->Cell(40, 20, "", 0, 0);
+	$pdf->Cell(20, 20, "", 0, 0);
+	$pdf->Cell(10, 10, "BM", 1, 0, 'C', true);
+	$pdf->Cell(10, 10, "AM", 1, 0, 'C', true);
+	$pdf->Cell(10, 10, "BM", 1, 0, 'C', true);
+	$pdf->Cell(10, 10, "AM", 1, 0, 'C', true);
+	$pdf->Cell(10, 10, "BM", 1, 0, 'C', true);
+	$pdf->Cell(10, 10, "AM", 1, 0, 'C', true);
+	
+	$pdf->Ln(10);
+    $pdf->Cell(40, 10, $pmed, 1, 0, 'C');
+	$pdf->Cell(20, 10, $pquant, 1, 0, 'C');
+	$pdf->Cell(10, 10, $mbm, 1, 0, 'C');
+	$pdf->Cell(10, 10, $mam, 1, 0, 'C');
+	$pdf->Cell(10, 10, $abm, 1, 0, 'C');
+	$pdf->Cell(10, 10, $aam, 1, 0, 'C');
+	$pdf->Cell(10, 10, $ebm, 1, 0, 'C');
+	$pdf->Cell(10, 10, $eam, 1, 0, 'C');
+	$pdf->Cell(20, 10, $dur, 1, 0, 'C');
+	$pdf->Cell(50, 10, $pinst, 1, 0, 'C');
+	
+	}
 
-$pdf->Ln(5);
 
-// $pdf->SetFont('Arial', 'B', 12);
-//     $pdf->SetTextColor(0);
-//     $pdf->SetFillColor(36, 140, 129);
-//     $pdf->SetLineWidth(0.4);
-//     $pdf->Cell(427, 25, "Item Description", 'LTR', 0, 'C', true);
-//     $pdf->Cell(100, 25, "Price", 'LTR', 1, 'C', true);
+
+
+
+
+//End of Body
+
+
 
 
 

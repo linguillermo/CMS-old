@@ -18,8 +18,19 @@
 
     <!-- Custom styles for this template -->
     <link href="css/style1.css" rel="stylesheet">
+
+    <!-- for appointment  calendar-->
+    <link href="appointment_plugins/css/date/style.css" rel="stylesheet">
+    <link href="appointment_plugins/css/date/style1.css" rel="stylesheet">
+    <link href="appointment_plugins/css/date/blocks.css" rel="stylesheet">
+    <link href="appointment_plugins/css/date/date/bootstrap-datepicker.css" rel="stylesheet">
+    <link href="appointment_plugins/css/date/date/bootstrap-datepicker3.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://formden.com/static/cdn/font-awesome/4.4.0/css/font-awesome.min.css" />
+    <link href="css/date/material.css" rel="stylesheet">
+
 </head>
 <body id="page-top" class="landing-page no-skin-config">
+
 <div class="navbar-wrapper">
         <nav class="navbar navbar-default navbar-fixed-top navbar-expand-md" role="navigation">
             <div class="container">
@@ -35,9 +46,9 @@
                         <li><a class="nav-link page-scroll" href="#services">Services</a></li>
 						<li><a class="nav-link page-scroll" href="#appointment">Appointment</a></li>
 						<li><a class="nav-link page-scroll" href="#team">About Us</a></li>
-                        
+
                         <li><a class="nav-link page-scroll" href="#contact">Contact</a></li>
-                        
+
                     </ul>
                 </div>
             </div>
@@ -69,7 +80,7 @@
         </div>
 
     </div>
-    
+
 </div>
 
 
@@ -165,65 +176,70 @@
 
 <section id="appointment" class="gray-section team">
     <div class="container">
-        <div class="row m-b-lg">
-            <div class="col-lg-12 text-center">
-                <div class="navy-line"></div>
-                <h1>Our Team</h1>
-                <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod.</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-4 wow fadeInLeft">
-                <div class="team-member">
-                    <img src="img/landing/avatar3.jpg" class="img-fluid rounded-circle img-small" alt="">
-                    <h4><span class="navy">Amelia</span> Smith</h4>
-                    <p>Lorem ipsum dolor sit amet, illum fastidii dissentias quo ne. Sea ne sint animal iisque, nam an soluta sensibus. </p>
-                    <ul class="list-inline social-icon">
-                        <li class="list-inline-item"><a href="#"><i class="fa fa-twitter"></i></a>
-                        </li>
-                        <li class="list-inline-item"><a href="#"><i class="fa fa-facebook"></i></a>
-                        </li>
-                        <li class="list-inline-item"><a href="#"><i class="fa fa-linkedin"></i></a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-sm-4">
-                <div class="team-member wow zoomIn">
-                    <img src="img/landing/avatar1.jpg" class="img-fluid rounded-circle" alt="">
-                    <h4><span class="navy">John</span> Novak</h4>
-                    <p>Lorem ipsum dolor sit amet, illum fastidii dissentias quo ne. Sea ne sint animal iisque, nam an soluta sensibus.</p>
-                    <ul class="list-inline social-icon">
-                        <li class="list-inline-item"><a href="#"><i class="fa fa-twitter"></i></a>
-                        </li>
-                        <li class="list-inline-item"><a href="#"><i class="fa fa-facebook"></i></a>
-                        </li>
-                        <li class="list-inline-item"><a href="#"><i class="fa fa-linkedin"></i></a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-sm-4 wow fadeInRight">
-                <div class="team-member">
-                    <img src="img/landing/avatar2.jpg" class="img-fluid rounded-circle img-small" alt="">
-                    <h4><span class="navy">Peter</span> Johnson</h4>
-                    <p>Lorem ipsum dolor sit amet, illum fastidii dissentias quo ne. Sea ne sint animal iisque, nam an soluta sensibus.</p>
-                    <ul class="list-inline social-icon">
-                        <li class="list-inline-item"><a href="#"><i class="fa fa-twitter"></i></a>
-                        </li>
-                        <li class="list-inline-item"><a href="#"><i class="fa fa-facebook"></i></a>
-                        </li>
-                        <li class="list-inline-item"><a href="#"><i class="fa fa-linkedin"></i></a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-12 text-center m-t-lg m-b-lg">
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut eaque, laboriosam veritatis, quos non quis ad perspiciatis, totam corporis ea, alias ut unde.</p>
-            </div>
-        </div>
+      <section id="promo-1" class="content-block promo-1 min-height-600px bg-offwhite">
+                  <div class="container">
+                      <div class="row">
+                          <div class="col-md-5">
+                              <h2>Make appointment today!</h2>
+                              <p>Click to make an appointment!</p>
+
+                              <!-- date textbox -->
+
+                              <div class="input-group" style="margin-bottom:10px;">
+                                  <div class="input-group-addon">
+                                      <i class="fa fa-calendar">
+                                      </i>
+                                  </div>
+                                  <input class="form-control" id="date" name="date" value="<?php echo date("Y-m-d")?>" onchange="showUser(this.value)"/>
+                              </div>
+
+                              <!-- date textbox end -->
+
+                              <!-- script start -->
+                              <script>
+                                  function showUser(str) {
+
+                                      if (str == "") {
+                                          document.getElementById("txtHint").innerHTML = "";
+                                          return;
+                                      } else {
+                                          if (window.XMLHttpRequest) {
+                                              // code for IE7+, Firefox, Chrome, Opera, Safari
+                                              xmlhttp = new XMLHttpRequest();
+                                          } else {
+                                              // code for IE6, IE5
+                                              xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                                          }
+                                          xmlhttp.onreadystatechange = function() {
+                                              if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                                                  document.getElementById("txtHint").innerHTML = xmlhttp.responseText;
+                                              }
+                                          };
+                                          xmlhttp.open("GET","appointment_plugins/getschedule.php?q="+str,true);
+                                          console.log(str);
+                                          xmlhttp.send();
+                                      }
+                                  }
+                              </script>
+
+                              <!-- script start end -->
+
+                              <!-- table appointment start -->
+                              <div id="txtHint"><b> </b></div>
+
+                              <!-- table appointment end -->
+                          </div>
+                          <!-- /.col -->
+                         <!--  <div class="col-md-6 col-md-offset-1">
+                              <div class="video-wrapper">
+                                  <iframe width="560" height="315" src="http://www.youtube.com/embed/FEoQFbzLYhc?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
+                              </div>
+                          </div> -->
+                          <!-- /.col -->
+                      </div>
+                      <!-- /.row -->
+                  </div>
+              </section>
     </div>
 </section>
 
@@ -631,7 +647,7 @@
         </div>
         <div class="row">
             <div class="col-lg-12 text-center">
-                
+
                 <p class="m-t-sm">
                     Follow us on social platform
                 </p>
@@ -665,7 +681,39 @@
 <script src="js/plugins/pace/pace.min.js"></script>
 <script src="js/plugins/wow/wow.min.js"></script>
 
+<!-- FOR CALENDAR/APPOINTMENT TAB-->
 
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="appointment_plugins/js/date/jquery.js"></script>
+<script src="appointment_plugins/js/date/date/bootstrap-datepicker.js"></script>
+<script src="appointment_plugins/js/date/moment.js"></script>
+<script src="appointment_plugins/js/date/transition.js"></script>
+<script src="appointment_plugins/js/date/collapse.js"></script>
+ <!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="appointment_plugins/js/date/bootstrap.min.js"></script>
+<script type="text/javascript">
+$('#myModal').on('shown.bs.modal', function () {
+$('#myInput').focus()
+})
+</script>
+<!-- date start -->
+
+<script>
+$(document).ready(function(){
+    var date_input=$('input[name="date"]'); //our date input has the name "date"
+    var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+    date_input.datepicker({
+        format: 'yyyy-mm-dd',
+        container: container,
+        todayHighlight: true,
+        autoclose: true,
+    })
+
+})
+
+</script>
+
+<!-- date end -->
 <script>
 
     $(document).ready(function () {
@@ -720,6 +768,63 @@
     new WOW().init();
 
 </script>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="js/date/jquery.js"></script>
+<script src="js/date/date/bootstrap-datepicker.js"></script>
+<script src="js/date/moment.js"></script>
+<script src="js/date/transition.js"></script>
+<script src="js/date/collapse.js"></script>
+ <!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="js/date/bootstrap.min.js"></script>
+<script type="text/javascript">
+$('#myModal').on('shown.bs.modal', function () {
+$('#myInput').focus()
+})
+</script>
+<!-- date start -->
 
+<script>
+$(document).ready(function(){
+    var date_input=$('input[name="date"]'); //our date input has the name "date"
+    var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+    date_input.datepicker({
+        format: 'yyyy-mm-dd',
+        container: container,
+        todayHighlight: true,
+        autoclose: true,
+    })
+
+})
+
+</script>
+
+<!-- date end -->
+
+<!-- Chat Code Start -->
+<!-- Load Facebook SDK for JavaScript -->
+      <div id="fb-root"></div>
+      <script>
+        window.fbAsyncInit = function() {
+          FB.init({
+            xfbml            : true,
+            version          : 'v10.0'
+          });
+        };
+
+        (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = 'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js';
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));</script>
+
+      <!-- Your Chat Plugin code -->
+      <div class="fb-customerchat"
+        attribution="setup_tool"
+        page_id="103559001863075">
+      </div>
+<!-- Chat Code End -->
+</html>
 </body>
 </html>

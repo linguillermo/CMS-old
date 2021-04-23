@@ -65,12 +65,17 @@ check_login();
 
                 </li>
 
-                <li>
-                    <a href="appointmentStaff.php"><i class="fa fa-calendar"></i> <span class="nav-label">Appointments</span>  </a>
-                </li>
+								<li>
+									<a href="#"><i class="fa fa-calendar"></i> <span class="nav-label">Appointments</span><span class="fa arrow"></span></a>
+									<ul class="nav nav-second-level collapse">
+											<li class="active"><a href="appointmentStaff.php">Appointment List</a></li>
+											<li><a href="addSchedule.php">Doctor Schedule</a></li>
+									</ul>
+								</li>
 
                 <li>
-                    <a href="manage-medicines.php"><i class="fa fa-medkit"></i> <span class="nav-label">Medicine Stocks</span></a>
+
+                    <a href="Inventory/inventory.php"><i class="fa fa-medkit"></i> <span class="nav-label">Medicine Stocks</span></a>
 
                 </li>
 
@@ -102,10 +107,6 @@ check_login();
                 <li>
                     <span class="m-r-sm text-muted welcome-message">Welcome to Clinica Abeleda</span>
                 </li>
-
-
-
-
                 <li>
                     <a href="logout.php">
                         <i class="fa fa-sign-out"></i> Log out

@@ -74,7 +74,7 @@ alert('Added fail. Please try again.');
                 <ul class="nav metismenu" id="side-menu">
                     <li class="nav-header">
                         <div class="dropdown profile-element">
-                            <img alt="image" class="rounded-circle" src="../img/New Project.png"/>
+                            <img alt="image" class="rounded-circle" src="insp/img/New Project.png"//>
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                                 <span class="block m-t-xs font-bold">Anna Santos</span>
                                 <span class="text-muted text-xs block">Staff<b class="caret"></b></span>
@@ -92,28 +92,25 @@ alert('Added fail. Please try again.');
                         </div>
                     </li>
                     <li>
-                        <a href="staff-dashboard.html"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboard</span></a>
+                        <a href="dashboard.php"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboard</span></a>
 
                     </li>
                     <li>
-                        <a href="staff-patient-records.html"><i class="fa fa-table"></i> <span class="nav-label">Patients</span></a>
+                        <a href="manage-patient.php"><i class="fa fa-id-card"></i> <span class="nav-label">Patient Records</span></a>
 
                     </li>
 
-                    <li class="active">
-                      <a href="#"><i class="fa fa-calendar"></i> <span class="nav-label">Appointments</span><span class="fa arrow"></span></a>
-                      <ul class="nav nav-second-level collapse">
-                          <li><a href="appointmentStaff.php">Appointment List</a></li>
-                          <li class="active"><a href="addSchedule.php">Doctor Schedule</a></li>
-                      </ul>
-                    </li>
+    								<li class="active">
+    									<a href="#"> <i class="fa fa-calendar"></i> <span class="nav-label">Appointments</span><span class="fa arrow"></span></a>
+    									<ul class="nav nav-second-level collapse">
+    											<li><a href="appointmentStaff.php">Appointment List</a></li>
+    											<li class= "active"><a href="addSchedule.php">Doctor Schedule</a></li>
+    									</ul>
+    								</li>
 
-                    <li>
-                        <a href="#"><i class="fa fa-table"></i> <span class="nav-label">Medicine Stocks</span><span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level collapse">
-                            <li><a href="">Medicines</a></li>
-                            <li class="active"><a href="staff-stocks.html">Stocks</a></li>
-                        </ul>
+    								<li>
+                        <a href="Inventory/inventory.php"><i class="fa fa-medkit"></i> <span class="nav-label">Medicine Stocks</span></a>
+
                     </li>
                 </ul>
 
@@ -197,7 +194,7 @@ alert('Added fail. Please try again.');
                                </div>
                               </div>
                              </div>
-                             <div class="form-group form-group-lg">
+                             <!-- <div class="form-group form-group-lg">
                               <label class="control-label col-sm-2 requiredField" for="scheduleday">
                                Day
                                <span class="asteriskField">
@@ -229,7 +226,7 @@ alert('Added fail. Please try again.');
                                 </option>
                                </select>
                               </div>
-                             </div>
+                             </div> -->
                              <div class="form-group form-group-lg">
                               <label class="control-label col-sm-2 requiredField" for="starttime">
                                Start Time
@@ -321,7 +318,7 @@ alert('Added fail. Please try again.');
                             <tr class="filters">
                                 <th><input type="text" class="form-control" placeholder="scheduleId" disabled></th>
                                 <th><input type="text" class="form-control" placeholder="scheduleDate" disabled></th>
-                                <th><input type="text" class="form-control" placeholder="scheduleDay" disabled></th>
+                                <!-- <th><input type="text" class="form-control" placeholder="scheduleDay" disabled></th> -->
                                 <th><input type="text" class="form-control" placeholder="startTime." disabled></th>
                                 <th><input type="text" class="form-control" placeholder="endTime" disabled></th>
                                 <th><input type="text" class="form-control" placeholder="bookAvail" disabled></th>
@@ -340,7 +337,7 @@ alert('Added fail. Please try again.');
                             echo "<tr>";
                                 echo "<td>" . $doctorschedule['scheduleId'] . "</td>";
                                 echo "<td>" . $doctorschedule['scheduleDate'] . "</td>";
-                                echo "<td>" . $doctorschedule['scheduleDay'] . "</td>";
+                                // echo "<td>" . $doctorschedule['scheduleDay'] . "</td>";
                                 echo "<td>" . $doctorschedule['startTime'] . "</td>";
                                 echo "<td>" . $doctorschedule['endTime'] . "</td>";
                                 echo "<td>" . $doctorschedule['bookAvail'] . "</td>";

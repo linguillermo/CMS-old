@@ -56,21 +56,29 @@
                         </div>
                     </li>
                     <li>
+<<<<<<< HEAD
                         <a href="staff/dashboard.html"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboard</span></a>
+=======
+                        <a href="../dashboard.php"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboard</span></a>
+>>>>>>> edd85bfc147d01d4fd0538490c8aa697f0d21b8d
 
                     </li>
                     <li>
-                        <a href="staff-patient-records.html"><i class="fa fa-table"></i> <span class="nav-label">Patients</span></a>
+                        <a href="../manage-patient.php"><i class="fa fa-id-card"></i> <span class="nav-label">Patient Records</span></a>
 
                     </li>
 
                     <li>
-                        <a href="staff-approved-appointments.html"><i class="fa fa-calendar"></i> <span class="nav-label">Appointments</span>  </a>
+                      <a href="#"><i class="fa fa-calendar"></i> <span class="nav-label">Appointments</span><span class="fa arrow"></span></a>
+                      <ul class="nav nav-second-level collapse">
+                          <li><a href="../appointmentStaff.php">Appointment List</a></li>
+                          <li><a href="../addSchedule.php">Doctor Schedule</a></li>
+                      </ul>
                     </li>
 
                     <li class="active">
-                        <a href="#"><i class="fa fa-table"></i> <span class="nav-label">Medicine Stocks</span><span class="fa arrow"></span></a>
-                       
+                        <a href="#"><i class="fa fa-table"></i> <span class="nav-label">Medicine Stocks</span></a>
+
                     </li>
                 </ul>
 
@@ -116,14 +124,14 @@
                                 <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModal5">
                                     Add Stocks
                                 </button>
-				
+
                                 <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#myModal6">
                                  QTY
-                                </button>																								
+                                </button>
 									</div>
-								
- <!---------------Modal5 - Add Stocks    -->								
-                            
+
+ <!---------------Modal5 - Add Stocks    -->
+
                             <!-- Start of modal -->
                             <div class="modal inmodal fade" id="myModal5" tabindex="-1" role="dialog"  aria-hidden="true">
                                 <div class="modal-dialog modal-md">
@@ -151,14 +159,14 @@
                                                         <div class="col-sm-8"><input type="text" class="form-control" name="quant" id="quant" min="1" max="">
                                                         </div>
                                                     </div>
-													
+
 													<div class="hr-line-dashed"></div>
                                                     <div class="form-group row"><label class="col-sm-4 col-form-label">Formulation</label>
                                                         <div class="col-sm-8"><input type="text" class="form-control" name="formulation" required>
-														
+
                                                         </div>
                                                     </div>
-													
+
 
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-white" data-dismiss="modal">Cancel</button>
@@ -168,11 +176,11 @@
                                         </div>
                                     </div>
                                 </div>
-							
+
                         <!-- End of modal -->
-					
-							
-							
+
+
+
 <!--- start of Modal 6 ------------------------------------------------------------------------------------->
 
 			<div class="modal inmodal fade" id="myModal6" tabindex="-1" role="dialog"  aria-hidden="true">
@@ -185,21 +193,21 @@
                                         </div>
                                         <div class="modal-body">
                                                 <form method="POST" action="order.php">
-												
-                                                
+
+
                                                     <div class="form-group row"><label class="col-sm-4 col-form-label">Product Name</label>
                                                         <div class="col-sm-8"><input type="text" class="form-control" name="product_name" required> </div>
-														
+
 														</div>
                                                     <div class="hr-line-dashed"></div>
                                                     <div class="form-group row"><label class="col-sm-4 col-form-label">Dosage</label>
                                                         <div class="col-sm-8"><input type="text" class="form-control" name="dosage">
                                                         </div>
-														
-														
-														
-														 
-										                                   
+
+
+
+
+
 																			<div class="col-lg-2">
 																				<div class="input-group">
 																					<span class="input-group-btn">
@@ -211,38 +219,38 @@
 				                                    					<span class="input-group-btn">
 				                                        					<button type="button" class="quantity-right-plus btn btn-success btn-number" data-type="plus" data-field="">
 				                                            					<span class="glyphicon glyphicon-plus"></span>
-				                                        					</button>	
+				                                        					</button>
 
-																			
-				                                        					
-																						<button type="submit" class="btn btn-primary" name="order">Submit</button>																	
-									
+
+
+																						<button type="submit" class="btn btn-primary" name="order">Submit</button>
+
                                                             </div>
-															
-															
+
+
                                                     </div>
                                                     	</div>
                                         </div>
 	                                 </div>
                                  </div>
-                                 
+
 </div>
 <!---End of Modal 6	--------------------------------------------------------------------------------------->
-						
-							
-<!--- start of Display Screen/ Refresh----------------------------------------------------------------------->                        
+
+
+<!--- start of Display Screen/ Refresh----------------------------------------------------------------------->
 <!-- Add stockcs -->
                        <div class="ibox-content">
-                          
+
                                <input type="text" class="form-control form-control-sm m-b-xs" id="filter"
                                    placeholder="Search for Medicine">
-                         
-                         
+
+
 
                             <table class="footable table table-stripped" data-page-size="10" data-filter=#filter>
                                 <thead>
                                     <tr>
-									  
+
                                         <th style="width:20%;"># </th>
                                         <th style="width:20%;">Medicine </th>
                                         <th style="width:20%;">Dosage </th>
@@ -250,7 +258,7 @@
                                         <th style="width:20%;">Formulation</th>
 										<th style="width:20%;">Action</th>
                                     </tr>
-									
+
 					<tbody>
                                     <?php
                                      $conn = new mysqli("localhost","root","","hms");
@@ -268,35 +276,35 @@
                                          <tr>
                                           <td><?php echo $count ?></td>
                                             <td><?php echo $row["product_name"] ?></td>
-                                            <td><?php echo $row["dosage"]  ?></td>   
+                                            <td><?php echo $row["dosage"]  ?></td>
                                             <td><?php echo $row["quantity"]  ?></td>
 											<td><?php echo $row["formulation"]  ?></td>
-											<td> 
-                           
+											<td>
+
 						 </div>
-						 
-<!--- End of Display Screen/ Refresh-----------------------------------------------------------------------> 	
-	
-						 						                                                   					
-					    
-					  <a href="edit.php?id=<?php echo $row["product_id"] ?>" class="btn btn-info btn-xs">Edit</a> 
-					  
-					  
-								
-                                                 
-                                               
+
+<!--- End of Display Screen/ Refresh----------------------------------------------------------------------->
+
+
+
+					  <a href="edit.php?id=<?php echo $row["product_id"] ?>" class="btn btn-info btn-xs">Edit</a>
+
+
+
+
+
 	                <a href="delete.php?id=<?php echo $row["product_id"] ?>" class="btn btn-danger btn-xs">Delete</a>
-					  
-					  
-											   
-										
-										  
+
+
+
+
+
                                   <?php
 
                                        }
                                      }
 
-                                  ?> 
+                                  ?>
                 </tbody>
                                 <tfoot>
                                 <tr>
@@ -304,8 +312,8 @@
                                         <ul class="pagination float-right" ></ul>
                                     </td>
                                 </tr>
-                               
-                                  
+
+
                                 </tfoot>
                             </table>
                         </div>
@@ -313,7 +321,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="footer">
             <div>
                 <strong>Copyright</strong> Clinica Abeleda &copy; 2020
@@ -367,26 +375,26 @@
 
 
     </script>
-	
+
 	<script>
-	
+
 	 $(document).ready(function(){
 
 var quantitiy=0;
    $('.quantity-right-plus').click(function(e){
-        
+
         // Stop acting like a button
         e.preventDefault();
         // Get the field name
         var quantity = parseInt($('#quantity').val());
-        
+
         // If is not undefined
-            
+
             $('#quantity').val(quantity + 1);
 
-          
+
             // Increment
-        
+
     });
 
      $('.quantity-left-minus').click(function(e){
@@ -394,19 +402,19 @@ var quantitiy=0;
         e.preventDefault();
         // Get the field name
         var quantity = parseInt($('#quantity').val());
-        
+
         // If is not undefined
-      
+
             // Increment
             if(quantity>0){
             $('#quantity').val(quantity - 1);
             }
     });
-    
+
 });
-	
+
 	</script>
-	
+
 	<script>
 			$(document).ready(function() {
 
@@ -416,7 +424,7 @@ var quantitiy=0;
 			});
 
 	</script>
-	
+
 	<script>
 			jQuery(document).ready(function() {
 				Main.init();
