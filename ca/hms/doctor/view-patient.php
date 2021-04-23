@@ -307,7 +307,18 @@ if(isset($_POST['save']))
                                                 </div></div>
 
                                                 <label class="col-sm-1 col-form-label">Gender</label>
-                                                <div class="col-sm-4"><input type="text" name="gender" value="<?php  echo $patgender;?>" class="form-control">
+                                                <!-- <div class="col-sm-4"><input type="text" name="gender" value="<?php  echo $patgender;?>" class="form-control">
+                                                </div> -->
+
+                                                <div class="col-sm-4">
+                                                  <!-- <input type="text" name="gender" class="form-control"> -->
+
+                                                  <select class="form-control m-b" name="gender" placeholder="<?php  echo $patgender;?>">
+                                                      <option value="Male">Male</option>
+                                                      <option value="Female">Female</option>
+
+                                                  </select>
+
                                                 </div>
 
 

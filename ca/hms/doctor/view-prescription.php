@@ -121,7 +121,7 @@ if (isset($_POST["addInvoice"]))
 
   							</li>
                 <li>
-                    <a href="doctor-approved-appointments.html"><i class="fa fa-calendar"></i> <span class="nav-label">Appointments</span>  </a>
+                    <a href="appointment-history.php"><i class="fa fa-calendar"></i> <span class="nav-label">Appointments</span>  </a>
                 </li>
             </ul>
 
