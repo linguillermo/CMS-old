@@ -6,6 +6,7 @@ include('include/config.php');
 include('include/checklogin.php');
 check_login();
 
+mysqli_query($con,"DELETE FROM tblpatient WHERE (UpdationDate < NOW() - INTERVAL 10 YEAR)");
 
 
 ?>
@@ -76,7 +77,7 @@ check_login();
 								</li>
 
 								<li>
-                    <a href="Inventory/inventory.php"><i class="fa fa-medkit"></i> <span class="nav-label">Medicine Stocks</span></a>
+                    <a href="manage-medicines.php"><i class="fa fa-medkit"></i> <span class="nav-label">Medicine Stocks</span></a>
 
                 </li>
 

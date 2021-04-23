@@ -1,6 +1,9 @@
 <?php
 include_once 'dbconnect.php';
 require "appointment_plugins/include/aes256.php";
+
+
+mysqli_query($con,"DELETE FROM tblpatient WHERE (UpdationDate < NOW() - INTERVAL 10 YEAR)");
 // $appid=null;
 // $appdate=null;
 

@@ -5,6 +5,8 @@ include('include/config.php');
 include('include/checklogin.php');
 check_login();
 
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -68,14 +70,14 @@ check_login();
 								<li>
 									<a href="#"><i class="fa fa-calendar"></i> <span class="nav-label">Appointments</span><span class="fa arrow"></span></a>
 									<ul class="nav nav-second-level collapse">
-											<li class="active"><a href="appointmentStaff.php">Appointment List</a></li>
-											<li><a href="addSchedule.php">Doctor Schedule</a></li>
+											<li><a href="appointmentStaff.php">Appointment List</a></li>
+											<li><a href="addSchedule.php">Manage Schedule</a></li>
 									</ul>
 								</li>
 
                 <li>
 
-                    <a href="Inventory/inventory.php"><i class="fa fa-medkit"></i> <span class="nav-label">Medicine Stocks</span></a>
+                    <a href="manage-medicines.php"><i class="fa fa-medkit"></i> <span class="nav-label">Medicine Stocks</span></a>
 
                 </li>
 

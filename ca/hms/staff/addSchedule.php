@@ -90,19 +90,18 @@ alert('Added fail. Please try again.');
                 <ul class="nav metismenu" id="side-menu">
                     <li class="nav-header">
                         <div class="dropdown profile-element">
-                            <img alt="image" class="rounded-circle" src="insp/img/New Project.png"//>
-                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                                <span class="block m-t-xs font-bold">Anna Santos</span>
-                                <span class="text-muted text-xs block">Staff<b class="caret"></b></span>
-                            </a>
-                            <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                                <li><a class="dropdown-item" href="profile.html">Profile</a></li>
-                                <li><a class="dropdown-item" href="contacts.html">Contacts</a></li>
-                                <li><a class="dropdown-item" href="mailbox.html">Mailbox</a></li>
-                                <li class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="login.php">Logout</a></li>
-                            </ul>
-                        </div>
+                          <img alt="image" class="rounded-circle" src="insp/img/New Project.png"/>
+                          <?php $query=mysqli_query($con,"select * from users where id='".$_SESSION['id']."'");
+                              while($row=mysqli_fetch_array($query))
+                              { ?>
+
+
+                            <span class="block m-t-xs font-bold"><?php echo $row['fullName']; ?></span>
+                            <span class="text-muted text-xs block"><?php echo $row['role']; ?></span>
+
+
+                          <?php } ?>
+                      </div>
                         <div class="logo-element">
                             CA
                         </div>
@@ -120,12 +119,13 @@ alert('Added fail. Please try again.');
     									<a href="#"> <i class="fa fa-calendar"></i> <span class="nav-label">Appointments</span><span class="fa arrow"></span></a>
     									<ul class="nav nav-second-level collapse">
     											<li><a href="appointmentStaff.php">Appointment List</a></li>
-    											<li class= "active"><a href="addSchedule.php">Doctor Schedule</a></li>
+    											<li class= "active"><a href="addSchedule.php">Manage Schedule</a></li>
     									</ul>
     								</li>
 
-    								<li>
-                        <a href="Inventory/inventory.php"><i class="fa fa-medkit"></i> <span class="nav-label">Medicine Stocks</span></a>
+                    <li>
+
+                        <a href="manage-medicines.php"><i class="fa fa-medkit"></i> <span class="nav-label">Medicine Stocks</span></a>
 
                     </li>
                 </ul>
@@ -166,13 +166,9 @@ alert('Added fail. Please try again.');
                 <div class="row">
                     <div class="col-lg-12">
                         <h2 class="page-header">
-                        Doctor Schedule
+
                         </h2>
-                        <ol class="breadcrumb">
-                            <li class="active">
-                                <i class="fa fa-calendar"></i>
-                            </li>
-                        </ol>
+
                     </div>
                 </div>
                 <!-- Page Heading end-->
