@@ -159,7 +159,7 @@ check_login();
 																					<td class="center"><?php echo $cnt;?>.</td>
 																					<!-- <td class="hidden-xs"><?php echo $row['uid'];?></td> -->
 																					<td><?php echo $row['username'];?></td>
-																					<td><?php echo date('F j, Y, g:i a', strtotime($row['loginTime']));?></td>
+																					<td><?php echo date('F j, Y, g:i a', $row['loginTime']);?></td>
 																					<td><?php echo $row['userip'];?></td>
 
 																					<td>
