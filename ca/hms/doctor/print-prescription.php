@@ -1,5 +1,7 @@
 <?php
+
   include_once 'FPDF/fpdf.php';
+    require "include/aes256.php";
   $pdf = new FPDF('P','mm','Letter');
   $pdf->AddPage();
   
@@ -78,15 +80,15 @@ $pdf->Cell(5, 10, "", 'T', 0, 'C');
 
 $pdf->Ln(5);
 $pdf->SetFont("Arial","",12);
-$pdf->Cell(90, 5,$pname, 0, 1 );
+$pdf->Cell(90, 5,$decryptSample = decryptthis( $pname, key), 0, 1 );
 
 
 $pdf->SetFont("Arial","",10);
 
 	
-$pdf->Cell(90, 5,$paddress, 0, 1 );
+$pdf->Cell(90, 5,$decryptSample = decryptthis( $paddress, key), 0, 1 );
 
-$pdf->Cell(90, 5,$pphone, 0, 1 );
+$pdf->Cell(90, 5,$decryptSample = decryptthis( $pphone, key), 0, 1 );
 
 $pdf->Ln();
 
@@ -104,9 +106,42 @@ $pdf->Cell(60, 5, $date, 0, 1 );
 }
 
 $pdf->Ln(5);
+ 
+  
+$pdf->SetFont('Arial', 'B', 10);
+    $pdf->SetFillColor(245, 245, 245);
 
-						
-			 $prescid=$_GET['prescid'];
+    $pdf->SetTextColor(85, 85, 85);
+    $pdf->SetDrawColor(221, 221, 221);
+    $pdf->SetLineWidth(0.4);
+	
+    $pdf->Ln(9);
+    $pdf->Cell(60, 20, "Medication", 1, 0, 'C', true);
+	$pdf->Cell(20, 20, "Quantity", 1, 0, 'C', true);
+	$pdf->Cell(20, 10, "Morning", 1, 0, 'C', true);
+	$pdf->Cell(20, 10, "Afternoon", 1, 0, 'C', true);
+	$pdf->Cell(20, 10, "Night", 1, 0, 'C', true);
+	$pdf->Cell(20, 20, "Duration", 1, 0, 'C', true);
+	$pdf->Cell(40, 20, "Instructions", 1, 0, 'C', true);
+	
+	
+	
+	$pdf->Ln(9);
+	 $pdf->Cell(40, 20, "", 0, 0);
+	$pdf->Cell(40, 20, "", 0, 0);
+	$pdf->Cell(10, 10, "BM", 1, 0, 'C', true);
+	$pdf->Cell(10, 10, "AM", 1, 0, 'C', true);
+	$pdf->Cell(10, 10, "BM", 1, 0, 'C', true);
+	$pdf->Cell(10, 10, "AM", 1, 0, 'C', true);
+	$pdf->Cell(10, 10, "BM", 1, 0, 'C', true);
+	$pdf->Cell(10, 10, "AM", 1, 0, 'C', true);
+	
+	
+	$pdf->Ln(10);
+	$pdf->SetFont('Arial', 'B', 8 );
+
+	
+	 $prescid=$_GET['prescid'];
 			$select="select * from tblprescription where prescID='$prescid'";
 			$result = $conn->query($select);
 			
@@ -122,51 +157,22 @@ $pdf->Ln(5);
 		   $ebm = $row->eveningBM; 
 		   $eam = $row->eveningAM;
 		   $dur = $row->duration;
-		 
-		   
+		   $pdf->Cell(60, 10, $decryptSample = decryptthis( $pmed, key), 1, 0, 'C');
+	       $pdf->Cell(20, 10, $decryptSample = decryptthis( $pquant, key), 1, 0, 'C');
+	       $pdf->Cell(10, 10, $decryptSample = decryptthis( $mbm, key), 1, 0, 'C');
+	       $pdf->Cell(10, 10, $decryptSample = decryptthis( $mam, key), 1, 0, 'C');
+			$pdf->Cell(10, 10, $decryptSample = decryptthis( $abm, key), 1, 0, 'C');
+			$pdf->Cell(10, 10, $decryptSample = decryptthis( $aam, key), 1, 0, 'C');
+			$pdf->Cell(10, 10, $decryptSample = decryptthis( $ebm, key), 1, 0, 'C');
+			$pdf->Cell(10, 10, $decryptSample = decryptthis( $eam, key), 1, 0, 'C');
+			$pdf->Cell(20, 10, $decryptSample = decryptthis( $dur, key), 1, 0, 'C');
+			$pdf->Cell(40, 10, $decryptSample = decryptthis( $pinst, key), 1, 0, 'C');
+			$pdf->Ln();
+				 
+	
+	
+	
   
-  
-  
-  
-$pdf->SetFont('Arial', 'B', 10);
-    $pdf->SetFillColor(245, 245, 245);
-
-    $pdf->SetTextColor(85, 85, 85);
-    $pdf->SetDrawColor(221, 221, 221);
-    $pdf->SetLineWidth(0.4);
-
-    $pdf->Cell(40, 20, "Medication", 1, 0, 'C', true);
-	$pdf->Cell(20, 20, "Quantity", 1, 0, 'C', true);
-	$pdf->Cell(20, 10, "Morning", 1, 0, 'C', true);
-	$pdf->Cell(20, 10, "Afternoon", 1, 0, 'C', true);
-	$pdf->Cell(20, 10, "Night", 1, 0, 'C', true);
-	$pdf->Cell(20, 20, "Duration", 1, 0, 'C', true);
-	$pdf->Cell(50, 20, "Instructions", 1, 0, 'C', true);
-	
-	
-	
-	$pdf->Ln(10);
-	 $pdf->Cell(40, 20, "", 0, 0);
-	$pdf->Cell(20, 20, "", 0, 0);
-	$pdf->Cell(10, 10, "BM", 1, 0, 'C', true);
-	$pdf->Cell(10, 10, "AM", 1, 0, 'C', true);
-	$pdf->Cell(10, 10, "BM", 1, 0, 'C', true);
-	$pdf->Cell(10, 10, "AM", 1, 0, 'C', true);
-	$pdf->Cell(10, 10, "BM", 1, 0, 'C', true);
-	$pdf->Cell(10, 10, "AM", 1, 0, 'C', true);
-	
-	$pdf->Ln(10);
-    $pdf->Cell(40, 10, $pmed, 1, 0, 'C');
-	$pdf->Cell(20, 10, $pquant, 1, 0, 'C');
-	$pdf->Cell(10, 10, $mbm, 1, 0, 'C');
-	$pdf->Cell(10, 10, $mam, 1, 0, 'C');
-	$pdf->Cell(10, 10, $abm, 1, 0, 'C');
-	$pdf->Cell(10, 10, $aam, 1, 0, 'C');
-	$pdf->Cell(10, 10, $ebm, 1, 0, 'C');
-	$pdf->Cell(10, 10, $eam, 1, 0, 'C');
-	$pdf->Cell(20, 10, $dur, 1, 0, 'C');
-	$pdf->Cell(50, 10, $pinst, 1, 0, 'C');
-	
 	}
 
 

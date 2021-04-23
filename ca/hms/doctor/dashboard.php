@@ -5,11 +5,14 @@ include('include/config.php');
 include('include/checklogin.php');
 check_login();
 
+
+
+
 if (isset($_POST['addTask']))
 {
 	$task = $_POST['taskInput'];
 
-	$queryTask = ($con,"INSERT INTO tbltodo value ('$task')");
+	$queryTask = ("INSERT INTO tbltodo value ('$task')");
 
 	if ($queryTask)
 	{
