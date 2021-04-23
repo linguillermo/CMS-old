@@ -23,10 +23,12 @@ $patcontact=encryptthis($_POST['patcontact'], key);
 $pataddress=encryptthis($_POST['pataddress'], key);
 $patbday=encryptthis($_POST['patbday'], key);
 //$patage=$_POST['patage'];
-$patbday1 = explode("/", $patbday);
-$patage = (date("md", date("U", mktime(0, 0, 0, $patbday1[0], $patbday1[1], $patbday1[2]))) > date("md")
+$patbday2=$_POST['patbday'];
+$patbday1 = explode("/", $patbday2);
+$patage1 = (date("md", date("U", mktime(0, 0, 0, $patbday1[0], $patbday1[1], $patbday1[2]))) > date("md")
     ? ((date("Y") - $patbday1[2]) - 1)
     : (date("Y") - $patbday1[2]));
+$patage = encryptthis($patage1, key);
 $gender=encryptthis($_POST['gender'], key);
 $patoccupation=encryptthis($_POST['patoccupation'],key);
 
@@ -218,7 +220,15 @@ error:function (){}
                                                         </div></div>
 
 																												<label class="col-sm-1 col-form-label">Gender</label>
-                                                        <div class="col-sm-4"><input type="text" name="gender" class="form-control">
+                                                        <div class="col-sm-4">
+																													<!-- <input type="text" name="gender" class="form-control"> -->
+
+																													<select class="form-control m-b" name="gender">
+											                                        <option value="Male">Male</option>
+											                                        <option value="Female">Female</option>
+
+											                                    </select>
+
                                                         </div>
 
 

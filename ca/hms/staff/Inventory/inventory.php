@@ -55,7 +55,11 @@
                         </div>
                     </li>
                     <li>
+<<<<<<< HEAD
+                        <a href="staff/dashboard.html"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboard</span></a>
+=======
                         <a href="../dashboard.php"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboard</span></a>
+>>>>>>> edd85bfc147d01d4fd0538490c8aa697f0d21b8d
 
                     </li>
                     <li>

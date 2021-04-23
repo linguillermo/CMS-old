@@ -36,6 +36,8 @@ if(isset($_POST['submit']))
 
 if (isset($_POST["addInvoice"]))
 	{
+
+
     //for logs
     $username = $_SESSION['dlogin'];
     $id = $_SESSION['id'];
@@ -43,6 +45,7 @@ if (isset($_POST["addInvoice"]))
     $status = "1";
 
 		$patientID = $_GET['viewid'];
+
 
     $log = "INSERT INTO userlog (uid,username,userip,status)
            VALUES ('$uId','$username','$userip','$status')";
@@ -69,7 +72,7 @@ if (isset($_POST["addInvoice"]))
       mysqli_query($con, $log);
 		}
 
-		echo "<p>Invoice has been added.</p>";
+		echo "<script>window.location.href ='view-prescription.php?viewid=$patientID&prescid=$prescID'</script>";
 	}
 
 ?>
@@ -380,8 +383,15 @@ if (isset($_POST["addInvoice"]))
 			// html += "<td>" + items + "</td>";
 			// html += "<td><input type='text' name='Medication[]'></td>";
 
-      html += "<td style='width:20%'><input type='text'  style='width:100%' name='Medication[]'></td>";
-	    html += "<td style='width:10%'><input type='text'  style='width:100%' name='Type[]'></td>";
+      // html += "<td style='width:20%'><input type='text'  style='width:100%' name='Medication[]'></td>";
+
+
+      html += "<td style='width:20%;'><select data-placeholder='Choose a Medicine...'  name='Medication[]' class='chosen-select'  tabindex='2'><?php $ret=mysqli_query($con,"select * from medicines"); while ($row=mysqli_fetch_array($ret)) {?><option value='<?php  echo $row['medicine_name'];?> <?php  echo $row['dosage'];?> (<?php  echo $row['formulation'];?>)'><?php  echo $row['medicine_name'];?> <?php  echo $row['dosage'];?> (<?php  echo $row['formulation'];?>)</option><?php } ?></select></td>";
+      html += "<td style='width:10%;'><select data-placeholder='Choose a Medicine...'  name='Type[]' class='chosen-select'  tabindex='2'><option value='Oral'>Oral</option><option value='Topical'>Topical</option></select></td>";
+
+
+
+	    // html += "<td style='width:10%'><input type='text'  style='width:100%' name='Type[]'></td>";
       html += "<td style='width:5%'><input type='text' style='width:100%' name='Quantity[]'></td>";
       html += "<td style='width:5%'><input type='text' style='width:100%' name='morningBM[]'></td>";
       html += "<td style='width:5%'><input type='text' style='width:100%' name='morningAM[]'></td>";

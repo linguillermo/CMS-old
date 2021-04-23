@@ -42,16 +42,21 @@ if(isset($_POST['save']))
   $status = "1";
 
 	$eid=$_GET['viewid'];
-	$patname=$_POST['patname'];
-  $patcontact=$_POST['patcontact'];
-  $pataddress=$_POST['pataddress'];
-  $patbday=$_POST['patbday'];
-  $patbday1 = explode("/", $patbday);
-  $patage = (date("md", date("U", mktime(0, 0, 0, $patbday1[0], $patbday1[1], $patbday1[2]))) > date("md")
+	$patname=encryptthis($_POST['patname'], key);
+  $patcontact=encryptthis($_POST['patcontact'], key);
+  $pataddress=encryptthis($_POST['pataddress'], key);
+  $patbday=encryptthis($_POST['patbday'], key);
+
+  $patbday2=$_POST['patbday'];
+  $patbday1 = explode("/", $patbday2);
+
+
+  $patage1 = (date("md", date("U", mktime(0, 0, 0, $patbday1[0], $patbday1[1], $patbday1[2]))) > date("md")
       ? ((date("Y") - $patbday1[2]) - 1)
       : (date("Y") - $patbday1[2]));
-  $gender=$_POST['gender'];
-  $patoccupation=$_POST['patoccupation'];
+  $patage = encryptthis($patage1, key);
+  $gender=encryptthis($_POST['gender'], key);
+  $patoccupation=encryptthis($_POST['patoccupation'], key);
 
   $log = "INSERT INTO userlog (uid,username,userip,status)
             VALUES ('$uId','$username','$userip','$status')";
@@ -175,6 +180,8 @@ if(isset($_POST['save']))
                                   $patientContact=decryptthis($row['PatientContno'], key);
                                   $patadd=decryptthis($row['PatientAdd'], key);
                                   $patoccupt=decryptthis($row['PatientOccupation'], key);
+                                  $patbday=decryptthis($row['PatientBday'], key);
+                                  $patage=decryptthis($row['PatientAge'], key);
                              ?>
 
           <div class="ibox">
@@ -209,11 +216,11 @@ if(isset($_POST['save']))
                           </dl>
                           <dl class="row mb-0">
                               <div class="col-sm-4 text-sm-right"><dt>Date of Birth:</dt> </div>
-                              <div class="col-sm-8 text-sm-left"> <dd class="mb-1"><?php echo date('F j, Y', strtotime($row['PatientBday']));?></dd></div>
+                              <div class="col-sm-8 text-sm-left"> <dd class="mb-1"><?php echo date('F j, Y', strtotime($patbday));?></dd></div>
                           </dl>
                           <dl class="row mb-0">
                               <div class="col-sm-4 text-sm-right"> <dt>Age:</dt></div>
-                              <div class="col-sm-8 text-sm-left"> <dd class="mb-1"> 	<?php  echo $row['PatientAge'];?> y/o </dd></div>
+                              <div class="col-sm-8 text-sm-left"> <dd class="mb-1"> 	<?php  echo $patage;?> y/o </dd></div>
                           </dl>
 
 
@@ -309,6 +316,8 @@ if(isset($_POST['save']))
                                                 <label class="col-sm-1 col-form-label">Gender</label>
                                                 <div class="col-sm-4"><input type="text" name="gender" value="<?php  echo $patgender;?>" class="form-control">
                                                 </div>
+
+
 
 
 
