@@ -1,6 +1,7 @@
 <?php
 session_start();
 error_reporting(0);
+require "include/aes256.php";
 include('include/config.php');
 include('include/checklogin.php');
 check_login();
@@ -163,8 +164,15 @@ if (isset($_POST["addInvoice"]))
 					<?php
 	                             $vid=$_GET['viewid'];
 	                             $ret=mysqli_query($con,"select * from tblpatient where ID='$vid'");
-	$cnt=1;
-	while ($row=mysqli_fetch_array($ret)) {
+                            	 $cnt=1;
+                            	 while ($row=mysqli_fetch_array($ret))
+                                {
+                                  $gender = decryptthis($row['PatientGender'], key);
+                                  $patientContact=decryptthis($row['PatientContno'], key);
+                                  $patadd=decryptthis($row['PatientAdd'], key);
+                                  $patoccupt=decryptthis($row['PatientOccupation'], key);
+
+
 	                             ?>
 
             <div class="ibox">
@@ -173,7 +181,7 @@ if (isset($_POST["addInvoice"]))
                         <div class="col-lg-12">
                             <div class="m-b-md">
 
-                                <h2><?php  echo $row['PatientName'];?></h2>
+                                <h2><?php  echo decryptthis ($row['PatientName'], key);?></h2>
                             </div>
 
                         </div>
@@ -182,19 +190,19 @@ if (isset($_POST["addInvoice"]))
 	                      <div class="col-lg-6">
 	                          <dl class="row mb-0">
 	                              <div class="col-sm-4 text-sm-right"><dt>Gender:</dt> </div>
-	                              <div class="col-sm-8 text-sm-left"><dd class="mb-1"><?php  echo $row['PatientGender'];?></dd></div>
+	                              <div class="col-sm-8 text-sm-left"><dd class="mb-1"><?php  echo $gender;?></dd></div>
 	                          </dl>
 	                          <dl class="row mb-0">
 	                              <div class="col-sm-4 text-sm-right"><dt>Address:</dt> </div>
-	                              <div class="col-sm-8 text-sm-left"><dd class="mb-1"><?php  echo $row['PatientAdd'];?></dd> </div>
+	                              <div class="col-sm-8 text-sm-left"><dd class="mb-1"><?php  echo $patadd;?></dd> </div>
 	                          </dl>
 	                          <dl class="row mb-0">
 	                              <div class="col-sm-4 text-sm-right"><dt>Phone No:</dt> </div>
-	                              <div class="col-sm-8 text-sm-left"> <dd class="mb-1"><?php  echo $row['PatientContno'];?></dd></div>
+	                              <div class="col-sm-8 text-sm-left"> <dd class="mb-1"><?php  echo $patientContact;?></dd></div>
 	                          </dl>
 	                          <dl class="row mb-0">
 	                              <div class="col-sm-4 text-sm-right"><dt>Occupation:</dt> </div>
-	                              <div class="col-sm-8 text-sm-left"> <dd class="mb-1"><?php  echo $row['PatientOccupation'];?></dd></div>
+	                              <div class="col-sm-8 text-sm-left"> <dd class="mb-1"><?php  echo $patoccupt;?></dd></div>
 	                          </dl>
 	                          <dl class="row mb-0">
 	                              <div class="col-sm-4 text-sm-right"><dt>Date of Birth:</dt> </div>
@@ -297,21 +305,33 @@ if (isset($_POST["addInvoice"]))
                                 <tbody id="tbody">
 
                                   <?php
-while ($row=mysqli_fetch_array($ret)) {
-?>
+                                while ($row=mysqli_fetch_array($ret))
+                                 {
+                                    $medication=decryptthis($row['Medication'],key);
+                                    $type=decryptthis($row['Type'], key);
+                                    $qunatity=decryptthis($row['Quantity'], key);
+                                    $morningBM=decryptthis($row['morningBM'], key);
+                                    $morningAM=decryptthis($row['morningAM'], key);
+                                    $afternoonBM=decryptthis($row['afternoonBM'], key);
+                                    $afternoonAM=decryptthis($row['afternoonAM'], key);
+                                    $eveningBM=decryptthis($row['eveningBM'], key);
+                                    $eveningAM=decryptthis($row['eveningAM'], key);
+                                    $duration=decryptthis($row['duration'], key);
+                                    $instructions=decryptthis($row['instructions'], key)
+                                ?>
 
                                 <tr>
-                                    <td><?php  echo $row['Medication'];?></td>
-                                    <td style="text-align:center"><?php  echo $row['Type'];?></td>
-                                    <td style="text-align:center"><?php  echo $row['Quantity'];?></td>
-                                    <td style="text-align:center"><?php  echo $row['morningBM'];?></td>
-                                    <td style="text-align:center"><?php  echo $row['morningAM'];?></td>
-                                    <td style="text-align:center"><?php  echo $row['afternoonBM'];?></td>
-                                    <td style="text-align:center"><?php  echo $row['afternoonAM'];?></td>
-                                    <td style="text-align:center"><?php  echo $row['eveningBM'];?></td>
-                                    <td style="text-align:center"><?php  echo $row['eveningAM'];?></td>
-                                    <td style="text-align:center"><?php  echo $row['duration'];?></td>
-                                    <td><?php  echo $row['instructions'];?></td>
+                                    <td><?php  echo $medication;?></td>
+                                    <td style="text-align:center"><?php  echo $type;?></td>
+                                    <td style="text-align:center"><?php  echo $quantity;?></td>
+                                    <td style="text-align:center"><?php  echo $morningBM;?></td>
+                                    <td style="text-align:center"><?php  echo $morningAM;?></td>
+                                    <td style="text-align:center"><?php  echo $afternoonBM;?></td>
+                                    <td style="text-align:center"><?php  echo $afternoonAM;?></td>
+                                    <td style="text-align:center"><?php  echo $eveningBM;?></td>
+                                    <td style="text-align:center"><?php  echo $eveningAM;?></td>
+                                    <td style="text-align:center"><?php  echo $duration;?></td>
+                                    <td><?php  echo $instructions;?></td>
 
 
                                 </tr>

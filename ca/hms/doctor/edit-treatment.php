@@ -1,34 +1,35 @@
 <?php
 session_start();
 error_reporting(0);
+require "include/aes256.php";
 include('include/config.php');
 include('include/checklogin.php');
 check_login();
-if(isset($_POST['submit']))
-  {
-
-    $vid=$_GET['viewid'];
-    $bp=$_POST['bp'];
-    $labs=$_POST['labs'];
-    $weight=$_POST['weight'];
-    $temp=$_POST['temp'];
-   $pres=$_POST['pres'];
-
-
-      $query.=mysqli_query($con, "insert   tblmedicalhistory(PatientID,BloodPressure,Laboratories,Weight,Temperature,MedicalPres)value('$vid','$bp','$labs','$weight','$temp','$pres')");
-    if ($query) {
-    echo '<script>alert("Medicle history has been added.")</script>';
-    echo "<script>window.location.href ='view-patient.php?viewid=$vid'</script>";
-  }
-  else
-    {
-      echo '<script>alert("Something Went Wrong. Please try again")</script>';
-    }
-
-
-}
-
-?>
+// if(isset($_POST['submit']))
+//   {
+//
+//     $vid=$_GET['viewid'];
+//     $bp=$_POST['bp'];
+//     $labs=$_POST['labs'];
+//     $weight=$_POST['weight'];
+//     $temp=$_POST['temp'];
+//    $pres=$_POST['pres'];
+//
+//
+//       $query.=mysqli_query($con, "insert   tblmedicalhistory(PatientID,BloodPressure,Laboratories,Weight,Temperature,MedicalPres)value('$vid','$bp','$labs','$weight','$temp','$pres')");
+//     if ($query) {
+//     echo '<script>alert("Medicle history has been added.")</script>';
+//     echo "<script>window.location.href ='view-patient.php?viewid=$vid'</script>";
+//   }
+//   else
+//     {
+//       echo '<script>alert("Something Went Wrong. Please try again")</script>';
+//     }
+//
+//
+// }
+//
+// ?>
 
 
 <?php
@@ -36,20 +37,67 @@ if(isset($_POST['save']))
 {
 	$eid=$_GET['editid'];
   $vid=$_GET['viewid'];
-  $bp=$_POST['bp'];
-  $labs=$_POST['labs'];
-  $weight=$_POST['weight'];
+  $labs=encryptthis($_POST['labs'], key);
+  $weights=encryptthis($_POST['weight'], key);
   $temp=$_POST['temp'];
- $pres=$_POST['pres'];
+  $pres=encryptthis($_POST['pres'], key);
 
-$sql=mysqli_query($con,"update tblmedicalhistory set BloodPressure='$bp',Laboratories='$labs',Weight='$weight',Temperature='$temp',MedicalPres='$pres' where ID='$eid'");
+$sql=mysqli_query($con,"UPDATE tblmedicalhistory SET Laboratories='$labs',Weight='$weights',Temperature='$temp',MedicalPres='$pres' WHERE ID='$eid'");
 if($sql)
 {
  echo "<script>alert('Patient info updated Successfully');</script>";
  echo "<script>window.location.href ='view-patient.php?viewid=$vid'</script>";
 
-
 }
+else {
+ echo "<script>alert('Error editing profile!');</script>";
+}
+
+
+
+
+// $id=$_POST['id'];
+//   $quant=$_POST['quantity'];
+
+
+  for ($a = 0; $a < count($_POST["id"]); $a++)
+  {
+    $query = mysqli_query($con,"update medicines set quantity=quantity - '" . $_POST["quantity"][$a] . "' where ID='" . $_POST["id"][$a] . "'");
+    mysqli_query($con, $query);
+  }
+
+  for ($a = 0; $a < count($_POST["id"]); $a++)
+  {
+    $sql = "INSERT INTO tblmedicineused (patientID, medicineusedID, medicineID, medicineinfo, quantity) VALUES ('$patientID', '$eid', '" . $_POST["id"][$a] . "', '" . $_POST["medicineinfo"][$a] . "', '" . $_POST["quantity"][$a] . "')";
+    mysqli_query($con, $sql);
+  }
+
+
+  // $query = mysqli_query($con,"update medicines set quantity=quantity - '" . $_POST["quantity"][$a] . "' where ID='" . $_POST["id"][$a] . "'");
+  //
+  //     if($query)
+  //     {
+  //     echo "<script>alert('Successfully stored');</script>";
+  //   }
+  //   else{
+  //       echo"<script>alert('Somthing wrong!!!');</script>";
+  //   }
+
+  // Handle delete
+  if (isset($_POST['delete_id'])) {
+      // get value of id that sent from address bar
+      $delete_id = $_POST['delete_id'];
+
+      // Delete data in mysql from row that has this id
+      $sql="DELETE FROM tblmedicineused WHERE id='$delete_id'";
+
+      mysqli_query($con, $sql);
+      // if successfully deleted
+
+  }
+
+
+
 }
 ?>
 
@@ -176,8 +224,12 @@ if($sql)
 					<?php
 	                             $vid=$_GET['viewid'];
 	                             $ret=mysqli_query($con,"select * from tblpatient where ID='$vid'");
-	$cnt=1;
-	while ($row=mysqli_fetch_array($ret)) {
+                               $cnt=1;
+                              	while ($row=mysqli_fetch_array($ret)) {
+                                 $gender = decryptthis($row['PatientGender'], key);
+                                 $patientContact=decryptthis($row['PatientContno'], key);
+                                 $patadd=decryptthis($row['PatientAdd'], key);
+                                 $patoccupt=decryptthis($row['PatientOccupation'], key);
 	                             ?>
 
             <div class="ibox">
@@ -186,7 +238,7 @@ if($sql)
                         <div class="col-lg-12">
                             <div class="m-b-md">
 
-                                <h2><?php  echo $row['PatientName'];?></h2>
+                                <h2><?php  echo decryptthis($row['PatientName'], key);?></h2>
                             </div>
 
                         </div>
@@ -195,19 +247,19 @@ if($sql)
 	                      <div class="col-lg-6">
 	                          <dl class="row mb-0">
 	                              <div class="col-sm-4 text-sm-right"><dt>Gender:</dt> </div>
-	                              <div class="col-sm-8 text-sm-left"><dd class="mb-1"><?php  echo $row['PatientGender'];?></dd></div>
+	                              <div class="col-sm-8 text-sm-left"><dd class="mb-1"><?php  echo $gender;?></dd></div>
 	                          </dl>
 	                          <dl class="row mb-0">
 	                              <div class="col-sm-4 text-sm-right"><dt>Address:</dt> </div>
-	                              <div class="col-sm-8 text-sm-left"><dd class="mb-1"><?php  echo $row['PatientAdd'];?></dd> </div>
+	                              <div class="col-sm-8 text-sm-left"><dd class="mb-1"><?php  echo $patadd;?></dd> </div>
 	                          </dl>
 	                          <dl class="row mb-0">
 	                              <div class="col-sm-4 text-sm-right"><dt>Phone No:</dt> </div>
-	                              <div class="col-sm-8 text-sm-left"> <dd class="mb-1"><?php  echo $row['PatientContno'];?></dd></div>
+	                              <div class="col-sm-8 text-sm-left"> <dd class="mb-1"><?php  echo $patientContact;?></dd></div>
 	                          </dl>
 	                          <dl class="row mb-0">
 	                              <div class="col-sm-4 text-sm-right"><dt>Occupation:</dt> </div>
-	                              <div class="col-sm-8 text-sm-left"> <dd class="mb-1"><?php  echo $row['PatientOccupation'];?></dd></div>
+	                              <div class="col-sm-8 text-sm-left"> <dd class="mb-1"><?php  echo $patoccupt;?></dd></div>
 	                          </dl>
 	                          <dl class="row mb-0">
 	                              <div class="col-sm-4 text-sm-right"><dt>Date of Birth:</dt> </div>
@@ -265,26 +317,27 @@ if($sql)
                                 <li><a class="nav-link active" data-toggle="tab" href="#tab-1"> Info</a></li>
 
 
-                                <li><a class="nav-link" data-toggle="tab" href="#tab-4"> Images</a></li>
+
                             </ul>
                             <div class="tab-content">
                                 <div id="tab-1" class="tab-pane active">
                                     <div class="panel-body">
-																				<form method="post" name="submit">
+																				<form method="POST" name="submit">
                                         <fieldset>
 
 																						<div class="form-group row"><label class="col-sm-2 col-form-label">Weight:</label>
-                                                <div class="col-md-4"><input name="weight" value="<?php  echo $row['Weight'];?>" class="form-control wd-450"></div>
+                                                <div class="col-md-4"><input name="weight" value="<?php  echo decryptthis($row['Weight'], key);?>" class="form-control wd-450"></div>
                                             </div>
+
 																						<div class="form-group row"><label class="col-sm-2 col-form-label">Laboratories:</label>
-                                                <div class="col-md-4"><input name="labs" value="<?php  echo $row['Laboratories'];?>" class="form-control wd-450"></div>
+                                                <div class="col-md-4"><input name="labs" value="<?php  echo decryptthis($row['Laboratories'], key);?>" class="form-control wd-450"></div>
                                             </div>
 
 
                                             <div class="form-group row"><label class="col-sm-2 col-form-label">Description:</label>
                                                 <div class="col-sm-10">
                                                     <textarea class="summernote" name="pres">
-                                                        <?php  echo $row['MedicalPres'];?>
+                                                        <?php  echo decryptthis($row['MedicalPres'], key);?>
 
                                                     </textarea>
                                                 </div>
@@ -292,89 +345,88 @@ if($sql)
 
 
 																						<?php } ?>
-                                            <div class="form-group row"><label class="col-sm-2 col-form-label">Medication</label>
+
+
+
+
+                                            <div class="form-group row"><label class="col-sm-2 col-form-label">Medication Used</label>
                                                 <div class="col-sm-10">
                                                     <div class="row">
-                                                        <div class="col-md-2">
+                                                        <div class="col-md-3">
 
                                                             <div class="form-group">
 
                                                                 <div>
                                                                     <select data-placeholder="Choose a Country..." class="chosen-select"  tabindex="2">
-                                                                    <option value="">Medicine</option>
-                                                                    <option value="Ibuprofen">Ibuprofen</option>
-                                                                    <option value="Paracetamol">Paracetamol</option>
-                                                                    <option value="Tylenol">Tylenol</option>
 
+                                                                      <?php
+
+                                                            	                             $ret=mysqli_query($con,"select * from medicines");
+
+                                                            	while ($row=mysqli_fetch_array($ret)) {
+                                                            	                             ?>
+
+                                                                    <option value="<?php  echo $row['id'];?>"><?php  echo $row['medicine_name'];?> <?php  echo $row['dosage'];?> (<?php  echo $row['formulation'];?>)</option>
+
+                                                                    <?php } ?>
                                                                     </select>
                                                                 </div>
                                                             </div>
                                                         </div>
 
 
-                                                        <div class="col-sm-2">
-                                                            <input class="touchspin1" type="text" value="" placeholder="0" name="demo1">
+                                                        <div class="col-md-2">
+                                                            <div><input name="weight" placeholder="Qty" class="form-control wd-450" id="qty"></div>
                                                         </div>
 
-                                                        <div class="col-sm-2">
-                                                            <a href="#" class="btn btn-primary">Add Medicine</a>
+                                                        <div class="col-md-2">
+                                                            <button class="btn btn-primary" type="button" id="submit1">Add Medicine</button>
                                                         </div>
                                                     </div>
+
+                                                    <?php
+                                                    $medicineusedID=$_GET['editid'];
+                                                    $ret=mysqli_query($con,"select * from tblmedicineused where medicineusedID='$medicineusedID'");
+
+
+
+                                                    ?>
 
 
 
                                                     <div class="table-responsive">
-                                                        <table class="table table-stripped table-bordered">
+                                                        <table class="table table-stripped table-bordered" id="table1">
 
                                                             <thead>
-                                                            <tr>
-                                                                <th style="width: 20%">
-                                                                    Medicine
-                                                                </th>
-                                                                <th style="width: 50%">
-                                                                    Description
-                                                                </th>
-                                                                <th>
+                                                              <tr>
+                                                                <th style="width:5%">
                                                                     Quantity
                                                                 </th>
 
-                                                                <th>
-                                                                    Actions
-                                                                </th>
-                                                            </tr>
+                                                                  <th style="width: 90%">
+                                                                      Medicine
+                                                                  </th>
+
+
+
+                                                                  <th style="width:5%">
+                                                                      Actions
+                                                                  </th>
+                                                              </tr>
                                                             </thead>
+
                                                             <tbody>
-                                                            <tr>
-                                                                <td>
-                                                                    Medicine 1
-                                                                </td>
-                                                                <td>
-                                                                    Insert Medicine Description Here
-                                                                </td>
-                                                                <td>
-                                                                    1
-                                                                </td>
+                                                              <?php
+                                                                while ($row=mysqli_fetch_array($ret)) {
+                                                                ?>
+                                                              <tr>
 
-                                                                <td>
-                                                                        <button class="btn btn-white"><i class="fa fa-trash"></i> </button>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>
-                                                                    Medicine 2
-                                                                </td>
-                                                                <td>
-                                                                    Insert Medicine Description Here
-                                                                </td>
-                                                                <td>
-                                                                    1
-                                                                </td>
+                                                                  <td><?php  echo $row['quantity'];?></td>
+                                                                  <td><?php  echo $row['medicineinfo'];?></td>
+                                                                  <td><button class="btn btn-white btn-sm" type="submit" name="delete_id"><i class="fa fa-trash"></i></button></td>
 
-                                                                <td>
-                                                                    <button class="btn btn-white"><i class="fa fa-trash"></i> </button>
-                                                                </td>
-                                                            </tr>
-
+                                                              </tr>
+<?php } ?>
 
                                                             </tbody>
 
@@ -387,11 +439,8 @@ if($sql)
 
                                         </fieldset>
 
-																				<div style="text-align: center; padding: 10px;">
-														                <a type="button" class="btn btn-danger" href="view-patient.php?viewid=<?php echo $vid;?>" data-dismiss="modal">Cancel</a>
-														                <button type="submit" class="btn btn-primary demo2" name="save" id="save">Save</button>
-														            </div>
-</form>
+
+
                                     </div>
 
 
@@ -401,91 +450,16 @@ if($sql)
 
 
 
-                                <div id="tab-4" class="tab-pane">
-                                    <div class="panel-body">
 
-                                        <div class="table-responsive">
-                                            <table class="table table-bordered table-stripped">
-                                                <thead>
-                                                <tr>
-                                                    <th>
-                                                        Image preview
-                                                    </th>
-                                                    <th>
-                                                        Description
-                                                    </th>
-                                                    <th>
-                                                        Actions
-                                                    </th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr>
-                                                    <td>
-                                                        <img src="img/gallery/lesion.jpg" style="width: 150px">
-                                                    </td>
-                                                    <td>
-                                                        <textarea class="form-control" rows="4" cols="50">Within and surrounding the foci of necrosis, there were moderate numbers of lymphocytes, a few plasma cells and mononuclear phagocytes, rare neutrophils and scattered petechial hemorrhages.
-                                                        </textarea>
-                                                    </td>
-                                                    <td>
-                                                        <div class="fileinput fileinput-new" data-provides="fileinput">
-                                                            <span class="btn btn-default btn-file"><span class="fileinput-new">Select file</span><span class="fileinput-exists">Change</span><input type="hidden" value="" name="..."><input type="file" name=""></span>
-                                                            <span class="fileinput-filename"></span>
-                                                            <a href="#" class="close fileinput-exists" data-dismiss="fileinput" style="float: none">×</a>
-                                                        </div>
-                                                        <button class="btn btn-white"><i class="fa fa-trash"></i> </button>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <img src="img/gallery/lesion.jpg" style="width: 150px">
-                                                    </td>
-                                                    <td>
-                                                        <textarea class="form-control" rows="4" cols="50">Within and surrounding the foci of necrosis, there were moderate numbers of lymphocytes, a few plasma cells and mononuclear phagocytes, rare neutrophils and scattered petechial hemorrhages.
-                                                        </textarea>
-                                                    </td>
-                                                    <td>
-                                                        <div class="fileinput fileinput-new" data-provides="fileinput">
-                                                            <span class="btn btn-default btn-file"><span class="fileinput-new">Select file</span><span class="fileinput-exists">Change</span><input type="hidden" value="" name="..."><input type="file" name=""></span>
-                                                            <span class="fileinput-filename"></span>
-                                                            <a href="#" class="close fileinput-exists" data-dismiss="fileinput" style="float: none">×</a>
-                                                        </div>
-                                                        <button class="btn btn-white"><i class="fa fa-trash"></i> </button>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <img src="img/gallery/lesion.jpg" style="width: 150px">
-                                                    </td>
-                                                    <td>
-                                                        <textarea class="form-control" rows="4" cols="50">Within and surrounding the foci of necrosis, there were moderate numbers of lymphocytes, a few plasma cells and mononuclear phagocytes, rare neutrophils and scattered petechial hemorrhages.
-                                                        </textarea>
-                                                    </td>
-                                                    <td>
-                                                        <div class="fileinput fileinput-new" data-provides="fileinput">
-                                                            <span class="btn btn-default btn-file"><span class="fileinput-new">Select file</span><span class="fileinput-exists">Change</span><input type="hidden" value="" name="..."><input type="file" name=""></span>
-                                                            <span class="fileinput-filename"></span>
-                                                            <a href="#" class="close fileinput-exists" data-dismiss="fileinput" style="float: none">×</a>
-                                                        </div>
-                                                        <button class="btn btn-white"><i class="fa fa-trash"></i> </button>
-                                                    </td>
-                                                </tr>
-
-                                                </tbody>
-                                            </table>
-                                        </div>
-
-                                    </div>
-                                </div>
                             </div>
                     </div>
                 </div>
             </div>
             <div style="text-align: center; padding: 10px;">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                <a href="sample-patient.html" type="button" class="btn btn-primary">Save</a>
+                <a type="button" class="btn btn-danger" href="view-patient.php?viewid=<?php echo $vid;?>" data-dismiss="modal">Cancel</a>
+                <button type="submit" class="btn btn-primary demo2" name="save" id="save">Save</button>
             </div>
+            </form>
         </div>
         <div class="footer">
 
@@ -562,6 +536,26 @@ if($sql)
             });
 
     });
+
+
+
+    $("#submit1").click(function () {
+        {
+            var selected = $('.chosen-select :selected');
+            var qty = document.getElementById("qty").value;
+
+                 $('#table1').append('<tr><td style="width:5%">'+qty+'</td><td style="width:90%">'+selected.text()+'<input type="text"  name="medicineinfo[]" value="'+selected.text()+'" hidden><input type="text"  name="id[]" value="'+selected.val()+'" hidden><input type="text"  name="quantity[]" value="'+qty+'" hidden></td><td style="width:5%"><button class="btn btn-white btn-sm" class="button" onclick="deleteRow(this)"><i class="fa fa-trash"></i></button></td></tr>');
+            // $('#table1').append('<tr><td>'+$(this).text()+'</td></tr>');
+            //if you need ah text like days do with that
+
+        }
+    });
+
+
+    function deleteRow(r) {
+    var i = r.parentNode.parentNode.rowIndex;
+    document.getElementById("table1").deleteRow(i);
+  }
 </script>
 
 <script>

@@ -1,5 +1,6 @@
 <?php
 include_once 'dbconnect.php';
+
 // $appid=null;
 // $appdate=null;
 if (isset($_GET['scheduleDate']) && isset($_GET['appid'])) {
@@ -16,11 +17,13 @@ $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
 //INSERT
 if (isset($_POST['appointment'])) {
 // $patientIc = mysqli_real_escape_string($con,$userRow['icPatient']);
+// $patcontact=encryptthis($_POST['patcontact'], key);
 $patientIc = 8888;
 $scheduleid = mysqli_real_escape_string($con,$appid);
-$firstName = mysqli_real_escape_string($con,$_POST['firstName']);
-$lastName = mysqli_real_escape_string($con,$_POST['lastName']);
-$contactNo = mysqli_real_escape_string($con,$_POST['contactNo']);
+//  $labs=encryptthis($_POST['labs'], key);
+$firstName = encryptthis($_POST['firstName'], key);
+$lastName = encryptthis(mysqli_real_escape_string($con,$_POST['lastName']), key);
+$contactNo = encryptthis(mysqli_real_escape_string($con,$_POST['contactNo']), key);
 $symptom = mysqli_real_escape_string($con,$_POST['symptom']);
 $avail = "notavail";
 

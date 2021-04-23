@@ -1,4 +1,5 @@
 <?php
+require "include/aes256.php";
 session_start();
 error_reporting(0);
 include('include/config.php');
@@ -228,18 +229,18 @@ check_login();
 
 																			<?php
 
-$sql=mysqli_query($con,"select * from tblpatient");
-$cnt=1;
-while($row=mysqli_fetch_array($sql))
-{
-?>
+																	$sql=mysqli_query($con,"select * from tblpatient");
+																	$cnt=1;
+																	while($row=mysqli_fetch_array($sql))
+																	{
+																	?>
 
 
 																				<tr>
 																					<td class="center"><?php echo $cnt;?>.</td>
-																					<td class="hidden-xs"><?php echo $row['PatientName'];?></td>
-																					<td><?php echo $row['PatientAdd'];?></td>
-																					<td>0<?php echo $row['PatientContno'];?></td>
+																					<td class="hidden-xs"><?php echo decryptthis($row['PatientName'], key);?></td>
+																					<td><?php echo decryptthis($row['PatientAdd'], key);?></td>
+																					<td>0<?php echo decryptthis($row['PatientContno'], key);?></td>
 																					<td><?php echo date('F j, Y', strtotime($row['PatientBday']));?></td>
 
 																					<td>

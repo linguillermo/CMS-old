@@ -1,4 +1,9 @@
 <?php
+session_start();
+error_reporting(0);
+include('include/config.php');
+include('include/checklogin.php');
+
 include('config.php');
 
 if (isset($_POST['submit']))
@@ -9,8 +14,11 @@ $dosage=mysqli_real_escape_string($db, $_POST['dosage']);
 $quant=mysqli_real_escape_string($db, $_POST['quantity']);
 $formulation=mysqli_real_escape_string($db, $_POST['formulation']);
 
-mysqli_query($db,"UPDATE product SET product_name='$name', dosage='$dosage' ,quantity='$quant' ,formulation='$formulation' WHERE product_id='$id'");
+$username=$_SESSION['login'];
+$uip = "Edited Medicine";
 
+mysqli_query($db,"UPDATE product SET product_name='$name', dosage='$dosage' ,quantity='$quant' ,formulation='$formulation' WHERE product_id='$id'");
+mysqli_query($db,"INSERT INTO userlog (uid,username,userip,status) VALUES ('$uId','$username','$uip','$status')");
 header("Location:inventory.php");
 }
 
@@ -233,8 +241,3 @@ echo "No results!";
 </center>
 </body>
 </html>
-
-
-
-
- 
