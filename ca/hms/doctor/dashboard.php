@@ -183,7 +183,7 @@ header('Location: dashboard.php');
 
 			<div class="wrapper wrapper-content  animated fadeInRight">
 		            <div class="row">
-		                <div class="col-lg-4" style="max-height: 580px; overflow-x: hidden; overflow-y: scroll;">
+		                <div class="col-lg" style="max-height: 580px; overflow-x: hidden; overflow-y: scroll;">
 		                    <div class="ibox">
 		                        <div class="ibox-content">
 		                            <h3>To-do</h3>
