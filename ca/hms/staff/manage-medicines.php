@@ -13,6 +13,23 @@ if(isset($_GET['del']))
 		  }
 
 
+			if(isset($_POST['add_stock']))
+			{
+
+				
+
+
+
+			$sql=mysqli_query($con,"update medicines set quantity=quantity + '" . $_POST["quantity"] . "' where ID='" . $_POST["medicine_id"] . "'");
+			if($sql)
+			{
+			echo "<script>alert('Added stocks successfully');</script>";
+			header('location:manage-medicines.php');
+
+			}
+			}
+
+
 
 
 			if(isset($_POST['submit_medicine']))
@@ -70,6 +87,7 @@ if(isset($_POST['edit_medicine']))
 	<!-- FooTable -->
 	<link href="insp/css/plugins/footable/footable.core.css" rel="stylesheet">
 	<link href="insp/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
+	<link href="insp/css/plugins/chosen/bootstrap-chosen.css" rel="stylesheet">
 
 	<link href="insp/css/animate.css" rel="stylesheet">
 	<link href="insp/css/style.css" rel="stylesheet">
@@ -170,10 +188,76 @@ if(isset($_POST['edit_medicine']))
                             <h5>Medicine List</h5>
 
                             <div class="ibox-tools">
-                                <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModal5">
+                                <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModal6">
+                                    Add Stocks
+                                </button>
+
+																<button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModal5">
                                     Add Medicine
                                 </button>
 
+                            </div>
+
+														<div class="modal inmodal fade" id="myModal6" tabindex="-1" role="dialog"  aria-hidden="true">
+                                <div class="modal-dialog modal-md">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                            <h4 class="modal-title">Add Medicine Stocks</h4>
+
+                                        </div>
+                                        <div class="modal-body">
+
+                                                <form role="form" name="" method="post">
+                                                    <div class="form-group row"><label class="col-sm-2 col-form-label">Medicine</label>
+
+
+                                                                <div class="col-sm-10">
+
+																																	<select data-placeholder="Choose a Country..." class="chosen-select"  name="medicine_id" tabindex="2">
+
+																																		<?php
+
+																																												 $ret=mysqli_query($con,"select * from medicines");
+
+																														while ($row=mysqli_fetch_array($ret)) {
+																																												 ?>
+
+																																	<option value="<?php  echo $row['id'];?>"><?php  echo $row['medicine_name'];?> <?php  echo $row['dosage'];?> (<?php  echo $row['formulation'];?>)</option>
+
+																																	<?php } ?>
+																																	</select>
+
+																																</div>
+
+
+                                                    </div>
+
+
+
+																										<div class="hr-line-dashed"></div>
+                                                    <div class="form-group row"><label class="col-sm-2 col-form-label">Quantity</label>
+                                                        <div class="col-sm-10"><input type="text" name="quantity" class="form-control">
+                                                        </div>
+                                                    </div>
+
+
+
+
+
+
+
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-white" data-dismiss="modal">Cancel</button>
+																						<button type="submit" name="add_stock" id="add_stock" class="btn btn-o btn-primary">
+																						Add Stocks
+																						</button>
+                                        </div>
+																				</form>
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="modal inmodal fade" id="myModal5" tabindex="-1" role="dialog"  aria-hidden="true">
@@ -388,6 +472,9 @@ $cnt=$cnt+1;
 	<!-- FooTable -->
 	<script src="insp/js/plugins/footable/footable.all.min.js"></script>
 
+	<!-- Chosen -->
+	<script src="insp/js/plugins/chosen/chosen.jquery.js"></script>
+
 	<!-- Custom and plugin javascript -->
 	<script src="insp/js/inspinia.js"></script>
 	<script src="insp/js/plugins/pace/pace.min.js"></script>
@@ -401,6 +488,7 @@ $cnt=$cnt+1;
 
 					$('.footable').footable();
 					$('.footable2').footable();
+					$('.chosen-select').chosen({width: "100%"});
 
 			});
 

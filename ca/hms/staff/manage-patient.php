@@ -6,6 +6,7 @@ include('include/config.php');
 include('include/checklogin.php');
 check_login();
 
+mysqli_query($con,"DELETE FROM tblpatient WHERE (UpdationDate < NOW() - INTERVAL 10 YEAR)");
 
 
 ?>
