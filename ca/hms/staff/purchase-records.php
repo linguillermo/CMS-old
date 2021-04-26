@@ -13,7 +13,7 @@ if(isset($_GET['del']))
 		  }
 
 
-			if(isset($_POST['add_stock']))
+			if(isset($_POST['purchase']))
 			{
 
 
@@ -138,12 +138,15 @@ if(isset($_POST['edit_medicine']))
 									</ul>
 								</li>
 
-								<li class="active">
+								<li>
                     <a href="manage-medicines.php"><i class="fa fa-medkit"></i> <span class="nav-label">Medicine Stocks</span></a>
 
                 </li>
 
-								
+								<li class="active">
+                    <a href="purchase-records.php"><i class="fa fa-medkit"></i> <span class="nav-label">Purchase Records</span></a>
+
+                </li>
 
             </ul>
 
@@ -187,16 +190,14 @@ if(isset($_POST['edit_medicine']))
                 <div class="col-lg-12">
                     <div class="ibox ">
                         <div class="ibox-title">
-                            <h5>Medicine List</h5>
+                            <h5>Purchase Records</h5>
 
                             <div class="ibox-tools">
                                 <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModal6">
-                                    Add Stocks
+                                    New Purchase
                                 </button>
 
-																<button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModal5">
-                                    Add Medicine
-                                </button>
+
 
                             </div>
 
@@ -211,6 +212,31 @@ if(isset($_POST['edit_medicine']))
                                         <div class="modal-body">
 
                                                 <form role="form" name="" method="post">
+
+																									<div class="form-group row"><label class="col-sm-2 col-form-label">Patient</label>
+
+
+																															<div class="col-sm-10">
+
+																																<select data-placeholder="Choose a Country..." class="chosen-select"  name="patient_id" tabindex="2">
+
+																																	<?php
+
+																																											 $ret=mysqli_query($con,"select * from tblpatient");
+
+																													while ($row=mysqli_fetch_array($ret)) {
+																																											 ?>
+
+																																<option value="<?php  echo $row['id'];?>"><?php  echo $row['PatientName'];?></option>
+
+																																<?php } ?>
+																																</select>
+
+																															</div>
+
+
+																									</div>
+																										<div class="hr-line-dashed"></div>
                                                     <div class="form-group row"><label class="col-sm-2 col-form-label">Medicine</label>
 
 
@@ -253,7 +279,7 @@ if(isset($_POST['edit_medicine']))
 
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-white" data-dismiss="modal">Cancel</button>
-																						<button type="submit" name="add_stock" id="add_stock" class="btn btn-o btn-primary">
+																						<button type="submit" name="purchase" id="purchase" class="btn btn-o btn-primary">
 																						Add Stocks
 																						</button>
                                         </div>
@@ -262,61 +288,7 @@ if(isset($_POST['edit_medicine']))
                                 </div>
                             </div>
 
-                            <div class="modal inmodal fade" id="myModal5" tabindex="-1" role="dialog"  aria-hidden="true">
-                                <div class="modal-dialog modal-lg">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                                            <h4 class="modal-title">New Medicine Form</h4>
 
-                                        </div>
-                                        <div class="modal-body">
-
-                                                <form role="form" name="" method="post">
-                                                    <div class="form-group row"><label class="col-sm-2 col-form-label">Medicine Name</label>
-
-
-                                                                <div class="col-sm-10"><input type="text" name="medicine_name" class="form-control"></div>
-
-
-                                                    </div>
-
-																										<div class="hr-line-dashed"></div>
-                                                    <div class="form-group row"><label class="col-sm-2 col-form-label">Dosage</label>
-                                                        <div class="col-sm-10"><input type="text" name="dosage" class="form-control">
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="hr-line-dashed"></div>
-                                                    <div class="form-group row"><label class="col-sm-2 col-form-label">Formulation</label>
-                                                        <div class="col-sm-10"><input type="text" name="formulation" class="form-control">
-                                                        </div>
-                                                    </div>
-
-																										<div class="hr-line-dashed"></div>
-                                                    <div class="form-group row"><label class="col-sm-2 col-form-label">Quantity</label>
-                                                        <div class="col-sm-10"><input type="text" name="quantity" class="form-control">
-                                                        </div>
-                                                    </div>
-
-
-
-
-
-
-
-                                        </div>
-
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-white" data-dismiss="modal">Cancel</button>
-																						<button type="submit" name="submit_medicine" id="submit_medicine" class="btn btn-o btn-primary">
-																						Submit
-																						</button>
-                                        </div>
-																				</form>
-                                    </div>
-                                </div>
-                            </div>
 
 
 
@@ -331,14 +303,14 @@ if(isset($_POST['edit_medicine']))
                             <table class="footable table table-stripped" data-page-size="14" data-filter=#filter>
                                 <thead>
                                     <tr>
-																			<th class="center">#</th>
-																			<th>Medicine Name</th>
-																			<th>Dosage</th>
-																			<th>Formulation</th>
+																			<!-- <th class="center">#</th> -->
+																			<th>Medicine Info</th>
 																			<th>Quantity</th>
+																			<th>Purchased By</th>
+																			<th>Logged By</th>
 
 
-																			<th>Action</th>
+																			<th>Date</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -352,7 +324,7 @@ while($row=mysqli_fetch_array($sql))
 
 
 																				<tr>
-																					<td class="center"><?php echo $cnt;?>.</td>
+																					<!-- <td class="center"><?php echo $cnt;?>.</td> -->
 																					<td class="hidden-xs"><?php echo $row['medicine_name'];?></td>
 																					<td><?php echo $row['dosage'];?></td>
 																					<td><?php echo $row['formulation'];?></td>
