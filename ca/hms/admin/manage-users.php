@@ -12,9 +12,6 @@ if(isset($_GET['del']))
                   $_SESSION['msg']="data deleted !!";
 		  }
 
-
-
-
 			if(isset($_POST['submit']))
 			{
 
@@ -34,7 +31,7 @@ if(isset($_GET['del']))
 			}
 			}
 
-			?>
+?>
 
 <!DOCTYPE html>
 <html lang="en">
