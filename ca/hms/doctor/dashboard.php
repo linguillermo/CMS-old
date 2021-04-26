@@ -9,11 +9,7 @@ check_login();
 
 
 
-if (isset($_POST['addTask']))
-{
-	$task = $_POST['taskInput'];
 
-	$queryTask = ("INSERT INTO tbltodo value ('$task')");
 
 
 
@@ -161,9 +157,9 @@ header('Location: dashboard.php');
 													while(mysqli_fetch_array($result))
 													{
 														$rows = mysqli_num_rows($result);
-													}
+ 													}
 													 ?>
-														<h2 class="font-bold"><?php echo $rows ?></h2>
+														<h2 class="font-bold"><?php echo $rows?></h2>
 									</div>
 							</div>
 						</div>
@@ -182,7 +178,7 @@ header('Location: dashboard.php');
 												while(mysqli_fetch_array($result))
 												{
 													$rowsMed = mysqli_num_rows($result);
-												}
+													}
 												 ?>
 													<h2 class="font-bold"><?php echo $rowsMed; ?></h2>
 											</div>

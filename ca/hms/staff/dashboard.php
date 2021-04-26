@@ -81,6 +81,11 @@ check_login();
 
                 </li>
 
+								<!-- <li>
+                    <a href="purchase-records.php"><i class="fa fa-medkit"></i> <span class="nav-label">Purchase Records</span></a>
+
+                </li> -->
+
                 <!-- <li>
                     <a href="manage-users.php"><i class="fa fa-users"></i> <span class="nav-label">Manage Users</span>  </a>
                 </li>
