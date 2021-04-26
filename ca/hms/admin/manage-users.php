@@ -22,7 +22,7 @@ if(isset($_GET['del']))
 			$role=$_POST['role'];
 			$email=$_POST['email'];
 			$username=$_POST['username'];
-			$password=$_POST['password'];
+			$password=password_hash($_POST['password'], PASSWORD_DEFAULT);
 
 
 			$sql=mysqli_query($con,"insert into users(fullName,role,email,username,password) values('$fullName','$role','$email','$username','$password')");

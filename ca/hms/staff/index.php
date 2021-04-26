@@ -4,7 +4,15 @@ error_reporting(0);
 include("include/config.php");
 if(isset($_POST['submit']))
 {
-$ret=mysqli_query($con,"SELECT * FROM users WHERE username='".$_POST['username']."' and password='".$_POST['password']."' and role='staff'");
+	// $hashed_pass = mysqli_query($con, "SELECT password from users");
+	// $password_unhash = $_POST['password'];
+	// $passVerify = password_verify($password_unhash, $hashed_pass);
+
+	// $user_pass = $_POST['password'];
+	// $hashed_pass = $row['password'];
+	// $pass_fin = password_verify($user_pass, $hashed_pass);
+
+$ret=mysqli_query($con,"SELECT * FROM users WHERE username='".$_POST['username']."' and password = '".$_POST['password']."' and role='staff'");
 $num=mysqli_fetch_array($ret);
 if($num>0)
 {
@@ -12,7 +20,9 @@ $extra="dashboard.php";//
 $_SESSION['login']=$_POST['username'];
 $_SESSION['id']=$num['id'];
 $host=$_SERVER['HTTP_HOST'];
+
 $uri=rtrim(dirname($_SERVER['PHP_SELF']),'/\\');
+
 header("location:http://$host$uri/$extra");
 exit();
 }
@@ -26,13 +36,14 @@ header("location:http://$host$uri/$extra");
 exit();
 }
 }
+//$password_unhash = $_POST['password'];
+//$passVeriyfy = password_verify($password_unhash, $users['password']);
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>Admin Login</title>
+		<title>Staff Login</title>
 
 		<link href="insp/css/bootstrap.min.css" rel="stylesheet">
     <link href="insp/font-awesome/css/font-awesome.css" rel="stylesheet">

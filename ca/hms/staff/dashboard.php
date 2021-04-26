@@ -5,7 +5,31 @@ include('include/config.php');
 include('include/checklogin.php');
 check_login();
 
+if (isset($_POST['addTask']))
 
+{
+	$task = $_POST['taskInput'];
+	$username = $_SESSION['login'];
+
+	$queryTask = "INSERT INTO tbltodo (username, todoNotes) value ('$username','$task')";
+	if (empty($_POST['taskInput']))
+	{
+		echo "CANNOT BE EMPTY! MUST HAVE INPUTS!";
+	}
+	else {
+		mysqli_query ($con,$queryTask);
+	}
+	header('Location: dashboard.php');
+}
+
+// DELETE TASKS
+if (isset($_GET['del_task']))
+{
+	$id=$_GET['del_task'];
+
+mysqli_query($con, "DELETE FROM tbltodo WHERE todoID =".$id);
+header('Location: dashboard.php');
+}
 
 ?>
 <!DOCTYPE html>
@@ -121,73 +145,95 @@ check_login();
         </div>
 
 
-			<div class="wrapper wrapper-content">
-			<div class="row">
-					<div class="col-lg-3">
-							<div class="widget style1 lazur-bg">
-									<div class="row">
-											<div class="col-4">
-													<i class="fa fa-calendar-o fa-5x"></i>
+							<div class="wrapper wrapper-content animated fadeInRight">
+							<div class="row">
+									<div class="col-lg-3">
+											<div class="widget style1 lazur-bg">
+													<div class="row">
+															<div class="col-4">
+																	<i class="fa fa-calendar-o fa-5x"></i>
+															</div>
+															<div class="col-8 text-right">
+																	<span> Pending Appointments </span>
+																	<?php
+																	$result = mysqli_query($con, "SELECT * FROM appointment where status='process'");
+
+																	while(mysqli_fetch_array($result))
+																	{
+																		$rows = mysqli_num_rows($result);
+				 													}
+																	 ?>
+																		<h2 class="font-bold"><?php echo $rows?></h2>
+													</div>
 											</div>
-											<div class="col-8 text-right">
-													<span> Today's Appointments </span>
-													<h2 class="font-bold">15</h2>
+										</div>
+									</div>
+									<div class="col-lg-3">
+											<div class="widget style1 yellow-bg">
+													<div class="row">
+															<div class="col-4">
+																	<i class="fas fa-pills fa-5x"></i>
+															</div>
+															<div class="col-8 text-right">
+																<span> Medicine Stocks </span>
+																<?php
+																$result = mysqli_query($con, "SELECT * FROM medicines");
+
+																while(mysqli_fetch_array($result))
+																{
+																	$rowsMed = mysqli_num_rows($result);
+																	}
+																 ?>
+																	<h2 class="font-bold"><?php echo $rowsMed; ?></h2>
+															</div>
+													</div>
 											</div>
 									</div>
 							</div>
-					</div>
-					<div class="col-lg-3">
-							<div class="widget style1 yellow-bg">
-									<div class="row">
-											<div class="col-4">
-													<i class="fas fa-pills fa-5x"></i>
-											</div>
-											<div class="col-8 text-right">
-													<span> Medicine Stocks </span>
-													<h2 class="font-bold">12</h2>
-											</div>
-									</div>
-							</div>
-					</div>
 
+							<!-- ********************************************************************************************************************* -->
+							<!-- DASHBOARD CODE STARTS HERE -->
 
-			</div>
+							<div class="wrapper wrapper-content  animated fadeInRight">
+						            <div class="row">
+						                <div class="col-lg" style="max-height: 580px; overflow-x: hidden; overflow-y: scroll;">
+						                    <div class="ibox">
+						                        <div class="ibox-content">
+						                            <h3>To-do</h3>
+						                            <p class="small"><i class="fa fa-hand-o-up"></i> Drag task between list</p>
 
+																				<form method="POST" action="">
+						                            <div class="input-group">
+						                                <input type="text" placeholder="Add new task. " class="input form-control-sm form-control" name="taskInput">
+						                                <span class="input-group-btn">
+						                                        <button type="submit" class="btn btn-sm btn-white" name="addTask"> <i class="fa fa-plus"></i> Add task</button>
+						                                </span>
+						                            </div>
+																			</form>
+																			 <?php
+																			 		$username = $_SESSION['login'];
+																			 		$tasks = mysqli_query($con, "SELECT * FROM tbltodo WHERE username = '$username' ORDER BY todoStamp desc");
+																					while ($row = mysqli_fetch_array($tasks)) {
+																			 ?>
 
-			<div class="row">
+					                             <ul class="sortable-list connectList agile-list" id="todo">
+					                                 <li class="warning-element" id="<?php $taskID ?>">
+					                                    <?php echo $row['todoNotes']; ?>
+					                                     <div class="agile-detail">
+																								 <span>
+				 																			 		 <a href="dashboard.php?del_task=<?php echo $row['todoID']; ?>" class="float-right fa fa-minus" </a>
+																									 <a href="#" class="float-right btn btn-xs btn-white" id="pbutton" onclick="changeColor(this)">On-Going</a>
+																								 </span>
+					                                         <i class="fa fa-clock-o"></i><?php echo date('F j, Y, g:i a', $row['todoStamp']); ?>
+					                                     </div>
+					                                 </li>
+																				 </ul>
+																				 <?php } ?>
+						                        </div>
+						                    </div>
+															</div>
+						               </div><br><br>
 
-					<div class="col-lg-12">
-							<div class="ibox ">
-									<div class="ibox-title">
-											<h5>Appointments </h5>
-											<div class="ibox-tools">
-													<a class="collapse-link">
-															<i class="fa fa-chevron-up"></i>
-													</a>
-													<a class="dropdown-toggle" data-toggle="dropdown" href="#">
-															<i class="fa fa-wrench"></i>
-													</a>
-													<ul class="dropdown-menu dropdown-user">
-															<li><a href="#" class="dropdown-item">Config option 1</a>
-															</li>
-															<li><a href="#" class="dropdown-item">Config option 2</a>
-															</li>
-													</ul>
-													<a class="close-link">
-															<i class="fa fa-times"></i>
-													</a>
-											</div>
-									</div>
-									<div class="ibox-content">
-											<div id="calendar"></div>
-									</div>
-							</div>
-					</div>
-
-			</div>
-
-
-			</div>
 
 
 			<div class="footer">

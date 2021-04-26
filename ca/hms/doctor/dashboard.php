@@ -6,9 +6,13 @@ include('include/checklogin.php');
 check_login();
 
 if (isset($_POST['addTask']))
+
 {
-	$queryTask = "INSERT INTO tbltodo (todoNotes) value ('$task')";
-	if (empty($_POST['addTask']))
+	$task = $_POST['taskInput'];
+	$username = $_SESSION['dlogin'];
+
+	$queryTask = "INSERT INTO tbltodo (username, todoNotes) value ('$username','$task')";
+	if (empty($_POST['taskInput']))
 	{
 		echo "CANNOT BE EMPTY! MUST HAVE INPUTS!";
 	}
@@ -198,7 +202,8 @@ header('Location: dashboard.php');
 		                            </div>
 															</form>
 															 <?php
-															 		$tasks = mysqli_query($con, "SELECT * FROM tbltodo ORDER BY todoStamp desc");
+															 		$username = $_SESSION['dlogin'];
+															 		$tasks = mysqli_query($con, "SELECT * FROM tbltodo WHERE username = '$username' ORDER BY todoStamp desc");
 																	while ($row = mysqli_fetch_array($tasks)) {
 															 ?>
 
