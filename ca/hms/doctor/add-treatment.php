@@ -182,6 +182,8 @@ if(isset($_POST['submit']))
                                  $patientContact=decryptthis($row['PatientContno'], key);
                                  $patadd=decryptthis($row['PatientAdd'], key);
                                  $patoccupt=decryptthis($row['PatientOccupation'], key);
+                                 $patage=decryptthis($row['PatientAge'], key);
+                                 $patbday=decryptthis($row['PatientBday'], key);
                               	                             ?>
 
             <div class="ibox">
@@ -215,11 +217,11 @@ if(isset($_POST['submit']))
 	                          </dl>
 	                          <dl class="row mb-0">
 	                              <div class="col-sm-4 text-sm-right"><dt>Date of Birth:</dt> </div>
-	                              <div class="col-sm-8 text-sm-left"> <dd class="mb-1"><?php echo date('F j, Y', strtotime($row['PatientBday']));?></dd></div>
+	                              <div class="col-sm-8 text-sm-left"> <dd class="mb-1"><?php echo date('F j, Y', strtotime($patbday));?></dd></div>
 	                          </dl>
 	                          <dl class="row mb-0">
 	                              <div class="col-sm-4 text-sm-right"> <dt>Age:</dt></div>
-	                              <div class="col-sm-8 text-sm-left"> <dd class="mb-1"> 	<?php  echo $row['PatientAge'];?> y/o </dd></div>
+	                              <div class="col-sm-8 text-sm-left"> <dd class="mb-1"> 	<?php  echo $patage;?> y/o </dd></div>
 	                          </dl>
 
 
