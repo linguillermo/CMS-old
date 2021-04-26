@@ -237,7 +237,7 @@ header('Location: dashboard.php');
 						                        </div>
 						                    </div>
 															</div>
-						               </div><br><br>
+						               </div></div></div><br><br>
 
 
 

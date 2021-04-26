@@ -216,7 +216,7 @@ header('Location: dashboard.php');
  																			 		 <a href="dashboard.php?del_task=<?php echo $row['todoID']; ?>" class="float-right fa fa-minus" </a>
 																					 <a href="#" class="float-right btn btn-xs btn-white" id="pbutton" onclick="changeColor(this)">On-Going</a>
 																				 </span>
-	                                        <i class="fa fa-clock-o"></i><?php echo date('F j, Y, g:i a',strtotime($row['todoStamp'])); ?>	
+	                                        <i class="fa fa-clock-o"></i><?php echo date('F j, Y, g:i a',strtotime($row['todoStamp'])); ?>
 	                                     </div>
 	                                 </li>
 																 </ul>
@@ -224,7 +224,7 @@ header('Location: dashboard.php');
 		                        </div>
 		                    </div>
 											</div>
-		               </div><br><br>
+		               </div></div></div><br><br>
 
 
 
