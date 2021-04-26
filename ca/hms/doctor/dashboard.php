@@ -6,14 +6,6 @@ include('include/checklogin.php');
 check_login();
 
 
-
-
-
-
-
-
-
-
 if (isset($_POST['addTask']))
 {
 	$queryTask = "INSERT INTO tbltodo (todoNotes) value ('$task')";
