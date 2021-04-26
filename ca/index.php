@@ -140,7 +140,7 @@ header("Location: index.php");
                     <p>
                      <!--   <a class="btn btn-lg btn-primary page-scroll" href="#appointment" role="button">MAKE AN APPOINTMENT</a>-->
 						<div class="col-sm-10" style="padding:0px">
-                              <h2>Make appointment today!</h2>
+                              <h2>Set an appointment today!</h2>
 
 
                               <!-- date textbox -->
