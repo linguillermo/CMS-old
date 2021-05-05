@@ -4,7 +4,7 @@ error_reporting(0);
 include("include/config.php");
 if(isset($_POST['submit']))
 {
-$ret=mysqli_query($con,"SELECT * FROM users WHERE username='".$_POST['username']."' and password='".$_POST['password']."' and role='administrator'");
+$ret=mysqli_query($con,"SELECT * FROM users WHERE username='".$_POST['username']."' and password='".md5($_POST['password'])."' and role='administrator'");
 $num=mysqli_fetch_array($ret);
 if($num>0)
 {

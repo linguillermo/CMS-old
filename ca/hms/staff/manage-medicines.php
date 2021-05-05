@@ -93,6 +93,10 @@ if(isset($_POST['edit_medicine']))
 	<link href="insp/css/style.css" rel="stylesheet">
 
 
+	<!-- Sweet Alert -->
+    <link href="insp/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+
+
 
 
 </head>
@@ -143,7 +147,7 @@ if(isset($_POST['edit_medicine']))
 
                 </li>
 
-								
+
 
             </ul>
 
@@ -360,10 +364,10 @@ while($row=mysqli_fetch_array($sql))
 
 
 
-																					<td>
+																					<td >
 																						<!-- <a href="edit-patient.php?editid=<?php echo $row['ID'];?>" class="btn btn-info btn-xs">Edit</a> -->
 																						<a href="#editmed<?php echo $row['id']?>" data-toggle="modal" class="btn btn-success btn-xs">Edit</a>
-																						<a href="manage-medicines.php?id=<?php echo $row['id']?>&del=delete" onClick="return confirm('Are you sure you want to delete?')"class="btn btn-danger btn-xs">Delete</a>
+																						<a href="manage-medicines.php?id=<?php echo $row['id']?>&del=delete" class="btn btn-danger btn-xs demo3">Delete</a>
 
 	                                        </td>
 
@@ -477,6 +481,9 @@ $cnt=$cnt+1;
 	<!-- Chosen -->
 	<script src="insp/js/plugins/chosen/chosen.jquery.js"></script>
 
+	<!-- Sweet alert -->
+    <script src="insp/js/plugins/sweetalert/sweetalert.min.js"></script>
+
 	<!-- Custom and plugin javascript -->
 	<script src="insp/js/inspinia.js"></script>
 	<script src="insp/js/plugins/pace/pace.min.js"></script>
@@ -491,6 +498,26 @@ $cnt=$cnt+1;
 					$('.footable').footable();
 					$('.footable2').footable();
 					$('.chosen-select').chosen({width: "100%"});
+
+
+
+					$('.demo3').click(function () {
+            swal({
+                title: "Are you sure?",
+                text: "You will not be able to recover this imaginary file!",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes, delete it!",
+                closeOnConfirm: false
+            }, function () {
+                swal("Deleted!", "Your imaginary file has been deleted.", "success");
+            });
+        });
+
+
+
+
 
 			});
 

@@ -1,6 +1,7 @@
 <?php
 session_start();
 error_reporting(0);
+require "include/aes256.php";
 include('include/config.php');
 include('include/checklogin.php');
 check_login();
@@ -19,7 +20,8 @@ if(isset($_GET['del']))
 			$role=$_POST['role'];
 			$email=$_POST['email'];
 			$username=$_POST['username'];
-			$password=password_hash($_POST['password'], PASSWORD_DEFAULT);
+			// $password=password_hash($_POST['password'], PASSWORD_DEFAULT);
+			$password=md5($_POST['password']);
 
 
 			$sql=mysqli_query($con,"insert into users(fullName,role,email,username,password) values('$fullName','$role','$email','$username','$password')");

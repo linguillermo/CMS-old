@@ -273,7 +273,7 @@ if(isset($_POST['save']))
 
                           <dl class="row mb-0">
                               <div class="col-sm-4 text-sm-right">
-                                  <dt>Last Appointment:</dt>
+                                  <dt>Last Updated:</dt>
                               </div>
                               <div class="col-sm-8 text-sm-left">
                                   <dd class="mb-1"><?php  echo date('F j, Y g:i A', strtotime($row['UpdationDate']));?></dd>

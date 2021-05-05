@@ -9,6 +9,47 @@ check_login();
 mysqli_query($con,"DELETE FROM tblpatient WHERE (UpdationDate < NOW() - INTERVAL 10 YEAR)");
 
 
+
+
+if(isset($_POST['submit']))
+{
+	//for logs
+	$username = $_SESSION['dlogin'];
+	$id = $_SESSION['id'];
+	$userip = "Added New Patient";
+	$status = "1";
+
+	$docid=$_SESSION['id'];
+	// $patname=$_POST['patname'];
+$patname=encryptthis($_POST['patname'], key);
+$patcontact=encryptthis($_POST['patcontact'], key);
+$pataddress=encryptthis($_POST['pataddress'], key);
+$patbday=encryptthis($_POST['patbday'], key);
+//$patage=$_POST['patage'];
+$patbday2=$_POST['patbday'];
+$patbday1 = explode("/", $patbday2);
+$patage1 = (date("md", date("U", mktime(0, 0, 0, $patbday1[0], $patbday1[1], $patbday1[2]))) > date("md")
+    ? ((date("Y") - $patbday1[2]) - 1)
+    : (date("Y") - $patbday1[2]));
+$patage = encryptthis($patage1, key);
+$gender=encryptthis($_POST['gender'], key);
+$patoccupation=encryptthis($_POST['patoccupation'],key);
+
+$log = "INSERT INTO userlog (uid,username,userip,status)
+			 VALUES ('$uId','$username','$userip','$status')";
+
+$sql=mysqli_query($con,"insert into tblpatient(Docid,PatientName,PatientContno,PatientAdd,PatientAge,PatientBday,PatientGender,PatientOccupation)
+values('$docid','$patname','$patcontact','$pataddress','$patage','$patbday','$gender','$patoccupation')");
+if($sql)
+{
+echo "<script>alert('Patient info added Successfully');</script>";
+mysqli_query($con,$log);
+header('location:manage-patient.php');
+
+}
+}
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -226,23 +267,28 @@ mysqli_query($con,"DELETE FROM tblpatient WHERE (UpdationDate < NOW() - INTERVAL
 																			<th>Action</th>
                                     </tr>
                                     </thead>
-                                    <tbody>
+																		<tbody>
 
 																			<?php
 
-																	$sql=mysqli_query($con,"select * from tblpatient");
-																	$cnt=1;
-																	while($row=mysqli_fetch_array($sql))
-																	{
-																	?>
+																				$sql=mysqli_query($con,"select * from tblpatient");
+																				$cnt=1;
+																				while($row=mysqli_fetch_array($sql))
+																				{
+																					$name=decryptthis($row['PatientName'], key);
+																					$patadd=decryptthis($row['PatientAdd'], key);
+																					$patcontno=decryptthis($row['PatientContno'], key);
+																					$patientbday=decryptthis($row['PatientBday'],key);
+
+																				?>
 
 
 																				<tr>
 																					<td class="center"><?php echo $cnt;?>.</td>
-																					<td class="hidden-xs"><?php echo decryptthis($row['PatientName'], key);?></td>
-																					<td><?php echo decryptthis($row['PatientAdd'], key);?></td>
-																					<td>0<?php echo decryptthis($row['PatientContno'], key);?></td>
-																					<td><?php echo date('F j, Y', strtotime($row['PatientBday']));?></td>
+																					<td class="hidden-xs"><?php echo $name;?></td>
+																					<td><?php echo $patadd;?></td>
+																					<td>0<?php echo $patcontno;?></td>
+																					<td><?php echo date('F j, Y', strtotime($patientbday));?></td>
 
 																					<td>
 																						<!-- <a href="edit-patient.php?editid=<?php echo $row['ID'];?>" class="btn btn-info btn-xs">Edit</a> -->

@@ -1,6 +1,7 @@
 <?php
 session_start();
 error_reporting(0);
+require "include/aes256.php";
 include("include/config.php");
 if(isset($_POST['submit']))
 {
@@ -11,8 +12,8 @@ if(isset($_POST['submit']))
 	// $user_pass = $_POST['password'];
 	// $hashed_pass = $row['password'];
 	// $pass_fin = password_verify($user_pass, $hashed_pass);
-
-$ret=mysqli_query($con,"SELECT * FROM users WHERE username='".$_POST['username']."' and password = '".$_POST['password']."' and role='staff'");
+// decryptthis($row['PatientName'], key)
+$ret=mysqli_query($con,"SELECT * FROM users WHERE username='".$_POST['username']."' and password = '".md5($_POST['password'])."' and role='staff'");
 $num=mysqli_fetch_array($ret);
 if($num>0)
 {

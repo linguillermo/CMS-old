@@ -1,6 +1,8 @@
 <?php
 $con = mysqli_connect("localhost","root","","hms");
 
+
+
 // Check connection
 if (mysqli_connect_errno())
   {
