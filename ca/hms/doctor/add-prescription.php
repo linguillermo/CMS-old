@@ -20,7 +20,7 @@ if(isset($_POST['submit']))
 
       $query.=mysqli_query($con, "insert   tblmedicalhistory(PatientID,BloodPressure,Laboratories,Weight,Temperature,MedicalPres)value('$vid','$bp','$labs','$weight','$temp','$pres')");
     if ($query) {
-    echo '<script>alert("Medicle history has been added.")</script>';
+    echo '<script>alert("Medical Prescription has been added.")</script>';
     echo "<script>window.location.href ='view-patient.php?viewid=$vid'</script>";
     mysqli_query ($con, $log);
 

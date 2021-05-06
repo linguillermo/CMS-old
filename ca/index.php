@@ -102,6 +102,30 @@ header("Location: index.php");
 
 </head>
 <body id="page-top" class="landing-page no-skin-config" style="scrollbar-width: thin;">
+	<!-- Messenger Chat plugin Code -->
+	    <div id="fb-root"></div>
+	      <script>
+	        window.fbAsyncInit = function() {
+	          FB.init({
+	            xfbml            : true,
+	            version          : 'v10.0'
+	          });
+	        };
+
+	        (function(d, s, id) {
+	          var js, fjs = d.getElementsByTagName(s)[0];
+	          if (d.getElementById(id)) return;
+	          js = d.createElement(s); js.id = id;
+	          js.src = 'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js';
+	          fjs.parentNode.insertBefore(js, fjs);
+	        }(document, 'script', 'facebook-jssdk'));
+	      </script>
+
+	      <!-- Your Chat plugin code -->
+	      <div class="fb-customerchat"
+	        attribution="page_inbox"
+	        page_id="103559001863075">
+	      </div>	
 
 <div class="navbar-wrapper">
         <nav class="navbar navbar-default navbar-fixed-top navbar-expand-md" role="navigation">
@@ -139,7 +163,7 @@ header("Location: index.php");
                     <p>
                      <!--   <a class="btn btn-lg btn-primary page-scroll" href="#appointment" role="button">MAKE AN APPOINTMENT</a>-->
 						<div class="col-sm-10" style="padding:0px">
-                              <h2>Set an appointment today!</h2>
+                              <h2>Set an appointment with us today!</h2>
 
 
                               <!-- date textbox -->

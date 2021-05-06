@@ -17,7 +17,7 @@ check_login();
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Clinica Abeleda | Stocks</title>
+    <title>Staff | Appointment</title>
 
     <link href="insp/css/bootstrap.min.css" rel="stylesheet">
     <link href="insp/font-awesome/css/font-awesome.css" rel="stylesheet">
