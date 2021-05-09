@@ -27,7 +27,7 @@ if(isset($_POST['submit']))
       $medicineusedID = mysqli_insert_id($con);
     if ($query)
     {
-    echo '<script>alert("Medicle history has been added.")</script>';
+    echo '<script>alert("Medical Treatnebt has been added.")</script>';
     echo "<script>window.location.href ='view-patient.php?viewid=$vid'</script>";
     mysqli_query($con,$log);
     }

@@ -78,7 +78,7 @@ if(isset($_POST['edit_medicine']))
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-	<title>Admin | View Patients</title>
+	<title>Staff | Med. Stocks</title>
 
 	<link href="insp/css/bootstrap.min.css" rel="stylesheet">
 	<link href="insp/font-awesome/css/font-awesome.css" rel="stylesheet">
