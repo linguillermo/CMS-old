@@ -17,13 +17,13 @@ if(isset($_POST['submit']))
     $medicineused= encryptthis($_POST['medicineused'], key);
     $labs=encryptthis($_POST['labs'], key);
     $weight=encryptthis($_POST['weight'], key);
-    $temp=encryptthis($_POST['temp'], key);
+
     $pres=encryptthis($_POST['pres'], key);
 
     $log = "INSERT INTO userlog (uid,username,userip,status)
               VALUES ('$uId','$username','$userip','$status')";
 
-      $query.=mysqli_query($con, "insert   tblmedicalhistory(PatientID,medicineused,Laboratories,Weight,Temperature,MedicalPres)value('$vid','$medicineused','$labs','$weight','$temp','$pres')");
+      $query.=mysqli_query($con, "insert   tblmedicalhistory(PatientID,medicineused,Laboratories,Weight,MedicalPres)value('$vid','$medicineused','$labs','$weight','$pres')");
       $medicineusedID = mysqli_insert_id($con);
     if ($query)
     {
@@ -313,7 +313,7 @@ if(isset($_POST['submit']))
 
 
                                                         <div class="col-md-2">
-                                                            <div><input name="weight" placeholder="Qty" class="form-control wd-450" id="qty"></div>
+                                                            <div><input name="qty" placeholder="Qty" class="form-control wd-450" id="qty"></div>
                                                         </div>
 
                                                         <div class="col-md-2">

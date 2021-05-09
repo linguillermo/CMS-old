@@ -378,7 +378,7 @@ else {
 
 
                                                         <div class="col-md-2">
-                                                            <div><input name="weight" placeholder="Qty" class="form-control wd-450" id="qty"></div>
+                                                            <div><input name="qty" placeholder="Qty" class="form-control wd-450" id="qty"></div>
                                                         </div>
 
                                                         <div class="col-md-2">
